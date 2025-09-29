@@ -156,7 +156,6 @@
     "video_autoplay": "Videos will be muted by default",
     "video_external": "Use a YouTube or Vimeo URL",
     "pills_usage": "Used for applied filters, discount codes, and search suggestions"
-
   },
   "names": {
     "product_title": "Product title",
@@ -926,6 +925,53 @@
     "z_index": "Z-index",
     "product_corner_radius": "Product corner radius",
     "card_corner_radius": "Card corner radius"
+  },
+  "sections": {
+    "testimonials": {
+      "name": "Testimonials",
+      "settings": {
+        "headline": {
+          "label": "Headline"
+        },
+        "subheadline": {
+          "label": "Subheadline"
+        },
+        "container_width": {
+          "label": "Container width",
+          "options__1": {
+            "label": "Narrow"
+          },
+          "options__2": {
+            "label": "Standard"
+          },
+          "options__3": {
+            "label": "Full width"
+          }
+        },
+        "show_dots": {
+          "label": "Show dots indicator"
+        }
+      },
+      "blocks": {
+        "testimonial": {
+          "name": "Testimonial",
+          "settings": {
+            "image": {
+              "label": "Image"
+            },
+            "text": {
+              "label": "Text"
+            },
+            "subtitle": {
+              "label": "Subtitle"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Testimonials"
+      }
+    }
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",

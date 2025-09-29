@@ -228,7 +228,7 @@
 
   /* caption area on the semicircle */
   .arc-caption {
-    position: absolute;
+    position: relative;
     z-index: 2;
     width: min(900px, 92%);
     margin-inline: auto;
@@ -236,21 +236,51 @@
     color: var(--caption-color, #fff);
     display: grid;
     gap: 1rem;
-    bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20vw;
   }
-  .arc-caption__title { color: inherit; margin: 0; font-size: clamp(1.4rem, 3vw, 2.25rem); font-weight: 700; letter-spacing: .02em; }
-  .arc-caption__text { color: inherit; opacity: .95; font-size: clamp(.95rem, 1.2vw, 1.125rem); max-width: 60ch; margin-inline: auto; }
-  .arc-caption .button { justify-self: center; }
+
+  .arc-caption__title { 
+    color: inherit; 
+    margin: 0; 
+    font-size: 3.125vw; 
+    font-weight: 400; 
+   }
+  .arc-caption__text { 
+    color: inherit; 
+    font-size: 1.667vw; 
+    max-width: 56.146vw;
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+  .arc-caption .button { 
+    justify-self: center; 
+    border-radius: 1000px;
+    background-color: #fff;
+    border: 2px solid white;
+    color: #2b98ac;
+    font-weight:400;
+    text-transform: uppercase;
+    font-size: 2.083vw;
+    line-height: 1;
+    padding-top: 1.7vw;
+  }
+
+  .arc-caption .button:hover {
+    background-color: #2b98ac;
+    color: white;
+  } 
 
   /* nav buttons */
   .arc-nav {
     position: absolute;
-    bottom: 10%;
-    transform: translateY(-50%);
-    width: 102px;
-    height: 102px;
+    bottom: 48%;
+    width: 5.313vw;
+    height: 5.313vw;
     border-radius: 50%;
-    border: 5px solid #E32013;
+    border: 0.26vw solid #E32013;
     background: white;
     box-shadow: var(--shadow-button, 0 2px 6px rgb(0 0 0 / .2));
     display: grid;
@@ -264,23 +294,16 @@
   .arc-nav--prev { 
     left: 12px;
 
-    transform: rotate(-180deg);
+    transform: rotate(-200deg);
    }
   .arc-nav--next {
     right: 12px;
+    transform: rotate(20deg);
    }
 
-  @media (max-width: 749px) {
-    .arc-nav { top: 25%; }
-  }
-
-  @media (min-width: 750px) and (max-width: 999px) {
-    .arc-nav { top: 35%; }
-  }
-
-  @media (min-width: 1000px) {
-    .arc-nav { top: 45%; }
-  }
+   .arc-caption__title{
+    max-width: 27.604vw;
+   }
 
   /* responsive */
   @media (max-width: 749px) {

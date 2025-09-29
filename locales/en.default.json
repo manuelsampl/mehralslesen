@@ -280,6 +280,10 @@
     "product_title": "Product title",
     "collection_title": "Collection title"
   },
+  "general": {
+    "previous": "Previous",
+    "next": "Next"
+  },
   "products": {
     "product": {
       "add_to_cart": "Add to cart",

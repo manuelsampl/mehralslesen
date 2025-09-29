@@ -1,0 +1,633 @@
+{% comment %}
+  Testimonials section with slider functionality
+  Displays customer testimonials with image, text, and subtitle
+{% endcomment %}
+
+<section
+  id="testimonials-{{ section.id }}"
+  class="testimonials color-{{ section.settings.color_scheme }} section-wrapper"
+  style="--padding-block-start: {{ section.settings.padding_top }}px; --padding-block-end: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="testimonials__container {{ section.settings.container_width }}">
+    <!-- Header -->
+    <div class="testimonials__header">
+      {% if section.settings.headline != blank %}
+        <h2 class="testimonials__headline">{{ section.settings.headline }}</h2>
+      {% endif %}
+      {% if section.settings.subheadline != blank %}
+        <p class="testimonials__subheadline">{{ section.settings.subheadline }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Testimonials Slider -->
+    {% if section.blocks.size > 0 %}
+      <div class="testimonials__slider-wrapper">
+        <div class="testimonials__slider" data-testimonials-slider>
+          <div class="testimonials__slides" data-testimonials-track>
+            {% for block in section.blocks %}
+              <div 
+                class="testimonials__slide"
+                data-slide="{{ forloop.index0 }}"
+                {{ block.shopify_attributes }}
+              >
+                <div class="testimonials__card">
+                  {% if block.settings.image != blank %}
+                    <div class="testimonials__image">
+                      {{
+                        block.settings.image
+                        | image_url: width: 200, height: 200
+                        | image_tag: 
+                          alt: block.settings.subtitle,
+                          loading: 'lazy',
+                          class: 'testimonials__img'
+                      }}
+                    </div>
+                  {% endif %}
+                  
+                  {% if block.settings.text != blank %}
+                    <div class="testimonials__content">
+                      <p class="testimonials__text">{{ block.settings.text }}</p>
+                    </div>
+                  {% endif %}
+                  
+                  {% if block.settings.subtitle != blank %}
+                    <div class="testimonials__meta">
+                      <p class="testimonials__subtitle">{{ block.settings.subtitle }}</p>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Navigation Arrows -->
+        {% if section.blocks.size > 1 %}
+          <div class="testimonials__navigation">
+            <button 
+              class="testimonials__nav testimonials__nav--prev" 
+              type="button" 
+              aria-label="{{ 'general.previous' | t | default: 'Previous' }}"
+              data-testimonials-prev
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button 
+              class="testimonials__nav testimonials__nav--next" 
+              type="button" 
+              aria-label="{{ 'general.next' | t | default: 'Next' }}"
+              data-testimonials-next
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        {% endif %}
+
+        <!-- Dots Indicator -->
+        {% if section.blocks.size > 1 and section.settings.show_dots %}
+          <div class="testimonials__dots">
+            {% for block in section.blocks %}
+              <button 
+                class="testimonials__dot{% if forloop.first %} testimonials__dot--active{% endif %}"
+                type="button"
+                aria-label="Go to slide {{ forloop.index }}"
+                data-testimonials-dot="{{ forloop.index0 }}"
+              ></button>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .testimonials {
+    padding: var(--padding-block-start) 0 var(--padding-block-end);
+    overflow: hidden;
+  }
+
+  .testimonials__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--page-margin);
+  }
+
+  .testimonials__container.container--narrow {
+    max-width: 900px;
+  }
+
+  .testimonials__container.container--full {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+
+  .testimonials__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .testimonials__headline {
+    font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 1rem;
+    color: rgb(var(--color-foreground));
+  }
+
+  .testimonials__subheadline {
+    font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0;
+    color: rgba(var(--color-foreground), 0.7);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .testimonials__slider-wrapper {
+    position: relative;
+  }
+
+  .testimonials__slider {
+    overflow: hidden;
+    border-radius: 12px;
+  }
+
+  .testimonials__slides {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .testimonials__slide {
+    width: 100%;
+    flex-shrink: 0;
+    padding: 0 10px;
+  }
+
+  .testimonials__card {
+    background: rgb(var(--color-background));
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    border: 1px solid rgba(var(--color-foreground), 0.1);
+  }
+
+  .testimonials__image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    margin: 0 auto;
+  }
+
+  .testimonials__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .testimonials__content {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .testimonials__text {
+    font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: rgb(var(--color-foreground));
+    margin: 0;
+    text-align: left;
+  }
+
+  .testimonials__meta {
+    margin-top: auto;
+  }
+
+  .testimonials__subtitle {
+    font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: rgba(var(--color-foreground), 0.8);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .testimonials__navigation {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .testimonials__nav {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgb(var(--color-background));
+    border: 1px solid rgba(var(--color-foreground), 0.2);
+    color: rgb(var(--color-foreground));
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .testimonials__nav:hover {
+    background: rgb(var(--color-foreground));
+    color: rgb(var(--color-background));
+    transform: scale(1.05);
+  }
+
+  .testimonials__nav--prev {
+    margin-left: -24px;
+  }
+
+  .testimonials__nav--next {
+    margin-right: -24px;
+  }
+
+  .testimonials__dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 2rem;
+  }
+
+  .testimonials__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(var(--color-foreground), 0.3);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .testimonials__dot--active,
+  .testimonials__dot:hover {
+    background: rgb(var(--color-foreground));
+  }
+
+  /* Mobile Styles */
+  @media screen and (max-width: 768px) {
+    .testimonials__headline {
+      font-size: 2rem;
+    }
+
+    .testimonials__subheadline {
+      font-size: 1rem;
+    }
+
+    .testimonials__card {
+      padding: 2rem 1.5rem;
+    }
+
+    .testimonials__image {
+      width: 100px;
+      height: 100px;
+    }
+
+    .testimonials__text {
+      font-size: 1rem;
+    }
+
+    .testimonials__nav {
+      width: 40px;
+      height: 40px;
+    }
+
+    .testimonials__nav--prev {
+      margin-left: -20px;
+    }
+
+    .testimonials__nav--next {
+      margin-right: -20px;
+    }
+  }
+
+  /* Desktop: Show multiple slides */
+  @media screen and (min-width: 769px) {
+    .testimonials__slides {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      transform: none !important;
+    }
+
+    .testimonials__slide {
+      width: auto;
+      padding: 0;
+    }
+
+    .testimonials__navigation {
+      display: none;
+    }
+
+    .testimonials__dots {
+      display: none;
+    }
+  }
+
+  /* When in slider mode (mobile or forced slider) */
+  @media screen and (max-width: 768px) {
+    .testimonials__slides {
+      display: flex;
+      grid-template-columns: none;
+      gap: 0;
+    }
+
+    .testimonials__slide {
+      width: 100%;
+      flex-shrink: 0;
+      padding: 0 10px;
+    }
+
+    .testimonials__navigation {
+      display: flex;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  class TestimonialsSlider {
+    constructor(element) {
+      this.slider = element;
+      this.track = this.slider.querySelector('[data-testimonials-track]');
+      this.slides = this.slider.querySelectorAll('.testimonials__slide');
+      this.prevBtn = this.slider.querySelector('[data-testimonials-prev]');
+      this.nextBtn = this.slider.querySelector('[data-testimonials-next]');
+      this.dots = this.slider.querySelectorAll('[data-testimonials-dot]');
+      
+      this.currentSlide = 0;
+      this.totalSlides = this.slides.length;
+      
+      this.init();
+    }
+
+    init() {
+      if (this.totalSlides <= 1) return;
+      
+      // Only initialize slider on mobile
+      if (window.innerWidth <= 768) {
+        this.bindEvents();
+        this.updateSlider();
+      }
+      
+      // Handle resize
+      window.addEventListener('resize', () => {
+        if (window.innerWidth <= 768) {
+          this.bindEvents();
+          this.updateSlider();
+        } else {
+          this.unbindEvents();
+        }
+      });
+    }
+
+    bindEvents() {
+      if (this.prevBtn) {
+        this.prevBtn.addEventListener('click', () => this.prevSlide());
+      }
+      
+      if (this.nextBtn) {
+        this.nextBtn.addEventListener('click', () => this.nextSlide());
+      }
+      
+      this.dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => this.goToSlide(index));
+      });
+
+      // Touch events
+      let startX = 0;
+      let currentX = 0;
+      let isDragging = false;
+
+      this.track.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+
+      this.track.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        currentX = e.touches[0].clientX;
+      });
+
+      this.track.addEventListener('touchend', () => {
+        if (!isDragging) return;
+        
+        const deltaX = startX - currentX;
+        
+        if (Math.abs(deltaX) > 50) {
+          if (deltaX > 0) {
+            this.nextSlide();
+          } else {
+            this.prevSlide();
+          }
+        }
+        
+        isDragging = false;
+      });
+    }
+
+    unbindEvents() {
+      // Remove event listeners when not needed
+      if (this.prevBtn) {
+        this.prevBtn.removeEventListener('click', () => this.prevSlide());
+      }
+      if (this.nextBtn) {
+        this.nextBtn.removeEventListener('click', () => this.nextSlide());
+      }
+    }
+
+    updateSlider() {
+      if (window.innerWidth > 768) return;
+      
+      const translateX = -this.currentSlide * 100;
+      this.track.style.transform = `translateX(${translateX}%)`;
+      
+      // Update dots
+      this.dots.forEach((dot, index) => {
+        dot.classList.toggle('testimonials__dot--active', index === this.currentSlide);
+      });
+    }
+
+    nextSlide() {
+      this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+      this.updateSlider();
+    }
+
+    prevSlide() {
+      this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+      this.updateSlider();
+    }
+
+    goToSlide(slideIndex) {
+      this.currentSlide = slideIndex;
+      this.updateSlider();
+    }
+  }
+
+  // Initialize all testimonials sliders
+  document.addEventListener('DOMContentLoaded', () => {
+    const sliders = document.querySelectorAll('[data-testimonials-slider]');
+    sliders.forEach(slider => new TestimonialsSlider(slider));
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "t:sections.testimonials.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "t:sections.testimonials.settings.headline.label",
+      "default": "Was Lehrer:innen und Schüler:innen sagen"
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": "t:sections.testimonials.settings.subheadline.label",
+      "default": "ERFAHRUNGEN AUS DEM SCHULALLTAG MIT UNSEREN ZEITSCHRIFTEN."
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "t:sections.testimonials.settings.container_width.label",
+      "options": [
+        {
+          "value": "container--narrow",
+          "label": "t:sections.testimonials.settings.container_width.options__1.label"
+        },
+        {
+          "value": "container--standard",
+          "label": "t:sections.testimonials.settings.container_width.options__2.label"
+        },
+        {
+          "value": "container--full",
+          "label": "t:sections.testimonials.settings.container_width.options__3.label"
+        }
+      ],
+      "default": "container--standard"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "t:sections.testimonials.settings.show_dots.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "t:sections.testimonials.blocks.testimonial.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.image.label"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.text.label",
+          "default": "Hallo Schule! ist ein idealer Einstieg ins Lesen. Die Kinder lieben die Bildgeschichten – und ich das zusätzliche Material."
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.subtitle.label",
+          "default": "VOLKSSCHULLEHRERIN, NIEDERÖSTERREICH"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.testimonials.presets.name",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "text": "Hallo Schule! ist ein idealer Einstieg ins Lesen. Die Kinder lieben die Bildgeschichten – und ich das zusätzliche Material.",
+            "subtitle": "VOLKSSCHULLEHRERIN, NIEDERÖSTERREICH"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "text": "Die Hefte fördern Lesemotivation und bieten perfekt abgestimmte Inhalte zum Lehrplan 2023.",
+            "subtitle": "VOLKSSCHULLEHRERIN, STEIERMARK"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "text": "Sir Winston ist cool! Ich kann schon ein bisschen Englisch sagen.",
+            "subtitle": "SAMUEL, 9 JAHRE"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
