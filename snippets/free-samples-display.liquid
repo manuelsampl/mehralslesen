@@ -1,0 +1,1191 @@
+<!-- Optimized Free Samples Display -->
+<!-- Only products with configured Custom Fields -->
+{% if product.metafields.custom.lehrerexemplar_id and product.metafields.custom.freiexemplar_id %}
+  <div class="rk-free-samples">
+    <!-- Teacher Samples -->
+    <div class="rk-sample-group">
+      <span>🎓</span>
+      <div>
+        <label for="rk-teacher-samples">Lehrerexemplare (kostenfrei)</label>
+        <div class="rk-quantity-controls">
+          <button type="button" data-action="minus" data-target="teacher">−</button>
+          <input type="number" id="rk-teacher-samples" value="0" min="0">
+          <button type="button" data-action="plus" data-target="teacher">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Samples -->
+    <div class="rk-sample-group">
+      <span>🤝</span>
+      <div>
+        <label for="rk-social-samples">Zusätzliche Freiexemplare für sozial benachteiligte Kinder</label>
+        <div class="rk-quantity-controls">
+          <button type="button" data-action="minus" data-target="social">−</button>
+          <input type="number" id="rk-social-samples" value="0" min="0">
+          <button type="button" data-action="plus" data-target="social">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .rk-free-samples { margin: 1rem 0; }
+    .rk-sample-group { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.75rem; background: white; border-radius: 6px; border: 1px solid #dee2e6; }
+    .rk-sample-group span { font-size: 1.25rem; width: 2rem; text-align: center; }
+    .rk-sample-group > div { flex: 1; }
+    .rk-sample-group label { display: block; font-weight: 500; color: #495057; margin-bottom: 0.25rem; font-size: 0.9rem; }
+    .rk-quantity-controls { display: flex; align-items: center; gap: 0.5rem; }
+    .rk-quantity-controls button { background: #6c757d; color: white; border: none; width: 32px; height: 32px; border-radius: 4px; cursor: pointer; font-size: 1.2rem; }
+    .rk-quantity-controls button[data-action="plus"] { background: #28a745; }
+    .rk-quantity-controls input { width: 60px; height: 32px; text-align: center; border: 1px solid #dee2e6; border-radius: 4px; font-size: 0.9rem; }
+  </style>
+
+  <script>
+(function() {
+  const teacherInput = document.getElementById('rk-teacher-samples');
+  const socialInput = document.getElementById('rk-social-samples');
+
+  // Product IDs from Custom Fields
+  const lehrerexemplarId = {{ product.metafields.custom.lehrerexemplar_id }};
+  const freiexemplarId = {{ product.metafields.custom.freiexemplar_id }};
+
+  console.log('🚀 RK Free Samples Widget loaded for product {{ product.id }}');
+  console.log('📋 Custom Fields:', { lehrerexemplarId, freiexemplarId });
+  console.log('🎯 Starting comprehensive debugging...');
+
+  // DEBUG: Log all available buttons on page
+  setTimeout(() => {
+    const allButtons = document.querySelectorAll('button');
+    console.log('🔍 All buttons found on page:', Array.from(allButtons).map(btn => ({
+      id: btn.id,
+      classes: btn.className,
+      text: btn.textContent?.trim().substring(0, 50),
+      name: btn.name,
+      type: btn.type
+    })));
+
+    // Try to find the add to cart button with various selectors
+    const selectors = [
+      '#BuyButtons-ProductSubmitButton-AUXVBUC9GTi9GRnE5W__add-to-cart',
+      'button[name="add"]',
+      '.add-to-cart-button',
+      'button[type="submit"]',
+      '[data-submit-button]',
+      '.btn--add-to-cart',
+      '.product-form-button'
+    ];
+
+    selectors.forEach(selector => {
+      const element = document.querySelector(selector);
+      if (element) {
+        console.log(`✅ Found element with selector "${selector}":`, element);
+      } else {
+        console.log(`❌ No element found with selector "${selector}"`);
+      }
+    });
+  }, 1000);
+
+  // Button handlers - NO direct cart updates, only UI updates
+  document.querySelectorAll('.rk-sample-group button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const action = this.dataset.action;
+      const target = this.dataset.target;
+      const input = target === 'teacher' ? teacherInput : socialInput;
+      const current = parseInt(input.value) || 0;
+
+      if (action === 'plus') {
+        const mainQty = getMainQuantity();
+        const maxAllowed = Math.floor(mainQty * 0.1);
+        if (current < maxAllowed) {
+          const newValue = current + 1;
+          input.value = newValue;
+          // NO cart update here - only UI update
+          showNotification(`${target === 'teacher' ? 'Lehrerexemplare' : 'Freiexemplare'}: ${newValue} Stück ausgewählt`);
+        } else {
+          showNotification('Maximum erreicht (10% der Hauptbestellmenge)', 'warning');
+        }
+      } else if (action === 'minus' && current > 0) {
+        const newValue = current - 1;
+        input.value = newValue;
+        // NO cart update here - only UI update
+        showNotification(`${target === 'teacher' ? 'Lehrerexemplare' : 'Freiexemplare'}: ${newValue} Stück ausgewählt`);
+      }
+    });
+  });
+
+  // Input change handlers - NO direct cart updates, only validation
+  [teacherInput, socialInput].forEach(input => {
+    input.addEventListener('input', function() {
+      const mainQty = getMainQuantity();
+      const maxAllowed = Math.floor(mainQty * 0.1);
+      const value = parseInt(this.value) || 0;
+
+      if (value > maxAllowed) {
+        this.value = maxAllowed;
+        showNotification(`Maximum erreicht: ${maxAllowed} Stück (10% von ${mainQty})`, 'warning');
+      }
+
+      // NO cart update here - only validation
+    });
+  });
+
+  function showNotification(message, type = 'success') {
+    // Erstelle temporäre Benachrichtigung
+    const notification = document.createElement('div');
+    const backgroundColor = type === 'warning' ? '#ffc107' : '#28a745';
+    const textColor = type === 'warning' ? '#000' : '#fff';
+
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: ${backgroundColor};
+      color: ${textColor};
+      padding: 12px 24px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 10000;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 14px;
+      animation: slideIn 0.3s ease-out;
+      max-width: 300px;
+      word-wrap: break-word;
+    `;
+
+    // Add slide-in animation if not already present
+    if (!document.querySelector('#rk-notification-styles')) {
+      const style = document.createElement('style');
+      style.id = 'rk-notification-styles';
+      style.textContent = `
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    // Remove after 3 seconds
+    setTimeout(() => {
+      notification.style.animation = 'slideIn 0.3s ease-out reverse';
+      setTimeout(() => {
+        if (notification.parentNode) {
+          document.body.removeChild(notification);
+        }
+      }, 300);
+    }, 3000);
+  }
+
+  // STRATEGY 1: Listen to theme events
+  console.log('📡 Setting up event listeners...');
+  document.addEventListener('cart:add', handleCartAdd);
+  document.addEventListener('CartAddEvent', handleCartAdd);
+
+  // Add more potential event names
+  const possibleEvents = [
+    'cart:add', 'CartAddEvent', 'cart:added', 'product:add', 'product:added',
+    'shopify:cart:add', 'theme:cart:add', 'add-to-cart', 'cart-add',
+    'cart:items-added', 'cart:update', 'cart:changed'
+  ];
+
+  possibleEvents.forEach(eventName => {
+    document.addEventListener(eventName, function(e) {
+      console.log(`🎉 Event detected: ${eventName}`, e);
+      handleCartAdd({ source: eventName, event: e });
+    });
+  });
+
+  // STRATEGY 2: Enhanced fetch interception with more detailed logging
+  console.log('🕵️ Setting up enhanced fetch interception...');
+  const originalFetch = window.fetch;
+  window.fetch = function(...args) {
+    const url = args[0];
+    const options = args[1] || {};
+
+    // Only log cart-related requests to reduce noise
+    if (typeof url === 'string' && (url.includes('/cart') || url.includes('add'))) {
+      console.log('🌐 Cart-related fetch request:', url, options.method || 'GET');
+
+      if (options.body) {
+        try {
+          const body = JSON.parse(options.body);
+          console.log('📦 Request body:', body);
+        } catch (e) {
+          console.log('📦 Request body (raw):', options.body);
+        }
+      }
+    }
+
+    // Check if this is a cart/add request
+    if (typeof url === 'string' && url.includes('/cart/add')) {
+      console.log('🎯 Cart add request detected:', url);
+
+      // Call our handler after a delay
+      setTimeout(() => {
+        console.log('⏰ Triggering handleCartAdd from fetch intercept');
+        handleCartAdd({ source: 'fetch-intercept' });
+      }, 500);
+    }
+
+    // Also check for other cart endpoints that might be used
+    if (typeof url === 'string' && (url.includes('cart') && (url.includes('add') || url.includes('change') || url.includes('update')))) {
+      console.log('🎯 General cart API request detected:', url);
+
+      // Call our handler with a longer delay for general cart operations
+      setTimeout(() => {
+        console.log('⏰ Triggering handleCartAdd from general cart API');
+        handleCartAdd({ source: 'cart-api-general' });
+      }, 800);
+    }
+
+    return originalFetch.apply(this, args);
+  };
+
+  // STRATEGY 3: Monitor cart changes via polling
+  console.log('⏱️ Setting up cart polling...');
+  let lastCartItemCount = 0;
+  let cartPollInterval;
+
+  function startCartMonitoring() {
+    console.log('🔄 Starting cart monitoring interval');
+    cartPollInterval = setInterval(async () => {
+      try {
+        const response = await originalFetch('/cart.js');
+        const cart = await response.json();
+        const currentItemCount = cart.item_count;
+
+        // If cart items increased, someone added something
+        if (currentItemCount > lastCartItemCount) {
+          console.log('🎯 Cart change detected via polling:', {
+            from: lastCartItemCount,
+            to: currentItemCount,
+            items: cart.items.map(item => ({
+              title: item.product_title,
+              quantity: item.quantity,
+              variant_id: item.variant_id
+            }))
+          });
+          handleCartAdd({ source: 'polling' });
+        }
+
+        lastCartItemCount = currentItemCount;
+      } catch (error) {
+        console.warn('❌ Cart polling error:', error);
+      }
+    }, 1000);
+  }
+
+  // Start monitoring when user interacts with the page
+  document.addEventListener('click', function(e) {
+    console.log('👆 Click detected on:', e.target);
+    if (!cartPollInterval) {
+      console.log('🚀 First click - starting cart monitoring');
+      startCartMonitoring();
+    }
+  }, { once: true });
+
+  // Also listen to custom theme events
+  if (window.CartAddEvent && window.CartAddEvent.eventName) {
+    document.addEventListener(window.CartAddEvent.eventName, handleCartAdd);
+  }
+
+  // STRATEGY 4: Direct Alpine.js/Framework Integration
+  console.log('🔌 Setting up Alpine.js/Framework integration...');
+
+  // Wait for Alpine to initialize
+  function waitForAlpineAndIntegrate() {
+    if (window.Alpine && typeof window.Alpine === 'object') {
+      console.log('🏔️ Alpine.js detected, setting up integration');
+
+      // Try to intercept Alpine's click handling
+      if (window.Alpine.directive) {
+        console.log('📡 Attempting to hook into Alpine directives');
+
+        // Monitor for Alpine data changes
+        document.addEventListener('alpine:init', () => {
+          console.log('🚀 Alpine initialized');
+        });
+
+        document.addEventListener('alpine:initialized', () => {
+          console.log('✅ Alpine fully initialized');
+        });
+      }
+    } else if (window.$nextTick || window.Vue || document.querySelector('[x-data]') || document.querySelector('[on\\:click]')) {
+      console.log('🌟 Framework detected (Vue/Alpine), waiting for initialization...');
+      setTimeout(waitForAlpineAndIntegrate, 100);
+    } else {
+      console.log('⚠️ No framework detected, relying on standard strategies');
+    }
+  }
+
+  // Start Alpine integration
+  waitForAlpineAndIntegrate();
+
+  // Alternative approach: Monitor for specific framework events
+  ['alpine:init', 'alpine:initialized', 'vue:mounted', 'framework:ready'].forEach(eventName => {
+    document.addEventListener(eventName, () => {
+      console.log(`🎉 Framework event detected: ${eventName}`);
+      // Small delay to let framework finish setup
+      setTimeout(() => {
+        console.log('⏰ Triggering handleCartAdd from framework event');
+        handleCartAdd({ source: `framework-event-${eventName}` });
+      }, 1000);
+    });
+  });
+
+  // STRATEGY 5: DOM Mutation Observer for Button/Form State Changes
+  console.log('👁️ Setting up DOM mutation observer for button/form changes...');
+
+  function setupMutationObserver() {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        // Check for attribute changes that might indicate button state changes
+        if (mutation.type === 'attributes') {
+          const target = mutation.target;
+
+          if (target.matches && (
+            target.matches('button[type="submit"]') ||
+            target.matches('[data-cart-add]') ||
+            target.matches('[on\\:click]') ||
+            target.matches('[x-on\\:click]') ||
+            target.matches('[\\@click]')
+          )) {
+            console.log('🎯 Button attribute changed:', {
+              element: target,
+              attribute: mutation.attributeName,
+              oldValue: mutation.oldValue,
+              newValue: target.getAttribute(mutation.attributeName)
+            });
+
+            // Check if button state changed to indicate it was clicked
+            if ((mutation.attributeName === 'disabled' && mutation.oldValue === null && target.disabled) ||
+                (mutation.attributeName === 'aria-busy' && target.getAttribute('aria-busy') === 'true') ||
+                (mutation.attributeName === 'data-loading' && target.getAttribute('data-loading') === 'true') ||
+                (mutation.attributeName === 'class' && target.className.includes('loading'))) {
+
+              console.log('🎉 Button appears to have been clicked (state change detected)');
+              setTimeout(() => {
+                console.log('⏰ Triggering handleCartAdd from mutation observer');
+                handleCartAdd({ source: 'mutation-observer' });
+              }, 800);
+            }
+          }
+        }
+
+        // Also watch for new form elements or buttons being added
+        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              const buttons = node.matches && node.matches('button') ? [node] :
+                           node.querySelectorAll ? node.querySelectorAll('button[type="submit"], [data-cart-add]') : [];
+
+              if (buttons.length > 0) {
+                console.log('🆕 New buttons detected in DOM:', buttons);
+                // Re-setup event listeners on new buttons
+                setTimeout(() => {
+                  console.log('🔄 Re-calling monitorAddToCartButton for new buttons');
+                  monitorAddToCartButton();
+                }, 100);
+              }
+            }
+          });
+        }
+      });
+    });
+
+    // Observe the entire document for changes
+    observer.observe(document.body, {
+      attributes: true,
+      childList: true,
+      subtree: true,
+      attributeOldValue: true,
+      attributeFilter: ['disabled', 'aria-busy', 'data-loading', 'class', 'style']
+    });
+
+    console.log('👁️ DOM mutation observer active');
+  }
+
+  // Start the mutation observer
+  if (typeof MutationObserver !== 'undefined') {
+    setupMutationObserver();
+  } else {
+    console.log('❌ MutationObserver not supported');
+  }
+
+  // STRATEGY 6: Cart Drawer/Modal Detection
+  console.log('🛒 Setting up cart drawer/modal detection...');
+
+  function detectCartDrawerChanges() {
+    // Common cart drawer selectors
+    const cartDrawerSelectors = [
+      'cart-drawer',
+      '.cart-drawer',
+      '[data-cart-drawer]',
+      '#cart-drawer',
+      'dialog[open]',
+      '.drawer.is-open',
+      '.sidebar-cart.is-active',
+      '.minicart.is-open',
+      '.cart-popup.is-visible'
+    ];
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        // Check if cart drawer/modal was opened
+        if (mutation.type === 'attributes') {
+          const target = mutation.target;
+
+          // Check for cart drawer opening
+          if (cartDrawerSelectors.some(selector => {
+            try {
+              return target.matches && target.matches(selector);
+            } catch (e) {
+              return false;
+            }
+          })) {
+            const isOpen = target.open ||
+                          target.classList.contains('is-open') ||
+                          target.classList.contains('is-active') ||
+                          target.classList.contains('is-visible') ||
+                          target.style.display !== 'none';
+
+            if (isOpen && mutation.oldValue !== null) {
+              console.log('🛒 Cart drawer/modal opened:', target);
+              setTimeout(() => {
+                console.log('⏰ Triggering handleCartAdd from cart drawer detection');
+                handleCartAdd({ source: 'cart-drawer' });
+              }, 200);
+            }
+          }
+        }
+
+        // Also check for new cart items being added to DOM
+        if (mutation.type === 'childList') {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              const cartItems = node.matches && (
+                node.matches('.cart-item') ||
+                node.matches('[data-cart-item]') ||
+                node.matches('.line-item')
+              ) ? [node] :
+              node.querySelectorAll ? node.querySelectorAll('.cart-item, [data-cart-item], .line-item') : [];
+
+              if (cartItems.length > 0) {
+                console.log('🛍️ New cart items detected in DOM:', cartItems);
+                setTimeout(() => {
+                  console.log('⏰ Triggering handleCartAdd from new cart items');
+                  handleCartAdd({ source: 'cart-items-added' });
+                }, 300);
+              }
+            }
+          });
+        }
+      });
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      childList: true,
+      subtree: true,
+      attributeOldValue: true,
+      attributeFilter: ['open', 'class', 'style', 'aria-hidden', 'data-state']
+    });
+
+    console.log('🛒 Cart drawer observer active');
+  }
+
+  // Start cart drawer detection
+  detectCartDrawerChanges();
+
+  // STRATEGY 7: Aggressive Fallback - Monitor Everything
+  console.log('💀 Setting up aggressive fallback monitoring...');
+
+  let lastCartHash = '';
+  let aggressiveInterval;
+
+  async function checkCartAggressively() {
+    try {
+      const response = await originalFetch('/cart.js');
+      const cart = await response.json();
+      const cartHash = JSON.stringify(cart.items.map(i => ({ id: i.variant_id, qty: i.quantity })));
+
+      if (cartHash !== lastCartHash && lastCartHash !== '') {
+        console.log('🔥 AGGRESSIVE: Cart change detected!', {
+          old: lastCartHash,
+          new: cartHash,
+          items: cart.items.length
+        });
+
+        setTimeout(() => {
+          console.log('⏰ Triggering handleCartAdd from aggressive fallback');
+          handleCartAdd({ source: 'aggressive-fallback' });
+        }, 100);
+      }
+
+      lastCartHash = cartHash;
+    } catch (e) {
+      console.warn('❌ Aggressive cart check failed:', e);
+    }
+  }
+
+  // Start aggressive monitoring after any user interaction
+  function startAggressiveMonitoring() {
+    if (aggressiveInterval) return; // Already running
+
+    console.log('🚨 Starting AGGRESSIVE cart monitoring');
+    aggressiveInterval = setInterval(checkCartAggressively, 500); // Check every 500ms
+
+    // Stop after 30 seconds to avoid infinite monitoring
+    setTimeout(() => {
+      if (aggressiveInterval) {
+        console.log('⏹️ Stopping aggressive monitoring');
+        clearInterval(aggressiveInterval);
+        aggressiveInterval = null;
+      }
+    }, 30000);
+  }
+
+  // Trigger aggressive monitoring on ANY page interaction
+  ['click', 'touchstart', 'keydown'].forEach(eventType => {
+    document.addEventListener(eventType, function(e) {
+      // If interaction is near our product form or add to cart buttons
+      const target = e.target;
+      const isNearCartButton = target.closest('form') ||
+                              target.closest('button') ||
+                              target.closest('[data-product-form]') ||
+                              target.closest('[data-cart-add]');
+
+      if (isNearCartButton) {
+        console.log('🎯 User interacted with cart-related element:', target);
+        setTimeout(startAggressiveMonitoring, 100);
+      }
+    }, { capture: true });
+  });
+
+  let handlingCartAdd = false; // Prevent duplicate processing
+
+  async function handleCartAdd(event) {
+    // Prevent duplicate calls
+    if (handlingCartAdd) {
+      console.log('🚫 Already handling cart add, skipping');
+      return;
+    }
+
+    handlingCartAdd = true;
+    console.log('🔄 Starting handleCartAdd, source:', event?.source || 'unknown');
+
+    // Much longer delay to ensure the main product was added by the theme first
+    setTimeout(async () => {
+      try {
+        const teacherQty = parseInt(teacherInput.value) || 0;
+        const socialQty = parseInt(socialInput.value) || 0;
+
+        // Only add free samples if some are selected
+        if (teacherQty === 0 && socialQty === 0) {
+          console.log('🚫 No free samples selected');
+          handlingCartAdd = false;
+          return;
+        }
+
+        console.log('🎯 Adding free samples after main product:', { teacherQty, socialQty, source: event?.source || 'event' });
+
+        // Check current cart state first - wait for main product
+        let cartResponse = await originalFetch('/cart.js');
+        let cartData = await cartResponse.json();
+        console.log('📦 Current cart before adding free samples:', cartData.item_count, 'items');
+
+        // If cart is still empty, the theme might not add the product automatically
+        // We need to add the main product ourselves!
+        if (cartData.item_count === 0) {
+          console.log('⚠️ Cart empty - attempting to add main product ourselves');
+
+          // Get the main product variant ID and quantity
+          const mainQuantity = getMainQuantity();
+          const productForm = document.querySelector('form[action*="/cart/add"]');
+
+          if (productForm) {
+            const variantInput = productForm.querySelector('input[name="id"]') ||
+                                productForm.querySelector('select[name="id"]') ||
+                                productForm.querySelector('[name="id"]');
+
+            const variantId = variantInput ? variantInput.value : null;
+
+            console.log('🔍 Detected main product details:', {
+              variantId,
+              quantity: mainQuantity,
+              form: productForm
+            });
+
+            if (variantId) {
+              console.log('➕ Adding main product to cart ourselves');
+
+              try {
+                const mainProductResponse = await originalFetch('/cart/add.js', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    items: [{
+                      id: variantId,
+                      quantity: mainQuantity
+                    }]
+                  })
+                });
+
+                const mainProductResult = await mainProductResponse.json();
+                console.log('✅ Main product added successfully:', mainProductResult);
+
+                // Wait a bit for the addition to process
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                // Re-check cart
+                cartResponse = await originalFetch('/cart.js');
+                cartData = await cartResponse.json();
+                console.log('📦 Cart after adding main product:', cartData.item_count, 'items');
+              } catch (error) {
+                console.error('❌ Failed to add main product:', error);
+                showNotification('Hauptprodukt konnte nicht hinzugefügt werden', 'warning');
+                handlingCartAdd = false;
+                return;
+              }
+            } else {
+              console.warn('❌ Could not find variant ID to add main product');
+              showNotification('Produktvariante nicht gefunden', 'warning');
+              handlingCartAdd = false;
+              return;
+            }
+          }
+        }
+
+        // If cart is STILL empty after our attempt, wait longer for theme
+        if (cartData.item_count === 0) {
+          console.log('⏳ Cart still empty after our attempt, waiting longer for theme...');
+          await new Promise(resolve => setTimeout(resolve, 1000));
+
+          cartResponse = await originalFetch('/cart.js');
+          cartData = await cartResponse.json();
+          console.log('📦 Cart after waiting longer:', cartData.item_count, 'items');
+
+          // If still empty after total 2.5 seconds, something is really wrong
+          if (cartData.item_count === 0) {
+            console.log('❌ Main product could not be added by any method, skipping free samples');
+            showNotification('Hauptprodukt konnte nicht hinzugefügt werden - Theme Problem', 'warning');
+            handlingCartAdd = false;
+            return;
+          }
+        }
+
+        // Add free samples one by one instead of parallel for better debugging
+        if (teacherQty > 0) {
+          console.log('📚 Adding teacher sample...');
+          const teacherResponse = await originalFetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              items: [{
+                id: lehrerexemplarId,
+                quantity: teacherQty,
+                properties: {
+                  'custom.lehrerexemplar_id': lehrerexemplarId,
+                  'custom.freiexemplar_id': freiexemplarId,
+                  '_main_product': '{{ product.title }}',
+                  '_type': 'Lehrerexemplar'
+                }
+              }]
+            })
+          });
+
+          const teacherResult = await teacherResponse.json();
+          console.log('✅ Teacher sample response:', teacherResult);
+        }
+
+        if (socialQty > 0) {
+          console.log('🤝 Adding social sample...');
+          const socialResponse = await originalFetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              items: [{
+                id: freiexemplarId,
+                quantity: socialQty,
+                properties: {
+                  'custom.lehrerexemplar_id': lehrerexemplarId,
+                  'custom.freiexemplar_id': freiexemplarId,
+                  '_main_product': '{{ product.title }}',
+                  '_type': 'Freiexemplar'
+                }
+              }]
+            })
+          });
+
+          const socialResult = await socialResponse.json();
+          console.log('✅ Social sample response:', socialResult);
+        }
+
+        // Check final cart state
+        cartResponse = await originalFetch('/cart.js');
+        cartData = await cartResponse.json();
+        console.log('📦 Final cart after adding free samples:', cartData.item_count, 'items');
+        console.log('📋 Final cart items:', cartData.items.map(item => ({ title: item.product_title, qty: item.quantity, id: item.variant_id })));
+
+        // Show success message
+        const totalSamples = teacherQty + socialQty;
+        const mainQuantity = getMainQuantity();
+        const mainProducts = cartData.items.filter(item =>
+          item.variant_id != lehrerexemplarId && item.variant_id != freiexemplarId
+        ).length;
+
+        showNotification(`${mainProducts} Hauptprodukt(e) + ${totalSamples} Freiexemplar(e) hinzugefügt!`);
+
+        // IMPORTANT: Trigger cart update events AFTER all products are added
+        console.log('🚀 Triggering cart update events after all products are added...');
+
+        // Wait a bit more to ensure all products are fully processed
+        setTimeout(() => {
+          triggerCartUpdateEvents();
+          console.log('✅ Free samples added successfully - cart updated');
+        }, 500); // Wait 500ms before triggering cart updates
+
+      } catch (error) {
+        console.error('❌ Failed to add free samples:', error);
+        showNotification('Freiexemplare konnten nicht hinzugefügt werden', 'warning');
+      } finally {
+        // Reset flag after 3 seconds to allow new cart adds
+        setTimeout(() => {
+          console.log('🔓 Resetting handlingCartAdd flag');
+          handlingCartAdd = false;
+        }, 3000);
+      }
+    }, 1500); // Increased delay from 800ms to 1500ms
+  }
+
+  // STRATEGY 4: Direct button monitoring with mutation observer
+  function monitorAddToCartButton() {
+    console.log('🔍 Searching for add-to-cart button...');
+
+    const selectors = [
+      '#BuyButtons-ProductSubmitButton-AUXVBUC9GTi9GRnE5W__add-to-cart',
+      'button[name="add"]',
+      '.add-to-cart-button',
+      'button[type="submit"]',
+      '[data-submit-button]',
+      '.btn--add-to-cart',
+      '.product-form-button',
+      'add-to-cart-component button',
+      '[ref="addToCartButton"]'
+    ];
+
+    let mainAddToCartButton = null;
+
+    for (const selector of selectors) {
+      const element = document.querySelector(selector);
+      if (element) {
+        console.log(`✅ Found add-to-cart button with selector: "${selector}"`, element);
+        mainAddToCartButton = element;
+        break;
+      }
+    }
+
+    if (!mainAddToCartButton) {
+      console.warn('❌ No add-to-cart button found with any selector');
+
+      // Fallback: try to find any button that contains "cart" or "add" text
+      const allButtons = Array.from(document.querySelectorAll('button'));
+      const potentialButtons = allButtons.filter(btn => {
+        const text = btn.textContent?.toLowerCase() || '';
+        return text.includes('cart') || text.includes('add') || text.includes('hinzu');
+      });
+
+      console.log('🔍 Potential add-to-cart buttons by text content:', potentialButtons.map(btn => ({
+        element: btn,
+        text: btn.textContent?.trim(),
+        id: btn.id,
+        classes: btn.className
+      })));
+
+      if (potentialButtons.length > 0) {
+        mainAddToCartButton = potentialButtons[0];
+        console.log('🎯 Using fallback button:', mainAddToCartButton);
+      }
+    }
+
+    if (mainAddToCartButton) {
+      console.log('🎯 Setting up listeners on button:', mainAddToCartButton);
+
+      // Try multiple event types and phases to catch the click
+      const eventTypes = [
+        { type: 'click', capture: true },   // Capture phase
+        { type: 'click', capture: false },  // Bubble phase
+        { type: 'mousedown', capture: false },
+        { type: 'mouseup', capture: false }
+      ];
+
+      eventTypes.forEach(({ type, capture }) => {
+        mainAddToCartButton.addEventListener(type, function(e) {
+          console.log(`🎉 ${type.toUpperCase()} event (${capture ? 'capture' : 'bubble'}) on add-to-cart button!`, e);
+
+          const teacherQty = parseInt(teacherInput.value) || 0;
+          const socialQty = parseInt(socialInput.value) || 0;
+
+          console.log('📊 Current free sample selections:', { teacherQty, socialQty });
+
+          if (teacherQty > 0 || socialQty > 0) {
+            console.log(`🎯 ${type} event with free samples:`, { teacherQty, socialQty });
+
+            // For framework buttons, we need to let the framework handle the click first
+            setTimeout(() => {
+              console.log(`⏰ Triggering handleCartAdd from button-${type}-${capture ? 'capture' : 'bubble'}`);
+              handleCartAdd({ source: `button-${type}-${capture ? 'capture' : 'bubble'}` });
+            }, type === 'click' ? 2000 : 1000); // Longer delay for click events
+          } else {
+            console.log('ℹ️ No free samples selected, normal add-to-cart flow');
+          }
+
+          // IMPORTANT: Let the event bubble normally to theme/framework handlers
+          // Do NOT call e.preventDefault() or e.stopPropagation()
+        }, capture);
+      });
+
+      // Also try to detect programmatic clicks by monitoring attributes
+      let lastClickTime = 0;
+      const clickDetector = () => {
+        const now = Date.now();
+        if (now - lastClickTime > 100) { // Debounce
+          lastClickTime = now;
+          console.log('🔥 Possible programmatic click detected via attribute change');
+
+          const teacherQty = parseInt(teacherInput.value) || 0;
+          const socialQty = parseInt(socialInput.value) || 0;
+
+          if (teacherQty > 0 || socialQty > 0) {
+            setTimeout(() => {
+              console.log('⏰ Triggering handleCartAdd from programmatic click detection');
+              handleCartAdd({ source: 'programmatic-click' });
+            }, 2500);
+          }
+        }
+      };
+
+      // Watch for button state changes that might indicate a click
+      new MutationObserver(() => clickDetector()).observe(mainAddToCartButton, { attributes: true });
+
+      // Also try clicking the button programmatically if we detect theme framework
+      console.log('🔍 Checking if button uses framework (Alpine.js, etc.)');
+      const hasFrameworkAttributes = mainAddToCartButton.hasAttribute('on:click') ||
+                                   mainAddToCartButton.hasAttribute('@click') ||
+                                   mainAddToCartButton.hasAttribute('x-on:click');
+
+      if (hasFrameworkAttributes) {
+        console.log('⚡ Framework button detected, using enhanced monitoring');
+
+        // Monitor for any DOM changes that might indicate cart activity
+        const cartObserver = new MutationObserver(() => {
+          setTimeout(() => {
+            console.log('🔄 DOM change detected, checking cart');
+            const teacherQty = parseInt(teacherInput.value) || 0;
+            const socialQty = parseInt(socialInput.value) || 0;
+            if (teacherQty > 0 || socialQty > 0) {
+              handleCartAdd({ source: 'dom-change' });
+            }
+          }, 1000);
+        });
+
+        // Watch the entire document for changes
+        cartObserver.observe(document.body, { childList: true, subtree: true });
+      }
+
+      // Log the button's current state
+      console.log('🔧 Button details:', {
+        id: mainAddToCartButton.id,
+        classes: mainAddToCartButton.className,
+        disabled: mainAddToCartButton.disabled,
+        type: mainAddToCartButton.type,
+        name: mainAddToCartButton.name,
+        text: mainAddToCartButton.textContent?.trim()
+      });
+    }
+
+    // Use MutationObserver to detect button changes/clicks
+    const observer = new MutationObserver(function(mutations) {
+      console.log('🔄 Button mutations detected:', mutations);
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' &&
+            (mutation.attributeName === 'class' || mutation.attributeName === 'disabled')) {
+
+          console.log(`🔧 Button attribute changed: ${mutation.attributeName}`);
+
+          const teacherQty = parseInt(teacherInput.value) || 0;
+          const socialQty = parseInt(socialInput.value) || 0;
+
+          if (teacherQty > 0 || socialQty > 0) {
+            console.log('🎯 Button attribute change detected, checking for cart add');
+            setTimeout(() => {
+              console.log('⏰ Triggering handleCartAdd from mutation observer');
+              handleCartAdd({ source: 'mutation-observer' });
+            }, 500);
+          }
+        }
+      });
+    });
+
+    if (mainAddToCartButton) {
+      observer.observe(mainAddToCartButton, { attributes: true });
+      console.log('👀 MutationObserver attached to button');
+    }
+  }
+
+  // Initialize button monitoring
+  console.log('🚀 Initializing button monitoring...');
+  console.log('📋 Page URL:', window.location.href);
+  console.log('📋 User Agent:', navigator.userAgent);
+  console.log('📋 Product ID from Liquid:', '{{ product.id }}');
+
+  // Get product form for debugging
+  const productForm = document.querySelector('form[action*="/cart/add"]') ||
+                      document.querySelector('#BuyButtons-ProductSubmitButton-AUXVBUC9GTi9GRnE5W') ||
+                      document.querySelector('product-form') ||
+                      document.querySelector('add-to-cart-component');
+
+  console.log('📋 Product form found:', productForm);
+
+  // Find all buttons on the page for debugging
+  const allButtons = Array.from(document.querySelectorAll('button'));
+  console.log('📋 All buttons on page:', allButtons.map(btn => ({
+    id: btn.id,
+    className: btn.className,
+    text: btn.textContent?.trim().substring(0, 50),
+    type: btn.type,
+    name: btn.name
+  })));
+
+  // Find specific cart-related buttons
+  const cartButtons = allButtons.filter(btn => {
+    const text = btn.textContent?.toLowerCase() || '';
+    const id = btn.id?.toLowerCase() || '';
+    const className = btn.className?.toLowerCase() || '';
+    return text.includes('cart') || text.includes('add') || text.includes('hinzu') ||
+           id.includes('cart') || id.includes('add') ||
+           className.includes('cart') || className.includes('add');
+  });
+
+  console.log('📋 Cart-related buttons:', cartButtons.map(btn => ({
+    element: btn,
+    id: btn.id,
+    className: btn.className,
+    text: btn.textContent?.trim().substring(0, 50)
+  })));
+
+  monitorAddToCartButton();
+
+  // Also try after a delay in case buttons are dynamically added
+  setTimeout(() => {
+    console.log('🔄 Re-checking for buttons after delay...');
+    monitorAddToCartButton();
+  }, 2000);  // Main quantity change handler - auto-adjust free samples
+  const mainQuantityInput = document.querySelector('input[name="quantity"]') ||
+                           document.querySelector('.quantity__input') ||
+                           document.querySelector('[data-quantity-input]') ||
+                           document.querySelector('input[id*="Quantity"]') ||
+                           document.querySelector('[id*="quantity"]');
+
+  if (mainQuantityInput) {
+    mainQuantityInput.addEventListener('input', function() {
+      const mainQty = parseInt(this.value) || 1;
+      const maxAllowed = Math.floor(mainQty * 0.1);
+
+      // Auto-update teacher samples if they exceed the new limit
+      if (parseInt(teacherInput.value) > maxAllowed) {
+        teacherInput.value = maxAllowed;
+        showNotification(`Lehrerexemplare auf ${maxAllowed} reduziert`, 'warning');
+      }
+
+      // Auto-update social samples if they exceed the new limit
+      if (parseInt(socialInput.value) > maxAllowed) {
+        socialInput.value = maxAllowed;
+        showNotification(`Freiexemplare auf ${maxAllowed} reduziert`, 'warning');
+      }
+    });
+  }
+
+  function getMainQuantity() {
+    // Erweiterte Selektoren für verschiedene Themes
+    const quantityInput = document.querySelector('input[name="quantity"]') ||
+                         document.querySelector('.quantity__input') ||
+                         document.querySelector('[data-quantity-input]') ||
+                         document.querySelector('input[id*="Quantity"]') ||
+                         document.querySelector('[id*="quantity"]');
+    return parseInt(quantityInput?.value) || 1;
+  }
+
+  function triggerCartUpdateEvents() {
+    console.log('🎯 Triggering cart update events...');
+
+    // First, verify cart has items before opening drawer
+    originalFetch('/cart.js')
+      .then(response => response.json())
+      .then(cart => {
+        console.log('🔍 Cart verification before opening drawer:', cart.item_count, 'items');
+
+        if (cart.item_count === 0) {
+          console.warn('⚠️ Cart is empty - not opening drawer');
+          return;
+        }
+
+        // Trigger verschiedene Cart-Update-Events für Theme-Kompatibilität
+        const events = [
+          new CustomEvent('cart:updated'),
+          new CustomEvent('cart:refresh'),
+          new CustomEvent('cartUpdated'),
+          new Event('cart-updated'),
+          new Event('cart.requestChange'),
+          new Event('cart:change')
+        ];
+
+        events.forEach(event => {
+          console.log('📡 Dispatching event:', event.type);
+          document.dispatchEvent(event);
+          window.dispatchEvent(event);
+        });
+
+        // Trigger theme's CartAddEvent if available
+        if (window.CartAddEvent) {
+          console.log('📡 Triggering CartAddEvent');
+          const themeCartEvent = new window.CartAddEvent();
+          document.dispatchEvent(themeCartEvent);
+        }
+
+        // Try to trigger cart drawer update if it exists - with delay
+        setTimeout(() => {
+          const cartDrawer = document.querySelector('cart-drawer-component') ||
+                           document.querySelector('cart-drawer') ||
+                           document.querySelector('#cart-drawer') ||
+                           document.querySelector('.cart-drawer');
+
+          if (cartDrawer) {
+            console.log('🎯 Found cart drawer, triggering update:', cartDrawer);
+
+            // Multiple update strategies
+            const drawerEvents = [
+              new CustomEvent('cart:items-updated'),
+              new CustomEvent('cart:updated'),
+              new Event('cart-updated')
+            ];
+
+            drawerEvents.forEach(event => {
+              console.log('📡 Dispatching drawer event:', event.type);
+              cartDrawer.dispatchEvent(event);
+            });
+
+            // Try to call refresh methods if available
+            if (cartDrawer.refresh && typeof cartDrawer.refresh === 'function') {
+              console.log('🔄 Calling cartDrawer.refresh()');
+              cartDrawer.refresh();
+            }
+
+            if (cartDrawer.update && typeof cartDrawer.update === 'function') {
+              console.log('🔄 Calling cartDrawer.update()');
+              cartDrawer.update();
+            }
+
+            // Wait longer before opening the drawer
+            setTimeout(() => {
+              // Try to open the drawer
+              if (cartDrawer.open && typeof cartDrawer.open === 'function') {
+                console.log('🚪 Opening cart drawer');
+                cartDrawer.open();
+              }
+
+              // Alternative opening methods
+              if (cartDrawer.show && typeof cartDrawer.show === 'function') {
+                console.log('🚪 Showing cart drawer');
+                cartDrawer.show();
+              }
+            }, 200); // Wait 200ms before opening
+
+          } else {
+            console.log('❌ No cart drawer found');
+
+            // Try to find and trigger cart icon/counter update instead
+            const cartIcon = document.querySelector('.cart-icon') ||
+                             document.querySelector('[data-cart-icon]') ||
+                             document.querySelector('.header__cart') ||
+                             document.querySelector('#cart-icon');
+
+            if (cartIcon) {
+              console.log('🎯 Found cart icon, triggering click:', cartIcon);
+              // Simulate click to open cart drawer - with delay
+              setTimeout(() => {
+                cartIcon.click();
+              }, 300);
+            }
+          }
+        }, 300); // Wait 300ms before dealing with drawer
+
+        // Force refresh cart sections after everything is done
+        setTimeout(() => {
+          console.log('🔄 Final cart refresh...');
+          const cartSections = document.querySelectorAll('[data-section-type="cart"], .cart-drawer, #cart-drawer');
+          console.log('🔄 Found cart sections to refresh:', cartSections.length);
+
+          cartSections.forEach(section => {
+            if (section.refresh && typeof section.refresh === 'function') {
+              console.log('🔄 Refreshing cart section');
+              section.refresh();
+            }
+          });
+
+          // Try to force reload cart data from Shopify API
+          if (window.Shopify && window.Shopify.theme && window.Shopify.theme.cart) {
+            if (typeof window.Shopify.theme.cart.getCart === 'function') {
+              console.log('🔄 Calling Shopify.theme.cart.getCart()');
+              window.Shopify.theme.cart.getCart();
+            }
+          }
+
+          // Dispatch a final cart update event
+          console.log('📡 Final cart update event');
+          document.dispatchEvent(new CustomEvent('cart:final-update'));
+
+        }, 800); // Final refresh after 800ms total
+      })
+      .catch(error => {
+        console.error('❌ Error verifying cart before update:', error);
+      });
+
+    console.log('✅ All cart update events triggered');
+  }  // Globale Funktionen für Backwards-Kompatibilität mit Block-Settings
+  window.changeTeacherQuantity = async function(productId, rate) {
+    const orderQuantity = getMainQuantity();
+    const newQuantity = Math.floor(orderQuantity * rate);
+
+    const teacherInput = document.querySelector('#rk-teacher-samples');
+    if (teacherInput) {
+      teacherInput.value = newQuantity;
+      showNotification(`Lehrerexemplare gesetzt: ${newQuantity} Stück`);
+    }
+  };
+
+  window.changeSocialQuantity = async function(productId, rate) {
+    const orderQuantity = getMainQuantity();
+    const newQuantity = Math.floor(orderQuantity * rate);
+
+    const socialInput = document.querySelector('#rk-social-samples');
+    if (socialInput) {
+      socialInput.value = newQuantity;
+      showNotification(`Freiexemplare gesetzt: ${newQuantity} Stück`);
+    }
+  };
+})();
+  </script>
+{% else %}
+  <!-- Debug: Custom Fields not found -->
+  <div style="background: #f8f9fa; border: 1px solid #dee2e6; padding: 1rem; margin: 1rem 0; border-radius: 4px;">
+    <p><strong>Debug Info:</strong> Freiexemplar-Widget nicht verfügbar</p>
+    <p>Lehrerexemplar ID: {{ product.metafields.custom.lehrerexemplar_id | default: 'nicht konfiguriert' }}</p>
+    <p>Freiexemplar ID: {{ product.metafields.custom.freiexemplar_id | default: 'nicht konfiguriert' }}</p>
+    <p><em>Produkt muss zuerst im Backend konfiguriert werden</em></p>
+  </div>
+{% endif %}

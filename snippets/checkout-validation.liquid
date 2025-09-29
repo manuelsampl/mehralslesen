@@ -1,0 +1,578 @@
+<!-- RK Order App - Checkout Validation -->
+<script>
+  (function () {
+    let validating = false;
+    let productMetafields = {};
+
+    // Load product metafields on page load
+    async function loadProductMetafields() {
+      try {
+        // Try multiple endpoints to get metafields
+        const endpoints = ['/products.json?fields=id,title,variants,metafields', '/products.json'];
+
+        let data = null;
+
+        for (const endpoint of endpoints) {
+          try {
+            const response = await fetch(endpoint);
+            if (response.ok) {
+              data = await response.json();
+              break;
+            }
+          } catch (e) {
+            // Silent fail
+          }
+        }
+
+        if (!data || !data.products) {
+          return;
+        }
+
+        data.products.forEach((product) => {
+          // Check for metafields in different locations
+          let teacherId = null;
+          let socialId = null;
+
+          // Check product.metafields object
+          if (product.metafields) {
+            teacherId =
+              product.metafields['custom.lehrerexemplar_id'] ||
+              product.metafields['lehrerexemplar_id'] ||
+              product.metafields['custom:lehrerexemplar_id'];
+            socialId =
+              product.metafields['custom.freiexemplar_id'] ||
+              product.metafields['freiexemplar_id'] ||
+              product.metafields['custom:freiexemplar_id'];
+          }
+
+          // Check metafields array format
+          if (Array.isArray(product.metafields)) {
+            product.metafields.forEach((metafield) => {
+              if (metafield.key === 'lehrerexemplar_id' && metafield.namespace === 'custom') {
+                teacherId = metafield.value;
+              }
+              if (metafield.key === 'freiexemplar_id' && metafield.namespace === 'custom') {
+                socialId = metafield.value;
+              }
+            });
+          }
+
+          if (teacherId && socialId) {
+            product.variants.forEach((variant) => {
+              productMetafields[variant.id] = {
+                teacherId: parseInt(teacherId),
+                socialId: parseInt(socialId),
+                productTitle: product.title,
+              };
+            });
+          }
+        });
+
+        // If still empty, try alternative approach
+        if (Object.keys(productMetafields).length === 0) {
+          await loadMetafieldsAlternative();
+        }
+      } catch (error) {
+        // Silent fail
+      }
+    }
+
+    // Alternative method to load metafields from current page context
+    async function loadMetafieldsAlternative() {
+      try {
+        // Check if we're on a product page and can get metafields from page context
+        if (window.ShopifyAnalytics && window.ShopifyAnalytics.meta && window.ShopifyAnalytics.meta.product) {
+          const currentProduct = window.ShopifyAnalytics.meta.product;
+
+          // Try to get metafields from global variables or page data
+          if (window.productMetafields) {
+            Object.assign(productMetafields, window.productMetafields);
+          }
+        }
+
+        // If we have any products with properties in cart, try to extract metafields
+        const cartResponse = await fetch('/cart.js');
+        const cart = await cartResponse.json();
+
+        cart.items.forEach((item) => {
+          if (item.properties) {
+            const teacherId = item.properties['custom.lehrerexemplar_id'] || item.properties['_lehrerexemplar_id'];
+            const socialId = item.properties['custom.freiexemplar_id'] || item.properties['_freiexemplar_id'];
+
+            if (teacherId && socialId) {
+              if (!productMetafields[item.variant_id]) {
+                productMetafields[item.variant_id] = {
+                  teacherId: parseInt(teacherId),
+                  socialId: parseInt(socialId),
+                  productTitle: item.product_title || 'Unknown Product',
+                };
+              }
+            }
+          }
+        });
+      } catch (error) {
+        // Silent fail
+      }
+    }
+
+    async function validateCart() {
+      if (validating) return true;
+      validating = true;
+
+      try {
+        const response = await fetch('/cart.js');
+        const cart = await response.json();
+
+        // Group items by main product
+        const productGroups = {};
+
+        cart.items.forEach((item) => {
+          // Extract key properties
+          const itemType = item.properties && item.properties['_type'];
+          const mainProductTitle = item.properties && item.properties['_main_product'];
+          const teacherId =
+            item.properties &&
+            (item.properties['custom.lehrerexemplar_id'] ||
+              item.properties['_lehrerexemplar_id'] ||
+              item.properties['lehrerexemplar_id']);
+          const socialId =
+            item.properties &&
+            (item.properties['custom.freiexemplar_id'] ||
+              item.properties['_freiexemplar_id'] ||
+              item.properties['freiexemplar_id']);
+
+          // Priority 1: Check if this is explicitly marked as a free sample
+          if (itemType === 'Lehrerexemplar' || itemType === 'Freiexemplar') {
+            // This is a free sample
+            // Find or create the main product group
+            let mainGroupKey = null;
+
+            for (const [key, group] of Object.entries(productGroups)) {
+              if (group.productTitle === mainProductTitle) {
+                mainGroupKey = key;
+                break;
+              }
+            }
+
+            if (!mainGroupKey) {
+              // Create new group for the main product
+              mainGroupKey = `group_${mainProductTitle}`;
+              productGroups[mainGroupKey] = {
+                mainQuantity: 0,
+                teacherQuantity: 0,
+                socialQuantity: 0,
+                teacherId: teacherId ? parseInt(teacherId) : null,
+                socialId: socialId ? parseInt(socialId) : null,
+                productTitle: mainProductTitle,
+              };
+            }
+
+            // Add to the correct category
+            if (itemType === 'Lehrerexemplar') {
+              productGroups[mainGroupKey].teacherQuantity += item.quantity;
+            } else {
+              productGroups[mainGroupKey].socialQuantity += item.quantity;
+            }
+          } else {
+            // Priority 2: This should be a main product
+            const cleanTitle = item.product_title;
+
+            // First check if there's already a group for this product title
+            let mainGroupKey = null;
+            for (const [key, group] of Object.entries(productGroups)) {
+              if (group.productTitle === cleanTitle) {
+                mainGroupKey = key;
+                break;
+              }
+            }
+
+            if (mainGroupKey) {
+              productGroups[mainGroupKey].mainQuantity += item.quantity;
+            } else {
+              // Check if any other cart item references this as main product
+              const isReferencedAsMain = cart.items.some(
+                (otherItem) => otherItem.properties && otherItem.properties['_main_product'] === cleanTitle
+              );
+
+              if (isReferencedAsMain || !item.properties || Object.keys(item.properties).length === 0) {
+                // Create new group for this main product
+                mainGroupKey = `group_main_${item.variant_id}`;
+                productGroups[mainGroupKey] = {
+                  mainQuantity: item.quantity,
+                  teacherQuantity: 0,
+                  socialQuantity: 0,
+                  teacherId: null,
+                  socialId: null,
+                  productTitle: cleanTitle,
+                };
+              }
+            }
+          }
+        });
+
+        // Second pass: Update metafield IDs for main products that don't have them yet
+        cart.items.forEach((item) => {
+          const teacherId = item.properties && item.properties['custom.lehrerexemplar_id'];
+          const socialId = item.properties && item.properties['custom.freiexemplar_id'];
+          const mainProductTitle = item.properties && item.properties['_main_product'];
+
+          if (teacherId && socialId && mainProductTitle) {
+            // Find the main product group that matches this title
+            for (const [key, group] of Object.entries(productGroups)) {
+              if (group.productTitle === mainProductTitle && !group.teacherId) {
+                group.teacherId = parseInt(teacherId);
+                group.socialId = parseInt(socialId);
+                break;
+              }
+            }
+          }
+        });
+
+        // Validate each group
+        const errors = [];
+
+        Object.entries(productGroups).forEach(([mainVariantId, group]) => {
+          const maxAllowed = Math.floor(group.mainQuantity * 0.1);
+
+          if (group.teacherQuantity > maxAllowed) {
+            errors.push(`${group.productTitle}: Zu viele Lehrerexemplare (${group.teacherQuantity}/${maxAllowed})`);
+          }
+
+          if (group.socialQuantity > maxAllowed) {
+            errors.push(`${group.productTitle}: Zu viele Freiexemplare (${group.socialQuantity}/${maxAllowed})`);
+          }
+        });
+
+        if (errors.length > 0) {
+          showError(errors);
+          disableCheckout();
+          return false;
+        } else {
+          hideError();
+          enableCheckout();
+          return true;
+        }
+      } catch (error) {
+        // Allow checkout on error to prevent blocking legitimate purchases
+        enableCheckout();
+        return true;
+      } finally {
+        validating = false;
+      }
+    }
+
+    function showError(errors) {
+      hideError(); // Remove existing error
+
+      const errorDiv = document.createElement('div');
+      errorDiv.id = 'rk-validation-error';
+      errorDiv.style.cssText = `
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #dc3545;
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      z-index: 10000;
+      max-width: 90%;
+      text-align: center;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      border: 2px solid #c82333;
+    `;
+
+      errorDiv.innerHTML = `
+      <div style="font-size: 18px; margin-bottom: 10px;">⚠️ Checkout nicht möglich</div>
+      <div style="font-size: 14px; line-height: 1.4;">
+        ${errors.map((error) => `• ${error}`).join('<br>')}
+      </div>
+      <div style="font-size: 12px; margin-top: 10px; opacity: 0.9;">
+        Bitte reduzieren Sie die Anzahl der Freiexemplare
+      </div>
+    `;
+
+      document.body.appendChild(errorDiv);
+
+      // Auto-hide after 15 seconds
+      setTimeout(() => hideError(), 15000);
+    }
+
+    function hideError() {
+      const errorDiv = document.getElementById('rk-validation-error');
+      if (errorDiv) {
+        errorDiv.remove();
+      }
+    }
+
+    function disableCheckout() {
+      const checkoutSelectors = [
+        '[href*="/checkout"]',
+        '[href="/checkout"]',
+        '.checkout-button',
+        '.btn--checkout',
+        '.cart__checkout',
+        '.cart-drawer__checkout',
+        '.cart__submit',
+        '[data-checkout-button]',
+        '.proceed-to-checkout',
+        '[name="goto_checkout"]',
+        'button[type="submit"]',
+        'input[type="submit"]',
+        '.button--checkout',
+        '.cart-form__submit',
+        '.checkout',
+        '.btn-checkout',
+        '.cart__checkout-button',
+      ];
+
+      let disabledCount = 0;
+
+      checkoutSelectors.forEach((selector) => {
+        document.querySelectorAll(selector).forEach((element) => {
+          // Don't disable regular add-to-cart buttons
+          if (selector.includes('name="add"')) return;
+
+          // Skip if this is clearly an add-to-cart button
+          const text = element.textContent || element.value || '';
+          if (
+            text.toLowerCase().includes('add to cart') ||
+            text.toLowerCase().includes('in den warenkorb') ||
+            element.name === 'add'
+          ) {
+            return;
+          }
+
+          element.disabled = true;
+          element.style.opacity = '0.5';
+          element.style.pointerEvents = 'none';
+          element.style.cursor = 'not-allowed';
+          element.setAttribute('data-rk-disabled', 'true');
+          element.setAttribute('data-rk-original-onclick', element.onclick || '');
+          element.onclick = preventCheckout;
+
+          // Add click prevention for all event types
+          ['click', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((eventType) => {
+            element.addEventListener(eventType, preventCheckout, true);
+          });
+
+          disabledCount++;
+        });
+      });
+
+      // Also disable form submissions to checkout
+      document.querySelectorAll('form').forEach((form) => {
+        const action = form.action || '';
+        if (action.includes('/checkout') || action.includes('cart/add')) {
+          form.addEventListener('submit', preventCheckout, true);
+          form.setAttribute('data-rk-form-disabled', 'true');
+        }
+      });
+    }
+
+    function enableCheckout() {
+      document.querySelectorAll('[data-rk-disabled="true"]').forEach((element) => {
+        element.disabled = false;
+        element.style.opacity = '';
+        element.style.pointerEvents = '';
+        element.style.cursor = '';
+        element.removeAttribute('data-rk-disabled');
+
+        // Restore original onclick if it existed
+        const originalOnclick = element.getAttribute('data-rk-original-onclick');
+        if (originalOnclick && originalOnclick !== 'null' && originalOnclick !== '') {
+          element.onclick = originalOnclick;
+        }
+        element.removeAttribute('data-rk-original-onclick');
+
+        // Remove all added event listeners
+        ['click', 'mousedown', 'mouseup', 'touchstart', 'touchend'].forEach((eventType) => {
+          element.removeEventListener(eventType, preventCheckout, true);
+        });
+      });
+
+      // Re-enable form submissions
+      document.querySelectorAll('form[data-rk-form-disabled="true"]').forEach((form) => {
+        form.removeEventListener('submit', preventCheckout, true);
+        form.removeAttribute('data-rk-form-disabled');
+      });
+    }
+
+    function preventCheckout(event) {
+      // Prevent all possible ways the event could propagate
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+      }
+
+      // Show error immediately
+      showError(['Checkout nicht möglich - zu viele Freiexemplare im Warenkorb']);
+
+      // Re-validate to ensure we're blocking correctly
+      setTimeout(() => {
+        validateCart().then((isValid) => {
+          if (!isValid) {
+            disableCheckout(); // Re-disable in case something was re-enabled
+          }
+        });
+      }, 100);
+
+      return false;
+    }
+
+    // Global click handler for checkout prevention
+    document.addEventListener(
+      'click',
+      function (event) {
+        const checkoutSelectors = [
+          '[href*="/checkout"]',
+          '[href="/checkout"]',
+          '.checkout-button',
+          '.btn--checkout',
+          '.cart__checkout',
+          '.cart-drawer__checkout',
+          '.cart__submit',
+          '[data-checkout-button]',
+          '.proceed-to-checkout',
+          '[name="goto_checkout"]',
+          'button[type="submit"]',
+          'input[type="submit"]',
+          '.button--checkout',
+          '.cart-form__submit',
+          '.checkout',
+          '.btn-checkout',
+        ];
+
+        // Check if clicked element or any parent matches checkout selectors
+        let target = event.target;
+        let isCheckoutElement = false;
+
+        // Check up to 5 levels up the DOM tree
+        for (let i = 0; i < 5 && target && target !== document; i++) {
+          const matches = checkoutSelectors.some((selector) => {
+            try {
+              return target.matches && target.matches(selector);
+            } catch (e) {
+              return false;
+            }
+          });
+
+          if (matches) {
+            isCheckoutElement = true;
+            break;
+          }
+
+          // Also check href attribute specifically
+          if (target.href && (target.href.includes('/checkout') || target.href.endsWith('/checkout'))) {
+            isCheckoutElement = true;
+            break;
+          }
+
+          target = target.parentElement;
+        }
+
+        if (isCheckoutElement) {
+          // Prevent immediately
+          event.preventDefault();
+          event.stopPropagation();
+          event.stopImmediatePropagation();
+
+          // Validate and show error
+          validateCart().then((isValid) => {
+            if (!isValid) {
+              showError(['Checkout nicht möglich - zu viele Freiexemplare im Warenkorb']);
+            }
+          });
+
+          return false;
+        }
+      },
+      true
+    ); // Use capture phase
+
+    // Monitor cart changes via fetch interception
+    const originalFetch = window.fetch;
+    window.fetch = function (...args) {
+      const url = args[0];
+      const result = originalFetch.apply(this, args);
+
+      if (typeof url === 'string' && (url.includes('/cart') || url.includes('cart.js'))) {
+        result.then(() => {
+          // Validate after cart operations
+          setTimeout(() => validateCart(), 1000);
+        });
+      }
+
+      return result;
+    };
+
+    // Monitor page navigation to checkout
+    const originalPushState = history.pushState;
+    const originalReplaceState = history.replaceState;
+
+    function checkCheckoutNavigation(url) {
+      if (url && (url.includes('/checkout') || url.endsWith('/checkout'))) {
+        validateCart().then((isValid) => {
+          if (!isValid) {
+            history.back();
+            showError(['Checkout nicht möglich - zu viele Freiexemplare im Warenkorb']);
+          }
+        });
+      }
+    }
+
+    history.pushState = function (state, title, url) {
+      checkCheckoutNavigation(url);
+      return originalPushState.apply(this, arguments);
+    };
+
+    history.replaceState = function (state, title, url) {
+      checkCheckoutNavigation(url);
+      return originalReplaceState.apply(this, arguments);
+    };
+
+    // Monitor direct URL changes (like when user types /checkout in address bar)
+    window.addEventListener('popstate', function () {
+      checkCheckoutNavigation(window.location.pathname);
+    });
+
+    // Check current URL on load
+    if (window.location.pathname.includes('/checkout')) {
+      setTimeout(() => {
+        validateCart().then((isValid) => {
+          if (!isValid) {
+            window.location.href = '/cart';
+          }
+        });
+      }, 1000);
+    }
+
+    // Initialize
+    async function initialize() {
+      // Load product metafields first
+      await loadProductMetafields();
+
+      // Initial validation
+      await validateCart();
+    }
+
+    // Start when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initialize);
+    } else {
+      initialize();
+    }
+
+    // Periodic validation every 30 seconds
+    setInterval(validateCart, 30000);
+
+    // Validate when page becomes visible again
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) {
+        setTimeout(validateCart, 1000);
+      }
+    });
+  })();
+</script>
