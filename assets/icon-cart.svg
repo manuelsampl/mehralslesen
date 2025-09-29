@@ -1,1 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-stroke-width)" d="M3.392 6.875h13.216v8.016c0 .567-.224 1.112-.624 1.513-.4.402-.941.627-1.506.627H5.522a2.13 2.13 0 0 1-1.506-.627 2.15 2.15 0 0 1-.624-1.513zM8.818 2.969h2.333c.618 0 1.211.247 1.649.686a2.35 2.35 0 0 1 .683 1.658v1.562H6.486V5.313c0-.622.246-1.218.683-1.658a2.33 2.33 0 0 1 1.65-.686"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="81.11" height="79.63" viewBox="0 0 81.11 79.63">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rechteck_47" data-name="Rechteck 47" width="60.721" height="54.692" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Gruppe_447" data-name="Gruppe 447" transform="translate(-1830.001 -26.267)">
+    <g id="Gruppe_307" data-name="Gruppe 307" transform="matrix(0.819, 0.574, -0.574, 0.819, 1861.371, 26.267)">
+      <g id="Gruppe_306" data-name="Gruppe 306" clip-path="url(#clip-path)">
+        <path id="Pfad_392" data-name="Pfad 392" d="M30.406,54.687c-17.167.259-24.629-9.1-28.55-22.108A68.459,68.459,0,0,1,.419,25.627a22.447,22.447,0,0,1-.278-6.581c.365-2.2.28-4.081.834-5.932C2.745,7.2,6.207,3.356,11.728,1.2c4.9-1.91,12.884-1.287,17.844.093C42.052,4.767,51.823,10.8,57.7,20.853c2.443,4.174,4.235,11.489,1.993,17.195C56.447,46.322,48.467,50.5,39.583,53.158a61.01,61.01,0,0,1-6.118,1.251l-3.059.278" transform="translate(0 0)" fill="#008aa9" fill-rule="evenodd"/>
+      </g>
+    </g>
+    <g id="Card" transform="translate(1858 50.164)">
+      <path id="Pfad_17" data-name="Pfad 17" d="M4.608,8l.154-1.793A6.085,6.085,0,0,1,10.716,0a6.085,6.085,0,0,1,5.955,6.205L16.517,8H4.608ZM0,28.724H21.516V8H0Z" transform="translate(0 0)" fill="none" stroke="#fff" stroke-width="3"/>
+    </g>
+  </g>
+</svg>

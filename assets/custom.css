@@ -1,0 +1,128 @@
+/* Dunant Font Family Integration */
+
+/* Dunant Light */
+@font-face {
+    font-family: 'Dunant';
+    src: url('dunant-light.eot');
+    src: url('dunant-light.eot?#iefix') format('embedded-opentype'),
+        url('dunant-light.woff2') format('woff2'),
+        url('dunant-light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Dunant Regular */
+@font-face {
+    font-family: 'Dunant';
+    src: url('dunant-regular.eot');
+    src: url('dunant-regular.eot?#iefix') format('embedded-opentype'),
+        url('dunant-regular.woff2') format('woff2'),
+        url('dunant-regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Dunant Medium */
+@font-face {
+    font-family: 'Dunant';
+    src: url('dunant-medium.eot');
+    src: url('dunant-medium.eot?#iefix') format('embedded-opentype'),
+        url('dunant-medium.woff2') format('woff2'),
+        url('dunant-medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Dunant Bold */
+@font-face {
+    font-family: 'Dunant';
+    src: url('dunant-bold.eot');
+    src: url('dunant-bold.eot?#iefix') format('embedded-opentype'),
+        url('dunant-bold.woff2') format('woff2'),
+        url('dunant-bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Global Font Application */
+
+/* Base body font */
+body,
+html {
+    font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Headlines */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-weight: 700;
+    /* Bold for headlines */
+}
+
+/* Product titles */
+.card__information .card__heading,
+.product__title,
+.product-form__title {
+    font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-weight: 500;
+    /* Medium weight for product titles */
+}
+
+/* Navigation */
+.header__menu-item,
+.menu-drawer__menu-item,
+.footer__list-item {
+    font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Buttons */
+.btn,
+button,
+.button,
+input[type="submit"],
+input[type="button"] {
+    font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-weight: 500;
+    /* Medium weight for buttons */
+}
+
+/* Form elements */
+input,
+textarea,
+select {
+    font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Price elements */
+.price,
+.price__container {
+    font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-weight: 500;
+    /* Medium weight for prices */
+}
+
+/* Hide products with price 0 as additional safety measure */
+.product-card[data-product-price="0"],
+.resource-card[data-product-price="0"] {
+    display: none !important;
+}
+
+.header-logo__image {
+    width: 16.771vw !important;
+    height: auto;
+}

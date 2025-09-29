@@ -16,9 +16,19 @@
       <div class="arc-carousel__rail" data-items>
         {%- if selected_collection and total > 0 -%}
           {%- for product in products -%}
-            <a href="{{ product.url }}" class="arc-item" data-index="{{ forloop.index0 }}">
+            {% comment %} Hide products with price of 0 {% endcomment %}
+            {% unless product.price == 0 %}
+              {%- liquid
+                assign media_bg_class = ''
+                if product.tags contains 'primarstufe'
+                  assign media_bg_class = 'arc-card__media--primarstufe'
+                elsif product.tags contains 'sekundarstufe'
+                  assign media_bg_class = 'arc-card__media--sekundarstufe'
+                endif
+              -%}
+              <a href="{{ product.url }}" class="arc-item" data-index="{{ forloop.index0 }}">
               <div class="arc-card">
-                <div class="arc-card__media">
+                <div class="arc-card__media {{ media_bg_class }}">
                   {%- if product.featured_image -%}
                     {%- assign img = product.featured_image -%}
                     {{
@@ -38,6 +48,7 @@
                 </div>
               </div>
             </a>
+            {% endunless %}
           {%- endfor -%}
         {%- else -%}
           {%- for i in (1..10) -%}
@@ -134,20 +145,54 @@
     background: var(--arc-color, #2b98ac);
     z-index: 0;
     box-shadow: inset 0 1px #ffffff40;
-    width: 130vw;
-    top: 30vw;
+    width: 180vw;
+    top: 20vw;
    }
 
+  @media (max-width: 749px) {
+    .arc-bg { 
+      height: min(60vh, 600px);
+      top: 35vw;
+    }
+  }
+
+  @media (min-width: 750px) and (max-width: 999px) {
+    .arc-bg {
+      height: 80vw;
+      top: 32vw;
+    }
+  }
+
   /* curved rail */
-  .arc-carousel__rail { position: absolute; top: 0%; left: 0; right: 0; pointer-events: none; }
+  .arc-carousel__rail { 
+    position: absolute; 
+    top: 8%; 
+    left: 0; 
+    right: 0; 
+    pointer-events: none;
+   }
   .arc-item {
     position: absolute;
-    top: 5vw;
+    top: 0;
     width: clamp(140px, 16vw, 220px);
     transform-origin: center bottom;
     will-change: transform, opacity;
     pointer-events: auto;
     text-decoration: none;
+  }
+
+  @media (max-width: 749px) {
+    .arc-item {
+      top: 8vw;
+      width: clamp(200px, 50vw, 280px);
+    }
+  }
+
+  @media (min-width: 750px) and (max-width: 999px) {
+    .arc-item {
+      top: 5vw;
+      width: clamp(160px, 25vw, 240px);
+    }
   }
 
   .arc-card {
@@ -162,7 +207,20 @@
   .arc-card:hover{
     transform: translateY(-100px);
   }
-  .arc-card__media { aspect-ratio: 3 / 4; background: rgb(0 0 0 / .04); display: grid; place-items: center; }
+  .arc-card__media { 
+    aspect-ratio: 3 / 4; background: rgb(0 0 0 / .04); display: grid; place-items: center;
+  padding: 20px;
+  }
+  
+  /* Tag-based background colors */
+  .arc-card__media--primarstufe {
+    background-color: rgba(63, 159, 184, 0.3) !important; /* #3F9FB8 with 30% alpha */
+  }
+  
+  .arc-card__media--sekundarstufe {
+    background-color: rgba(227, 6, 19, 0.3) !important; /* #E30613 with 30% alpha */
+  }
+  
   .arc-card__img { width: 100%; height: 100%; object-fit: cover; }
   .arc-card__meta { padding: .5rem .75rem .75rem; text-align: center; }
   .arc-card__title { font: 600 0.9rem var(--font-body--family, system-ui, sans-serif); line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -187,7 +245,7 @@
   /* nav buttons */
   .arc-nav {
     position: absolute;
-    top: 16%;
+    bottom: 10%;
     transform: translateY(-50%);
     width: 102px;
     height: 102px;
@@ -203,22 +261,34 @@
     z-index: 3;
   }
 
-  .arc-nav--prev { left: 12px; }
+  .arc-nav--prev { 
+    left: 12px;
+
+    transform: rotate(-180deg);
+   }
   .arc-nav--next {
     right: 12px;
-    transform: rotate(-336deg);
    }
 
+  @media (max-width: 749px) {
+    .arc-nav { top: 25%; }
+  }
 
+  @media (min-width: 750px) and (max-width: 999px) {
+    .arc-nav { top: 35%; }
+  }
 
   @media (min-width: 1000px) {
-    .arc-nav { top: 40%; }
+    .arc-nav { top: 45%; }
   }
 
   /* responsive */
   @media (max-width: 749px) {
-    .arc-bg { height: min(52vh, 520px); }
-    .arc-caption { margin-top: min(22vh, 180px); }
+    .arc-caption { margin-top: min(25vh, 200px); }
+  }
+
+  @media (min-width: 750px) and (max-width: 999px) {
+    .arc-caption { margin-top: min(20vh, 160px); }
   }
 {% endstylesheet %}
 
@@ -234,9 +304,10 @@
     if (!items.length || !arcEl) return;
 
     let current = 0;
-    const V_DESK = 7; // desktop shows 6
-    const V_MOB = 3; // mobile shows 3
-    const EDGE = 0.85; // spacing from arc edges
+    const V_DESK = 5; // desktop shows 4 for better spacing
+    const V_TAB = 3; // tablet shows 3
+    const V_MOB = 1; // mobile shows 1
+    const EDGE = 0.7; // Higher value to keep products in valid arc range
 
     /** point on upper arc (semi-ellipse) for t ∈ [-1, 1] */
     function pointOnArc(t) {
@@ -246,23 +317,24 @@
       const H = arcRect.height;
 
       const a = W / 2;
-      const b = H;
+      const b = H * 0.6; // Reduced height factor for less curvature
 
-      const xRel = t * a;
+      // Back to original ellipse formula for arc top edge
+      const xRel = t * a * 0.85;
       const yTop = b - b * Math.sqrt(Math.max(0, 1 - (xRel * xRel) / (a * a)));
 
       const left = arcRect.left - stageRect.left;
       const top = arcRect.top - stageRect.top;
 
       const x = left + a + xRel;
-      const y = top + yTop;
+      const y = top + yTop; // This is the top edge of the blue arc
 
       return { x, y };
     }
 
     /** tangent angle on arc (numerical) */
     function angleOnArc(t) {
-      const dt = 0.002;
+      const dt = 0.0001;
       const p1 = pointOnArc(Math.max(-1, Math.min(1, t - dt)));
       const p2 = pointOnArc(Math.max(-1, Math.min(1, t + dt)));
       return (Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180) / Math.PI;
@@ -270,7 +342,16 @@
 
     function layout() {
       const isMobile = window.matchMedia('(max-width: 749px)').matches;
-      const visible = isMobile ? V_MOB : V_DESK;
+      const isTablet = window.matchMedia('(min-width: 750px) and (max-width: 999px)').matches;
+      
+      let visible;
+      if (isMobile) {
+        visible = V_MOB;
+      } else if (isTablet) {
+        visible = V_TAB;
+      } else {
+        visible = V_DESK;
+      }
 
       // Exact visible window:
       // even -> [-visible/2 .. visible/2 - 1]  e.g. 6 -> [-3..2]
@@ -307,10 +388,10 @@
         t = Math.max(-1, Math.min(1, t));
 
         const { x, y } = pointOnArc(t);
-        const angle = angleOnArc(t) * 0.8;
+        const angle = angleOnArc(t) * 0.7; // Moderate rotation factor
 
         const ex = x - el.offsetWidth / 2;
-        const ey = y - el.offsetHeight * 1.2 - angleOnArc(t) * 0.8;
+        const ey = y - el.offsetHeight + 20; // Bottom of product sits just above arc edge
 
         el.style.opacity = 1;
         el.style.pointerEvents = 'auto';

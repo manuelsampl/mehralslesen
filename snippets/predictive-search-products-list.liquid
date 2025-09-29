@@ -50,33 +50,39 @@
           {% for _id in order_ids %}
             {% assign int_id = _id | times: 1 %}
             {% assign product = products | find: 'id', int_id %}
-            <li
-              class="predictive-search-results__card predictive-search-results__card--product"
-              ref="recentlyViewedItems[]"
-            >
-              {% render 'resource-card',
-                resource_type: 'product',
-                resource: product,
-                image_width: 500,
-                image_hover: true,
-                image_aspect_ratio: '4 / 5'
-              %}
-            </li>
+            {% comment %} Hide products with price of 0 {% endcomment %}
+            {% unless product.price == 0 %}
+              <li
+                class="predictive-search-results__card predictive-search-results__card--product"
+                ref="recentlyViewedItems[]"
+              >
+                {% render 'resource-card',
+                  resource_type: 'product',
+                  resource: product,
+                  image_width: 500,
+                  image_hover: true,
+                  image_aspect_ratio: '4 / 5'
+                %}
+              </li>
+            {% endunless %}
           {% endfor %}
         {% else %}
           {% for product in products limit: limit %}
-            <li
-              class="predictive-search-results__card predictive-search-results__card--product"
-              ref="recentlyViewedItems[]"
-            >
-              {% render 'resource-card',
-                resource_type: 'product',
-                resource: product,
-                image_width: 500,
-                image_hover: true,
-                image_aspect_ratio: '4 / 5'
-              %}
-            </li>
+            {% comment %} Hide products with price of 0 {% endcomment %}
+            {% unless product.price == 0 %}
+              <li
+                class="predictive-search-results__card predictive-search-results__card--product"
+                ref="recentlyViewedItems[]"
+              >
+                {% render 'resource-card',
+                  resource_type: 'product',
+                  resource: product,
+                  image_width: 500,
+                  image_hover: true,
+                  image_aspect_ratio: '4 / 5'
+                %}
+              </li>
+            {% endunless %}
           {% endfor %}
         {% endif %}
       </ul>

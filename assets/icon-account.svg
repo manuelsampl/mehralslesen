@@ -1,1 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6.5" r="2.75" stroke="currentColor" stroke-width="var(--icon-stroke-width)"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-stroke-width)" d="m5.172 14.591-.437.786a.588.588 0 0 0 .514.873h9.502a.588.588 0 0 0 .514-.873l-.437-.786a5.523 5.523 0 0 0-9.656 0"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="58.184" height="57.503" viewBox="0 0 58.184 57.503">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rechteck_48" data-name="Rechteck 48" width="57.503" height="58.184" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect id="Rechteck_46" data-name="Rechteck 46" width="37.836" height="37.836" transform="translate(-3 -3)" fill="none" stroke="#fff" stroke-width="3"/>
+    </clipPath>
+  </defs>
+  <g id="Gruppe_446" data-name="Gruppe 446" transform="translate(-1777.352 -37.33)">
+    <g id="Gruppe_310" data-name="Gruppe 310" transform="translate(1777.352 94.833) rotate(-90)">
+      <g id="Gruppe_309" data-name="Gruppe 309" clip-path="url(#clip-path)">
+        <path id="Pfad_393" data-name="Pfad 393" d="M28.709,0C44.965-.24,72.347,32.426,46.4,50.655c-30.18,13.792-37.97-9.093-43.54-18.61C.544,28.093-1.153,21.165.97,15.762,4.048,7.926,11.6,3.972,20.018,1.453A57.777,57.777,0,0,1,25.812.268L28.709,0" transform="translate(0 0)" fill="#d9000d" fill-rule="evenodd"/>
+      </g>
+    </g>
+    <g id="Gruppe_40" data-name="Gruppe 40" transform="translate(1791.045 53.878)">
+      <g id="Gruppe_39" data-name="Gruppe 39" transform="translate(-3.714 -3.713)" clip-path="url(#clip-path-2)">
+        <path id="Pfad_390" data-name="Pfad 390" d="M31.1,15.8A15.3,15.3,0,1,0,15.8,31.1,15.3,15.3,0,0,0,31.1,15.8Z" transform="translate(0.119 0.118)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="3"/>
+        <circle id="Ellipse_7" data-name="Ellipse 7" cx="4.526" cy="4.526" r="4.526" transform="translate(11.393 7.485)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="3"/>
+        <path id="Pfad_391" data-name="Pfad 391" d="M25,23.269a11.479,11.479,0,0,0-20.364,0" transform="translate(1.101 4.059)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="3"/>
+      </g>
+    </g>
+  </g>
+</svg>

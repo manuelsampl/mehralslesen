@@ -83,18 +83,21 @@
       %}
       {% capture list_items %}
         {% for product in products limit: block_settings.max_products %}
-          <div class="resource-list__item">
-            {% content_for 'block',
-              type: '_product-card',
-              id: 'static-product-card',
-              closest.product: product
-            %}
-          </div>
-          {% if block_settings.layout_type == 'carousel' or block_settings.carousel_on_mobile %}
-            {% unless forloop.last %}
-              <!--@list/split-->
-            {% endunless %}
-          {% endif %}
+          {% comment %} Hide products with price of 0 {% endcomment %}
+          {% unless product.price == 0 %}
+            <div class="resource-list__item">
+              {% content_for 'block',
+                type: '_product-card',
+                id: 'static-product-card',
+                closest.product: product
+              %}
+            </div>
+            {% if block_settings.layout_type == 'carousel' or block_settings.carousel_on_mobile %}
+              {% unless forloop.last %}
+                <!--@list/split-->
+              {% endunless %}
+            {% endif %}
+          {% endunless %}
         {% endfor %}
       {% endcapture %}
 
