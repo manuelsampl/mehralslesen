@@ -56,7 +56,7 @@
               "type": "button",
               "name": "t:names.button",
               "settings": {
-                "label": "← Zurück",
+                "label": "← ZURÜCK",
                 "link": "shopify://collections/all",
                 "open_in_new_tab": false,
                 "style_class": "link",
