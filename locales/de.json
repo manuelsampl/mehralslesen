@@ -294,5 +294,42 @@
   "general": {
     "previous": "Previous",
     "next": "Next"
+  },
+  "shopify": {
+    "checkout": {
+      "contact": {
+        "change_company_location_link_label": "Standort der Schule ändern"
+      },
+      "field_errors": {
+        "address_company_blank": "Gib einen Schulnamen ein",
+        "address_company_too_long": "Schulname ist zu lang. (max. 255 Zeichen)"
+      },
+      "thank_you": {
+        "company_location_section_title": "Schule und Standort"
+      },
+      "review": {
+        "blocks": {
+          "company_location": "Standort der Schule"
+        }
+      },
+      "company_location": {
+        "location_title": "Standort der Schule"
+      }
+    }
+  },
+  "customer_accounts": {
+    "navigation_and_structure": {
+      "company_location": "Standort der Schule"
+    },
+    "order_details": {
+      "company": "Schule",
+      "company_and_location": "Schule und Standort"
+    },
+    "B2B": {
+      "account_information": {
+        "company_card_name_label": "Name der Schule",
+        "company_card_section_accessibility_label": "Schule"
+      }
+    }
   }
 }
