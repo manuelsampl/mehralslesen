@@ -15,7 +15,7 @@
         "group_k4ECNw": {
           "type": "group",
           "settings": {
-            "link": "",
+            "link": "shopify://collections/primarstufe",
             "open_in_new_tab": false,
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -107,8 +107,8 @@
             "button_pHjc9Y": {
               "type": "button",
               "settings": {
-                "label": "Zur Bestellung",
-                "link": "/account",
+                "label": "Weiter zur Primarstufe",
+                "link": "shopify://collections/primarstufe",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
@@ -128,7 +128,7 @@
         "group_q7CAab": {
           "type": "group",
           "settings": {
-            "link": "",
+            "link": "shopify://collections/sekundarstufe",
             "open_in_new_tab": false,
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -219,8 +219,8 @@
             "button_AmNBAV": {
               "type": "button",
               "settings": {
-                "label": "Zur Bestellung",
-                "link": "/account",
+                "label": "Weiter zur Sekundarstufe",
+                "link": "shopify://collections/sekundarstufe",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
