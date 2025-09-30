@@ -298,7 +298,9 @@
   "shopify": {
     "checkout": {
       "contact": {
-        "change_company_location_link_label": "Standort der Schule ändern"
+        "change_company_location_link_label": "Standort der Schule ändern",
+        "company_label": "Schule",
+        "optional_company_label": "Schule (optional)"
       },
       "field_errors": {
         "address_company_blank": "Gib einen Schulnamen ein",
