@@ -220,8 +220,8 @@
             "extend_summary": true,
             "inherit_color_scheme": false,
             "color_scheme": "scheme-954b600d-7e34-40be-8ec5-0b3eb56de6c1",
-            "border": "none",
-            "border_width": 1,
+            "border": "solid",
+            "border_width": 2,
             "border_opacity": 100,
             "border_radius": 0
           },
