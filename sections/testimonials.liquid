@@ -5,103 +5,119 @@
 
 <section
   id="testimonials-{{ section.id }}"
-  class="testimonials color-{{ section.settings.color_scheme }} section-wrapper"
+  class="testimonials"
   style="--padding-block-start: {{ section.settings.padding_top }}px; --padding-block-end: {{ section.settings.padding_bottom }}px;"
 >
-  <div class="testimonials__container {{ section.settings.container_width }}">
-    <!-- Header -->
-    <div class="testimonials__header">
-      {% if section.settings.headline != blank %}
-        <h2 class="testimonials__headline">{{ section.settings.headline }}</h2>
-      {% endif %}
-      {% if section.settings.subheadline != blank %}
-        <p class="testimonials__subheadline">{{ section.settings.subheadline }}</p>
-      {% endif %}
-    </div>
-
-    <!-- Testimonials Slider -->
-    {% if section.blocks.size > 0 %}
-      <div class="testimonials__slider-wrapper">
-        <div class="testimonials__slider" data-testimonials-slider>
-          <div class="testimonials__slides" data-testimonials-track>
-            {% for block in section.blocks %}
-              <div 
-                class="testimonials__slide"
-                data-slide="{{ forloop.index0 }}"
-                {{ block.shopify_attributes }}
-              >
-                <div class="testimonials__card">
-                  {% if block.settings.image != blank %}
-                    <div class="testimonials__image">
-                      {{
-                        block.settings.image
-                        | image_url: width: 200, height: 200
-                        | image_tag: 
-                          alt: block.settings.subtitle,
-                          loading: 'lazy',
-                          class: 'testimonials__img'
-                      }}
-                    </div>
-                  {% endif %}
-                  
-                  {% if block.settings.text != blank %}
-                    <div class="testimonials__content">
-                      <p class="testimonials__text">{{ block.settings.text }}</p>
-                    </div>
-                  {% endif %}
-                  
-                  {% if block.settings.subtitle != blank %}
-                    <div class="testimonials__meta">
-                      <p class="testimonials__subtitle">{{ block.settings.subtitle }}</p>
-                    </div>
-                  {% endif %}
-                </div>
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-
-        <!-- Navigation Arrows -->
-        {% if section.blocks.size > 1 %}
-          <div class="testimonials__navigation">
-            <button 
-              class="testimonials__nav testimonials__nav--prev" 
-              type="button" 
-              aria-label="{{ 'general.previous' | t | default: 'Previous' }}"
-              data-testimonials-prev
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-            <button 
-              class="testimonials__nav testimonials__nav--next" 
-              type="button" 
-              aria-label="{{ 'general.next' | t | default: 'Next' }}"
-              data-testimonials-next
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
+  <div class="testimonials__background">
+    <div class="testimonials__container {{ section.settings.container_width }}">
+      <!-- Header -->
+      <div class="testimonials__header">
+        {% if section.settings.headline != blank %}
+          <h2 class="testimonials__headline">{{ section.settings.headline }}</h2>
         {% endif %}
-
-        <!-- Dots Indicator -->
-        {% if section.blocks.size > 1 and section.settings.show_dots %}
-          <div class="testimonials__dots">
-            {% for block in section.blocks %}
-              <button 
-                class="testimonials__dot{% if forloop.first %} testimonials__dot--active{% endif %}"
-                type="button"
-                aria-label="Go to slide {{ forloop.index }}"
-                data-testimonials-dot="{{ forloop.index0 }}"
-              ></button>
-            {% endfor %}
-          </div>
+        {% if section.settings.subheadline != blank %}
+          <p class="testimonials__subheadline">{{ section.settings.subheadline }}</p>
         {% endif %}
       </div>
-    {% endif %}
+
+      <!-- Testimonials Slider -->
+      {% if section.blocks.size > 0 %}
+        <div class="testimonials__slider-wrapper">
+          <div class="testimonials__slider" data-testimonials-slider>
+            <div class="testimonials__slides" data-testimonials-track>
+              {% for block in section.blocks %}
+                <div 
+                  class="testimonials__slide"
+                  data-slide="{{ forloop.index0 }}"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="testimonials__card">
+                    {% if block.settings.image != blank %}
+                      <div class="testimonials__image">
+                        {{
+                          block.settings.image
+                          | image_url: width: 200, height: 200
+                          | image_tag: 
+                            alt: block.settings.subtitle,
+                            loading: 'lazy',
+                            class: 'testimonials__img'
+                        }}
+                      </div>
+                    {% endif %}
+                    
+                    {% if block.settings.text != blank %}
+                      <div class="testimonials__content">
+                        <p class="testimonials__text">{{ block.settings.text }}</p>
+                      </div>
+                    {% endif %}
+                    
+                    {% if block.settings.subtitle != blank %}
+                      <div class="testimonials__meta">
+                        <p class="testimonials__subtitle">{{ block.settings.subtitle }}</p>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Navigation Arrows -->
+          {% if section.blocks.size > 1 %}
+            <div class="testimonials__navigation">
+              <button 
+                class="testimonials__nav testimonials__nav--prev" 
+                type="button" 
+                aria-label="{{ 'general.previous' | t | default: 'Previous' }}"
+                data-testimonials-prev
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="73.25" height="73.25" viewBox="0 0 73.25 73.25">
+                  <g transform="translate(73.25 73.25) rotate(180)">
+                    <g fill="#fff" stroke="#e32013" stroke-width="5">
+                      <ellipse cx="36.625" cy="36.625" rx="36.625" ry="36.625" stroke="none"/>
+                      <ellipse cx="36.625" cy="36.625" rx="34.125" ry="34.125" fill="none"/>
+                    </g>
+                    <g transform="translate(14.218 25.783)">
+                      <g transform="translate(31.963 22.16) rotate(-90)">
+                        <line x1="11.08" y2="13.574" transform="translate(11.08)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                        <line x2="11.08" y2="13.574" transform="translate(0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                      </g>
+                      <g transform="translate(0 11.08)">
+                        <line x1="45.537" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </button>
+              <button 
+                class="testimonials__nav testimonials__nav--next" 
+                type="button" 
+                aria-label="{{ 'general.next' | t | default: 'Next' }}"
+                data-testimonials-next
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="73.25" height="73.25" viewBox="0 0 73.25 73.25">
+                  <g>
+                    <g fill="#fff" stroke="#e32013" stroke-width="5">
+                      <ellipse cx="36.625" cy="36.625" rx="36.625" ry="36.625" stroke="none"/>
+                      <ellipse cx="36.625" cy="36.625" rx="34.125" ry="34.125" fill="none"/>
+                    </g>
+                    <g transform="translate(14.218 25.783)">
+                      <g transform="translate(31.963 22.16) rotate(-90)">
+                        <line x1="11.08" y2="13.574" transform="translate(11.08)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                        <line x2="11.08" y2="13.574" transform="translate(0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                      </g>
+                      <g transform="translate(0 11.08)">
+                        <line x1="45.537" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </button>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
   </div>
 </section>
 
@@ -111,10 +127,17 @@
     overflow: hidden;
   }
 
+  .testimonials__background {
+    background: #65b5c4;
+    border-radius: 32px 32px 0 0;
+    padding: 4rem 0;
+    position: relative;
+  }
+
   .testimonials__container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--page-margin);
+    padding: 0 2rem;
   }
 
   .testimonials__container.container--narrow {
@@ -123,21 +146,21 @@
 
   .testimonials__container.container--full {
     max-width: 100%;
-    padding: 0 20px;
+    padding: 0 2rem;
   }
 
   .testimonials__header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
   }
 
   .testimonials__headline {
     font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 700;
     line-height: 1.2;
     margin: 0 0 1rem;
-    color: rgb(var(--color-foreground));
+    color: white;
   }
 
   .testimonials__subheadline {
@@ -146,10 +169,12 @@
     font-weight: 400;
     line-height: 1.5;
     margin: 0;
-    color: rgba(var(--color-foreground), 0.7);
-    max-width: 600px;
+    color: white;
+    opacity: 0.9;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    letter-spacing: 0.5px;
   }
 
   .testimonials__slider-wrapper {
@@ -158,7 +183,6 @@
 
   .testimonials__slider {
     overflow: hidden;
-    border-radius: 12px;
   }
 
   .testimonials__slides {
@@ -167,24 +191,20 @@
   }
 
   .testimonials__slide {
-    width: 100%;
     flex-shrink: 0;
-    padding: 0 10px;
+    padding: 0 1rem;
   }
 
   .testimonials__card {
-    background: rgb(var(--color-background));
-    border-radius: 16px;
-    padding: 2.5rem 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: transparent;
+    padding: 2rem;
     text-align: center;
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 1.5rem;
-    border: 1px solid rgba(var(--color-foreground), 0.1);
   }
 
   .testimonials__image {
@@ -193,7 +213,8 @@
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
-    margin: 0 auto;
+    margin: 0 auto 1rem;
+    border: 3px solid white;
   }
 
   .testimonials__img {
@@ -203,18 +224,17 @@
   }
 
   .testimonials__content {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
+    margin-bottom: 1.5rem;
   }
 
   .testimonials__text {
     font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    font-size: 1.125rem;
-    line-height: 1.6;
-    color: rgb(var(--color-foreground));
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: white;
     margin: 0;
     text-align: left;
+    max-width: 400px;
   }
 
   .testimonials__meta {
@@ -223,12 +243,13 @@
 
   .testimonials__subtitle {
     font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: rgba(var(--color-foreground), 0.8);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: white;
     margin: 0;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+    opacity: 0.9;
   }
 
   .testimonials__navigation {
@@ -241,61 +262,47 @@
     justify-content: space-between;
     pointer-events: none;
     z-index: 2;
+    padding: 0 2rem;
   }
 
   .testimonials__nav {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgb(var(--color-background));
-    border: 1px solid rgba(var(--color-foreground), 0.2);
-    color: rgb(var(--color-foreground));
+    width: 73px;
+    height: 73px;
+    background: transparent;
+    border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
     pointer-events: auto;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   }
 
   .testimonials__nav:hover {
-    background: rgb(var(--color-foreground));
-    color: rgb(var(--color-background));
     transform: scale(1.05);
   }
 
+  .testimonials__nav svg {
+    width: 100%;
+    height: 100%;
+  }
+
   .testimonials__nav--prev {
-    margin-left: -24px;
+    margin-left: -40px;
   }
 
   .testimonials__nav--next {
-    margin-right: -24px;
+    margin-right: -40px;
   }
 
-  .testimonials__dots {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 2rem;
+  /* Desktop: Show 2 slides */
+  @media screen and (min-width: 769px) {
+    .testimonials__slide {
+      width: 50%;
+    }
   }
 
-  .testimonials__dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(var(--color-foreground), 0.3);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  .testimonials__dot--active,
-  .testimonials__dot:hover {
-    background: rgb(var(--color-foreground));
-  }
-
-  /* Mobile Styles */
+  /* Mobile: Show 1 slide */
   @media screen and (max-width: 768px) {
     .testimonials__headline {
       font-size: 2rem;
@@ -305,8 +312,21 @@
       font-size: 1rem;
     }
 
+    .testimonials__background {
+      padding: 3rem 0;
+      border-radius: 24px 24px 0 0;
+    }
+
+    .testimonials__header {
+      margin-bottom: 3rem;
+    }
+
+    .testimonials__slide {
+      width: 100%;
+    }
+
     .testimonials__card {
-      padding: 2rem 1.5rem;
+      padding: 1.5rem;
     }
 
     .testimonials__image {
@@ -315,62 +335,24 @@
     }
 
     .testimonials__text {
-      font-size: 1rem;
+      font-size: 1.125rem;
     }
 
     .testimonials__nav {
-      width: 40px;
-      height: 40px;
+      width: 60px;
+      height: 60px;
     }
 
     .testimonials__nav--prev {
-      margin-left: -20px;
+      margin-left: -30px;
     }
 
     .testimonials__nav--next {
-      margin-right: -20px;
-    }
-  }
-
-  /* Desktop: Show multiple slides */
-  @media screen and (min-width: 769px) {
-    .testimonials__slides {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
-      transform: none !important;
-    }
-
-    .testimonials__slide {
-      width: auto;
-      padding: 0;
+      margin-right: -30px;
     }
 
     .testimonials__navigation {
-      display: none;
-    }
-
-    .testimonials__dots {
-      display: none;
-    }
-  }
-
-  /* When in slider mode (mobile or forced slider) */
-  @media screen and (max-width: 768px) {
-    .testimonials__slides {
-      display: flex;
-      grid-template-columns: none;
-      gap: 0;
-    }
-
-    .testimonials__slide {
-      width: 100%;
-      flex-shrink: 0;
-      padding: 0 10px;
-    }
-
-    .testimonials__navigation {
-      display: flex;
+      padding: 0 1rem;
     }
   }
 {% endstylesheet %}
@@ -383,122 +365,163 @@
       this.slides = this.slider.querySelectorAll('.testimonials__slide');
       this.prevBtn = this.slider.querySelector('[data-testimonials-prev]');
       this.nextBtn = this.slider.querySelector('[data-testimonials-next]');
-      this.dots = this.slider.querySelectorAll('[data-testimonials-dot]');
       
-      this.currentSlide = 0;
+      this.currentIndex = 0;
       this.totalSlides = this.slides.length;
+      this.slidesToShow = this.getSlidesToShow();
+      
+      console.log('Testimonials Slider initialized with', this.totalSlides, 'slides');
       
       this.init();
     }
 
+    getSlidesToShow() {
+      return window.innerWidth > 768 ? 2 : 1;
+    }
+
+    getMaxIndex() {
+      return Math.max(0, this.totalSlides - this.slidesToShow);
+    }
+
     init() {
-      if (this.totalSlides <= 1) return;
-      
-      // Only initialize slider on mobile
-      if (window.innerWidth <= 768) {
-        this.bindEvents();
-        this.updateSlider();
+      if (this.totalSlides <= 1) {
+        this.hideNavigation();
+        return;
       }
       
-      // Handle resize
+      this.bindEvents();
+      this.updateSlider();
+      
       window.addEventListener('resize', () => {
-        if (window.innerWidth <= 768) {
-          this.bindEvents();
-          this.updateSlider();
-        } else {
-          this.unbindEvents();
-        }
+        this.slidesToShow = this.getSlidesToShow();
+        this.currentIndex = Math.min(this.currentIndex, this.getMaxIndex());
+        this.updateSlider();
       });
+    }
+
+    hideNavigation() {
+      if (this.prevBtn) this.prevBtn.style.display = 'none';
+      if (this.nextBtn) this.nextBtn.style.display = 'none';
     }
 
     bindEvents() {
       if (this.prevBtn) {
-        this.prevBtn.addEventListener('click', () => this.prevSlide());
+        this.prevBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log('Previous button clicked');
+          this.prevSlide();
+        });
       }
       
       if (this.nextBtn) {
-        this.nextBtn.addEventListener('click', () => this.nextSlide());
+        this.nextBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log('Next button clicked');
+          this.nextSlide();
+        });
       }
-      
-      this.dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => this.goToSlide(index));
-      });
 
       // Touch events
+      this.setupTouchEvents();
+    }
+
+    setupTouchEvents() {
       let startX = 0;
-      let currentX = 0;
       let isDragging = false;
 
       this.track.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
         isDragging = true;
-      });
+        this.track.style.transition = 'none';
+      }, { passive: true });
 
       this.track.addEventListener('touchmove', (e) => {
         if (!isDragging) return;
-        currentX = e.touches[0].clientX;
-      });
+        
+        const currentX = e.touches[0].clientX;
+        const diff = startX - currentX;
+        const slideWidth = this.track.offsetWidth / this.slidesToShow;
+        const translateX = -this.currentIndex * slideWidth - diff;
+        
+        this.track.style.transform = `translateX(${translateX}px)`;
+      }, { passive: true });
 
-      this.track.addEventListener('touchend', () => {
+      this.track.addEventListener('touchend', (e) => {
         if (!isDragging) return;
         
-        const deltaX = startX - currentX;
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
         
-        if (Math.abs(deltaX) > 50) {
-          if (deltaX > 0) {
+        this.track.style.transition = 'transform 0.3s ease';
+        
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) {
             this.nextSlide();
           } else {
             this.prevSlide();
           }
+        } else {
+          this.updateSlider();
         }
         
         isDragging = false;
-      });
-    }
-
-    unbindEvents() {
-      // Remove event listeners when not needed
-      if (this.prevBtn) {
-        this.prevBtn.removeEventListener('click', () => this.prevSlide());
-      }
-      if (this.nextBtn) {
-        this.nextBtn.removeEventListener('click', () => this.nextSlide());
-      }
+      }, { passive: true });
     }
 
     updateSlider() {
-      if (window.innerWidth > 768) return;
-      
-      const translateX = -this.currentSlide * 100;
+      const slideWidth = 100 / this.slidesToShow;
+      const translateX = -this.currentIndex * slideWidth;
       this.track.style.transform = `translateX(${translateX}%)`;
-      
-      // Update dots
-      this.dots.forEach((dot, index) => {
-        dot.classList.toggle('testimonials__dot--active', index === this.currentSlide);
-      });
+      console.log(`Slider updated: currentIndex=${this.currentIndex}, translateX=${translateX}%`);
     }
 
     nextSlide() {
-      this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+      const maxIndex = this.getMaxIndex();
+      console.log(`Next slide: currentIndex=${this.currentIndex}, maxIndex=${maxIndex}`);
+      
+      if (this.currentIndex < maxIndex) {
+        this.currentIndex++;
+      } else {
+        this.currentIndex = 0; // Loop back to start
+      }
       this.updateSlider();
     }
 
     prevSlide() {
-      this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
-      this.updateSlider();
-    }
-
-    goToSlide(slideIndex) {
-      this.currentSlide = slideIndex;
+      const maxIndex = this.getMaxIndex();
+      console.log(`Prev slide: currentIndex=${this.currentIndex}, maxIndex=${maxIndex}`);
+      
+      if (this.currentIndex > 0) {
+        this.currentIndex--;
+      } else {
+        this.currentIndex = maxIndex; // Loop to end
+      }
       this.updateSlider();
     }
   }
 
-  // Initialize all testimonials sliders
-  document.addEventListener('DOMContentLoaded', () => {
+  // Initialize testimonials sliders
+  function initTestimonialsSliders() {
     const sliders = document.querySelectorAll('[data-testimonials-slider]');
-    sliders.forEach(slider => new TestimonialsSlider(slider));
-  });
+    console.log('Found', sliders.length, 'testimonials sliders');
+    
+    sliders.forEach((slider, index) => {
+      if (!slider.sliderInstance) {
+        console.log('Initializing slider', index);
+        slider.sliderInstance = new TestimonialsSlider(slider);
+      }
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTestimonialsSliders);
+  } else {
+    initTestimonialsSliders();
+  }
+
+  // Also try to initialize immediately (for theme editor)
+  setTimeout(initTestimonialsSliders, 100);
 {% endjavascript %}
 
 {% schema %}
@@ -538,12 +561,6 @@
         }
       ],
       "default": "container--standard"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_dots",
-      "label": "t:sections.testimonials.settings.show_dots.label",
-      "default": true
     },
     {
       "type": "color_scheme",
