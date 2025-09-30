@@ -759,7 +759,7 @@
         "group_A7QfWe": {
           "type": "group",
           "settings": {
-            "link": "",
+            "link": "shopify://collections/all",
             "open_in_new_tab": false,
             "content_direction": "column",
             "vertical_on_mobile": true,
