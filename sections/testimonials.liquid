@@ -3,7 +3,7 @@
   Displays customer testimonials with image, text, and subtitle
 {% endcomment %}
 
-<section
+<div
   id="testimonials-{{ section.id }}"
   class="testimonials"
   style="--padding-block-start: {{ section.settings.padding_top }}px; --padding-block-end: {{ section.settings.padding_bottom }}px;"
@@ -119,7 +119,7 @@
       {% endif %}
     </div>
   </div>
-</section>
+</div>
 
 {% stylesheet %}
   .testimonials {
