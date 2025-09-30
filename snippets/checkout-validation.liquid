@@ -3,6 +3,9 @@
   (function () {
     let validating = false;
     let productMetafields = {};
+    let alertShownForProducts = {}; // Track which products have already shown alerts
+    let lastValidationState = {}; // Track the last validation state for each product
+    let persistentErrorTimer = null; // Timer for persistent error checking
 
     // Load product metafields on page load
     async function loadProductMetafields() {
@@ -230,22 +233,82 @@
 
         // Validate each group
         const errors = [];
+        const currentValidationState = {};
 
         Object.entries(productGroups).forEach(([mainVariantId, group]) => {
           const maxAllowed = Math.floor(group.mainQuantity * 0.1);
+          const productKey = group.productTitle;
+          
+          // Track current state
+          currentValidationState[productKey] = {
+            teacherQuantity: group.teacherQuantity,
+            socialQuantity: group.socialQuantity,
+            maxAllowed: maxAllowed,
+            teacherExceedsLimit: group.teacherQuantity > maxAllowed,
+            socialExceedsLimit: group.socialQuantity > maxAllowed
+          };
 
+          // Check if we should show alert for teacher samples
           if (group.teacherQuantity > maxAllowed) {
-            errors.push(`${group.productTitle}: Zu viele Lehrerexemplare (${group.teacherQuantity}/${maxAllowed})`);
+            const lastState = lastValidationState[productKey];
+            
+            // Show alert only if:
+            // 1. This is the first time exceeding limit, OR
+            // 2. Previously was within limit and now exceeds again
+            if (!lastState || !lastState.teacherExceedsLimit) {
+              if (!alertShownForProducts[productKey + '_teacher']) {
+                errors.push(`${group.productTitle}: Zu viele Lehrerexemplare (${group.teacherQuantity}/${maxAllowed})`);
+                alertShownForProducts[productKey + '_teacher'] = true;
+              }
+            }
+          } else {
+            // Reset alert flag when back within limit
+            alertShownForProducts[productKey + '_teacher'] = false;
           }
 
+          // Check if we should show alert for social samples
           if (group.socialQuantity > maxAllowed) {
-            errors.push(`${group.productTitle}: Zu viele Freiexemplare (${group.socialQuantity}/${maxAllowed})`);
+            const lastState = lastValidationState[productKey];
+            
+            // Show alert only if:
+            // 1. This is the first time exceeding limit, OR
+            // 2. Previously was within limit and now exceeds again
+            if (!lastState || !lastState.socialExceedsLimit) {
+              if (!alertShownForProducts[productKey + '_social']) {
+                errors.push(`${group.productTitle}: Zu viele Freiexemplare (${group.socialQuantity}/${maxAllowed})`);
+                alertShownForProducts[productKey + '_social'] = true;
+              }
+            }
+          } else {
+            // Reset alert flag when back within limit
+            alertShownForProducts[productKey + '_social'] = false;
           }
         });
 
+        // Update last validation state
+        lastValidationState = currentValidationState;
+
+        // Check if any products still exceed limits (for checkout blocking)
+        const hasAnyExceedingLimits = Object.values(currentValidationState).some(
+          state => state.teacherExceedsLimit || state.socialExceedsLimit
+        );
+
+        // Show errors only if there are new alerts to show
         if (errors.length > 0) {
-          showError(errors);
+          showError(errors, true); // Mark as persistent
+        }
+
+        // Block checkout if any limits are exceeded (regardless of whether alert was shown)
+        if (hasAnyExceedingLimits) {
           disableCheckout();
+          // Keep error visible as long as there are violations
+          if (errors.length === 0) {
+            // If no new errors but still violations, show a persistent error
+            const existingError = document.getElementById('rk-validation-error');
+            if (!existingError) {
+              showError(['Checkout nicht möglich - zu viele Freiexemplare im Warenkorb'], true);
+            }
+          }
           return false;
         } else {
           hideError();
@@ -261,7 +324,7 @@
       }
     }
 
-    function showError(errors) {
+    function showError(errors, isPersistent = false) {
       hideError(); // Remove existing error
 
       const errorDiv = document.createElement('div');
@@ -295,11 +358,33 @@
 
       document.body.appendChild(errorDiv);
 
-      // Auto-hide after 15 seconds
-      setTimeout(() => hideError(), 15000);
+      // Clear existing timer
+      if (persistentErrorTimer) {
+        clearTimeout(persistentErrorTimer);
+        persistentErrorTimer = null;
+      }
+
+      // Only auto-hide if not persistent or if there are no more violations
+      if (!isPersistent) {
+        persistentErrorTimer = setTimeout(() => {
+          // Check if there are still violations before hiding
+          validateCart().then((isValid) => {
+            if (isValid) {
+              hideError();
+            }
+            // If still invalid, keep the error visible
+          });
+        }, 15000);
+      }
     }
 
     function hideError() {
+      // Clear the persistent error timer
+      if (persistentErrorTimer) {
+        clearTimeout(persistentErrorTimer);
+        persistentErrorTimer = null;
+      }
+      
       const errorDiv = document.getElementById('rk-validation-error');
       if (errorDiv) {
         errorDiv.remove();
