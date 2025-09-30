@@ -52,9 +52,9 @@
                     {% endif %}
                     
                     {% if block.settings.subtitle != blank %}
-                      <div class="testimonials__meta">
+                        <div class="testimonials__meta">
                         <p class="testimonials__subtitle">{{ block.settings.subtitle }}</p>
-                      </div>
+                    </div>
                     {% endif %}
                   </div>
                 </div>
@@ -125,6 +125,12 @@
   .testimonials {
     padding: var(--padding-block-start) 0 var(--padding-block-end);
     overflow: hidden;
+    position: relative;
+    margin-top: -4rem;
+    z-index:2;
+    background-color: white;
+    border-top-left-radius: 4rem;
+    border-top-right-radius: 4rem;
   }
 
   .testimonials__background {
@@ -150,26 +156,27 @@
   .testimonials__header {
     text-align: center;
     margin-bottom: 4rem;
+    margin-top: 4rem;
+
   }
 
   .testimonials__headline {
     font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    font-size: 3rem;
-    font-weight: 700;
+    font-size: 2.813vw;
+    font-weight: 400;
     line-height: 1.2;
-    margin: 0 0 1rem;
-    color: white;
+    margin: 0 0 0.5rem;
+    color: #3F9FB8;
   }
 
   .testimonials__subheadline {
     font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    font-size: 1.125rem;
-    font-weight: 400;
+    font-size: 2.083vw;
+    font-weight: 300;
     line-height: 1.5;
     margin: 0;
-    color: white;
+    color: #0A0A09;
     opacity: 0.9;
-    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
     letter-spacing: 0.5px;
@@ -190,29 +197,34 @@
 
   .testimonials__slide {
     flex-shrink: 0;
-    padding: 0 1rem;
+    padding: 0 0.5rem;
+
+    padding-top: 7rem;
   }
 
   .testimonials__card {
     background: #3F9FB8;
     padding: 2rem;
-    text-align: center;
+    text-align: left;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     gap: 1.5rem;
+    overflow: visible;
   }
 
   .testimonials__image {
-    width: 120px;
-    height: 120px;
+    position: absolute;
+    width: 12.656vw;
+    height: 12.656vw;
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
     margin: 0 auto 1rem;
     border: 3px solid white;
+    margin-top: -9rem;
   }
 
   .testimonials__img {
@@ -223,6 +235,7 @@
 
   .testimonials__content {
     margin-bottom: 1.5rem;
+    margin-top: 4rem;
   }
 
   .testimonials__text {
@@ -237,29 +250,33 @@
 
   .testimonials__meta {
     margin-top: auto;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
   }
 
   .testimonials__subtitle {
     font-family: 'Dunant', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     font-size: 0.875rem;
-    font-weight: 600;
+    text-align: left;
+    font-weight: 300;
     color: white;
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 1px;
     opacity: 0.9;
+    max-width: 50%;
   }
 
   .testimonials__navigation {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
+    position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     pointer-events: none;
     z-index: 2;
+    margin-top: 2rem;
     padding: 0 2rem;
   }
 
@@ -293,8 +310,15 @@
     margin-right: -40px;
   }
 
-  /* Desktop: Show 2 slides */
-  @media screen and (min-width: 769px) {
+  /* Desktop: Show 3 slides */
+  @media screen and (min-width: 1024px) {
+    .testimonials__slide {
+      width: 33.333%;
+    }
+  }
+
+  /* Tablet: Show 2 slides */
+  @media screen and (min-width: 769px) and (max-width: 1023px) {
     .testimonials__slide {
       width: 50%;
     }
@@ -364,17 +388,54 @@
       this.prevBtn = this.slider.querySelector('[data-testimonials-prev]');
       this.nextBtn = this.slider.querySelector('[data-testimonials-next]');
       
+      // Also try searching in the parent container
+      if (!this.prevBtn || !this.nextBtn) {
+        const parent = this.slider.closest('.testimonials__slider-wrapper');
+        if (parent) {
+          this.prevBtn = parent.querySelector('[data-testimonials-prev]');
+          this.nextBtn = parent.querySelector('[data-testimonials-next]');
+        }
+      }
+      
+      // Also try searching globally as a fallback
+      if (!this.prevBtn || !this.nextBtn) {
+        this.prevBtn = document.querySelector('[data-testimonials-prev]');
+        this.nextBtn = document.querySelector('[data-testimonials-next]');
+      }
+      
       this.currentIndex = 0;
       this.totalSlides = this.slides.length;
       this.slidesToShow = this.getSlidesToShow();
       
-      console.log('Testimonials Slider initialized with', this.totalSlides, 'slides');
+      // Auto-slide properties
+      this.autoSlideInterval = null;
+      this.autoSlideDelay = 5000; // 5 seconds
+      this.isUserInteracting = false;
+      
+      console.log('Testimonials Slider initialized with', this.totalSlides, 'slides, showing', this.slidesToShow);
+      console.log('Elements found:', {
+        track: !!this.track,
+        prevBtn: !!this.prevBtn,
+        nextBtn: !!this.nextBtn,
+        slides: this.slides.length
+      });
+      
+      // Debug button search
+      console.log('Button search debug:', {
+        sliderContainer: this.slider,
+        parentWrapper: this.slider.closest('.testimonials__slider-wrapper'),
+        globalPrevBtn: document.querySelector('[data-testimonials-prev]'),
+        globalNextBtn: document.querySelector('[data-testimonials-next]')
+      });
       
       this.init();
     }
 
     getSlidesToShow() {
-      return window.innerWidth > 768 ? 2 : 1;
+      const width = window.innerWidth;
+      if (width >= 1024) return 3; // Desktop: 3 slides
+      if (width >= 769) return 2;  // Tablet: 2 slides
+      return 1; // Mobile: 1 slide
     }
 
     getMaxIndex() {
@@ -382,7 +443,10 @@
     }
 
     init() {
-      if (this.totalSlides <= 1) {
+      console.log('Init called - totalSlides:', this.totalSlides, 'slidesToShow:', this.slidesToShow);
+      
+      if (this.totalSlides <= this.slidesToShow) {
+        console.log('Hiding navigation - not enough slides');
         this.hideNavigation();
         return;
       }
@@ -390,46 +454,129 @@
       this.bindEvents();
       this.updateSlider();
       
+      // Start auto-slide
+      this.startAutoSlide();
+      
+      // Add resize listener with debounce
+      let resizeTimeout;
       window.addEventListener('resize', () => {
-        this.slidesToShow = this.getSlidesToShow();
-        this.currentIndex = Math.min(this.currentIndex, this.getMaxIndex());
-        this.updateSlider();
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          const newSlidesToShow = this.getSlidesToShow();
+          if (newSlidesToShow !== this.slidesToShow) {
+            this.slidesToShow = newSlidesToShow;
+            this.currentIndex = Math.min(this.currentIndex, this.getMaxIndex());
+            this.updateSlider();
+            console.log('Resize: now showing', this.slidesToShow, 'slides');
+          }
+        }, 250);
       });
     }
 
     hideNavigation() {
+      console.log('Hiding navigation');
       if (this.prevBtn) this.prevBtn.style.display = 'none';
       if (this.nextBtn) this.nextBtn.style.display = 'none';
     }
 
+    showNavigation() {
+      console.log('Showing navigation');
+      if (this.prevBtn) this.prevBtn.style.display = 'flex';
+      if (this.nextBtn) this.nextBtn.style.display = 'flex';
+    }
+
     bindEvents() {
+      console.log('Binding events...');
+      
       if (this.prevBtn) {
+        console.log('Binding previous button');
         this.prevBtn.addEventListener('click', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           console.log('Previous button clicked');
+          this.pauseAutoSlide();
           this.prevSlide();
+          
+          // Resume auto-slide after 3 seconds
+          setTimeout(() => {
+            this.resumeAutoSlide();
+          }, 3000);
         });
+        
+        // Add visual feedback
+        this.prevBtn.addEventListener('mousedown', () => {
+          console.log('Previous button mousedown');
+        });
+      } else {
+        console.log('Previous button not found!');
       }
       
       if (this.nextBtn) {
+        console.log('Binding next button');
         this.nextBtn.addEventListener('click', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           console.log('Next button clicked');
+          this.pauseAutoSlide();
           this.nextSlide();
+          
+          // Resume auto-slide after 3 seconds
+          setTimeout(() => {
+            this.resumeAutoSlide();
+          }, 3000);
         });
+        
+        // Add visual feedback
+        this.nextBtn.addEventListener('mousedown', () => {
+          console.log('Next button mousedown');
+        });
+      } else {
+        console.log('Next button not found!');
       }
 
       // Touch events
       this.setupTouchEvents();
+      
+      // Hover pause functionality
+      this.setupHoverPause();
+    }
+
+    setupHoverPause() {
+      if (!this.slider) return;
+      
+      console.log('Setting up hover pause');
+      
+      this.slider.addEventListener('mouseenter', () => {
+        console.log('Mouse enter - pausing auto-slide');
+        this.pauseAutoSlide();
+      });
+      
+      this.slider.addEventListener('mouseleave', () => {
+        console.log('Mouse leave - resuming auto-slide');
+        this.resumeAutoSlide();
+      });
     }
 
     setupTouchEvents() {
+      if (!this.track) {
+        console.log('Track not found for touch events');
+        return;
+      }
+      
+      console.log('Setting up touch events');
+      
       let startX = 0;
+      let startY = 0;
       let isDragging = false;
+      let hasMoved = false;
 
       this.track.addEventListener('touchstart', (e) => {
+        console.log('Touch start');
+        this.pauseAutoSlide();
         startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
         isDragging = true;
+        hasMoved = false;
         this.track.style.transition = 'none';
       }, { passive: true });
 
@@ -437,40 +584,70 @@
         if (!isDragging) return;
         
         const currentX = e.touches[0].clientX;
-        const diff = startX - currentX;
-        const slideWidth = this.track.offsetWidth / this.slidesToShow;
-        const translateX = -this.currentIndex * slideWidth - diff;
+        const currentY = e.touches[0].clientY;
+        const diffX = Math.abs(startX - currentX);
+        const diffY = Math.abs(startY - currentY);
         
-        this.track.style.transform = `translateX(${translateX}px)`;
-      }, { passive: true });
+        // Only handle horizontal swipes
+        if (diffX > diffY && diffX > 10) {
+          hasMoved = true;
+          console.log('Touch move - horizontal swipe detected');
+          e.preventDefault(); // Prevent scrolling
+          
+          const diff = startX - currentX;
+          const slideWidth = this.track.offsetWidth / this.slidesToShow;
+          const translateX = -this.currentIndex * slideWidth - diff;
+          
+          this.track.style.transform = `translateX(${translateX}px)`;
+        }
+      }, { passive: false });
 
       this.track.addEventListener('touchend', (e) => {
         if (!isDragging) return;
         
-        const endX = e.changedTouches[0].clientX;
-        const diff = startX - endX;
-        
+        console.log('Touch end - hasMoved:', hasMoved);
         this.track.style.transition = 'transform 0.3s ease';
         
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) {
-            this.nextSlide();
+        if (hasMoved) {
+          const endX = e.changedTouches[0].clientX;
+          const diff = startX - endX;
+          
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+              this.nextSlide();
+            } else {
+              this.prevSlide();
+            }
           } else {
-            this.prevSlide();
+            this.updateSlider();
           }
-        } else {
-          this.updateSlider();
         }
         
         isDragging = false;
+        hasMoved = false;
+        
+        // Resume auto-slide after 3 seconds
+        setTimeout(() => {
+          this.resumeAutoSlide();
+        }, 3000);
       }, { passive: true });
     }
 
     updateSlider() {
+      if (!this.track) return;
+      
       const slideWidth = 100 / this.slidesToShow;
       const translateX = -this.currentIndex * slideWidth;
       this.track.style.transform = `translateX(${translateX}%)`;
-      console.log(`Slider updated: currentIndex=${this.currentIndex}, translateX=${translateX}%`);
+      
+      // Update navigation visibility
+      if (this.totalSlides <= this.slidesToShow) {
+        this.hideNavigation();
+      } else {
+        this.showNavigation();
+      }
+      
+      console.log(`Slider updated: currentIndex=${this.currentIndex}, translateX=${translateX}%, slidesToShow=${this.slidesToShow}`);
     }
 
     nextSlide() {
@@ -496,6 +673,41 @@
       }
       this.updateSlider();
     }
+
+    // Auto-slide methods
+    startAutoSlide() {
+      if (this.totalSlides <= this.slidesToShow) {
+        return; // Don't auto-slide if not enough slides
+      }
+      
+      console.log('Starting auto-slide');
+      this.stopAutoSlide(); // Clear any existing interval
+      
+      this.autoSlideInterval = setInterval(() => {
+        if (!this.isUserInteracting) {
+          console.log('Auto-slide: moving to next slide');
+          this.nextSlide();
+        }
+      }, this.autoSlideDelay);
+    }
+
+    stopAutoSlide() {
+      if (this.autoSlideInterval) {
+        console.log('Stopping auto-slide');
+        clearInterval(this.autoSlideInterval);
+        this.autoSlideInterval = null;
+      }
+    }
+
+    pauseAutoSlide() {
+      console.log('Pausing auto-slide');
+      this.isUserInteracting = true;
+    }
+
+    resumeAutoSlide() {
+      console.log('Resuming auto-slide');
+      this.isUserInteracting = false;
+    }
   }
 
   // Initialize testimonials sliders
@@ -504,10 +716,13 @@
     console.log('Found', sliders.length, 'testimonials sliders');
     
     sliders.forEach((slider, index) => {
-      if (!slider.sliderInstance) {
-        console.log('Initializing slider', index);
-        slider.sliderInstance = new TestimonialsSlider(slider);
+      // Clear any existing instance
+      if (slider.sliderInstance) {
+        delete slider.sliderInstance;
       }
+      
+      console.log('Initializing slider', index);
+      slider.sliderInstance = new TestimonialsSlider(slider);
     });
   }
 
@@ -518,8 +733,12 @@
     initTestimonialsSliders();
   }
 
-  // Also try to initialize immediately (for theme editor)
+  // Also initialize after a short delay for theme editor
   setTimeout(initTestimonialsSliders, 100);
+  
+  // Re-initialize on theme editor events
+  document.addEventListener('shopify:section:load', initTestimonialsSliders);
+  document.addEventListener('shopify:section:reorder', initTestimonialsSliders);
 {% endjavascript %}
 
 {% schema %}
