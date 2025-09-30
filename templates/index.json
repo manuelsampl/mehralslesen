@@ -196,7 +196,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Unser freundliches Abo-Service-Team steht Ihnen bei allen Fragen rund um Bestellung, Lieferung und Abos mit Rat und Tat zur Seite.</p><p></p><p>Österreichisches Jugendrotkreuz<br/>Wiedner Hauptstraße 32, 1040 Wien<br/><br/>abo@mehralslesen.at<br/>01 / 589 00-170<br/><br/>Mo–Do 7.30–15.00, Fr 7.30–13.00</p>",
+                "text": "<p>Unser freundliches Abo-Service-Team steht Ihnen bei allen Fragen rund um Bestellung, Lieferung und Abos mit Rat und Tat zur Seite.</p><p></p><p>Österreichisches Jugendrotkreuz<br/>Wiedner Hauptstraße 32, 1040 Wien<br/><br/><a href=\"mailto:abo@mehralslesen.at\" title=\"mailto:abo@mehralslesen.at\">abo@mehralslesen.at</a><br/><a href=\"tel:+43158900170\" title=\"tel:+43158900170\">01 / 589 00-170</a><br/><br/>Mo–Do 7.30–15.00, Fr 7.30–13.00</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
