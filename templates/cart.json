@@ -161,7 +161,7 @@
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
         "gap": 0,
-        "section_width": "full-width",
+        "section_width": "page-width",
         "section_height": "",
         "section_height_custom": 50,
         "color_scheme": "",
@@ -206,10 +206,10 @@
             "image_ratio": "portrait",
             "dividers": true,
             "vendor": false,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-block-start": 20,
+            "padding-block-end": 20,
+            "padding-inline-start": 20,
+            "padding-inline-end": 20
           },
           "blocks": {}
         },
@@ -232,7 +232,7 @@
         "section_width": "page-width",
         "color_scheme": "scheme-954b600d-7e34-40be-8ec5-0b3eb56de6c1",
         "padding-block-start": 24,
-        "padding-block-end": 0
+        "padding-block-end": 23
       }
     }
   },
