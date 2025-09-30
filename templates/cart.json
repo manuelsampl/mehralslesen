@@ -219,7 +219,7 @@
           "settings": {
             "extend_summary": true,
             "inherit_color_scheme": false,
-            "color_scheme": "scheme-2",
+            "color_scheme": "scheme-954b600d-7e34-40be-8ec5-0b3eb56de6c1",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
@@ -230,7 +230,7 @@
       },
       "settings": {
         "section_width": "page-width",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-954b600d-7e34-40be-8ec5-0b3eb56de6c1",
         "padding-block-start": 24,
         "padding-block-end": 0
       }
