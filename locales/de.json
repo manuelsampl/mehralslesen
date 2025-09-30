@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "blocks": {
     "load_video": "Video laden: {{ description }}",
@@ -224,7 +233,10 @@
     "recipient_form_message": "Nachricht (optional)",
     "recipient_form_characters_used": "{{ used_chars }}/{{ max_chars }} Zeichen verwendet",
     "recipient_form_send_on": "JJJJ-MM-TT",
-    "recipient_form_send_on_label": "Senden am (optional)"
+    "recipient_form_send_on_label": "Senden am (optional)",
+    "recipient_form_fields_visible": "Recipient form fields visible",
+    "recipient_form_fields_hidden": "Recipient form fields hidden",
+    "recipient_form_error": "Recipient form error"
   },
   "gift_cards": {
     "issued": {
@@ -278,5 +290,9 @@
       "success_moderated": "Kommentar gepostet, Moderation ausstehend",
       "success": "Kommentar gepostet"
     }
+  },
+  "general": {
+    "previous": "Previous",
+    "next": "Next"
   }
 }
