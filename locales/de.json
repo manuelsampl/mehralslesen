@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "blocks": {
     "load_video": "Video laden: {{ description }}",
@@ -224,7 +233,10 @@
     "recipient_form_message": "Nachricht (optional)",
     "recipient_form_characters_used": "{{ used_chars }}/{{ max_chars }} Zeichen verwendet",
     "recipient_form_send_on": "JJJJ-MM-TT",
-    "recipient_form_send_on_label": "Senden am (optional)"
+    "recipient_form_send_on_label": "Senden am (optional)",
+    "recipient_form_fields_visible": "Recipient form fields visible",
+    "recipient_form_fields_hidden": "Recipient form fields hidden",
+    "recipient_form_error": "Recipient form error"
   },
   "gift_cards": {
     "issued": {
@@ -277,6 +289,49 @@
       "post": "Kommentar posten",
       "success_moderated": "Kommentar gepostet, Moderation ausstehend",
       "success": "Kommentar gepostet"
+    }
+  },
+  "general": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "shopify": {
+    "checkout": {
+      "contact": {
+        "change_company_location_link_label": "Standort der Schule ändern",
+        "company_label": "Schule",
+        "optional_company_label": "Schule (optional)"
+      },
+      "field_errors": {
+        "address_company_blank": "Gib einen Schulnamen ein",
+        "address_company_too_long": "Schulname ist zu lang. (max. 255 Zeichen)"
+      },
+      "thank_you": {
+        "company_location_section_title": "Schule und Standort"
+      },
+      "review": {
+        "blocks": {
+          "company_location": "Standort der Schule"
+        }
+      },
+      "company_location": {
+        "location_title": "Standort der Schule"
+      }
+    }
+  },
+  "customer_accounts": {
+    "navigation_and_structure": {
+      "company_location": "Standort der Schule"
+    },
+    "order_details": {
+      "company": "Schule",
+      "company_and_location": "Schule und Standort"
+    },
+    "B2B": {
+      "account_information": {
+        "company_card_name_label": "Name der Schule",
+        "company_card_section_accessibility_label": "Schule"
+      }
     }
   }
 }
