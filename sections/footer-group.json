@@ -60,7 +60,7 @@
       "name": "Footer",
       "settings": {
         "logo_image": "shopify://shop_images/logo_MAL.png",
-        "logo_width": 200,
+        "logo_width": 300,
         "social_title": "We are on Social",
         "show_social": true,
         "columns_gap": 40,
