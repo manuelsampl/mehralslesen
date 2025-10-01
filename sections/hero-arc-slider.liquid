@@ -11,90 +11,102 @@
   <div class="arc-carousel__inner {{ section.settings.section_width }}">
     <div
       class="arc-carousel__stage"
-      style="--arc-color: {{ section.settings.arc_color }}; --arc-height: {{ section.settings.arc_height }}vh; --item-max: 6;"
+      style="--arc-color: {{ section.settings.arc_color }}; --arc-height: {{ section.settings.arc_height }}vh;"
     >
-      <div class="arc-carousel__rail" data-items>
-        {%- if selected_collection and total > 0 -%}
-          {%- for product in products -%}
-            {% comment %} Hide products with price of 0 {% endcomment %}
-            {% unless product.price == 0 %}
-              {%- liquid
-                assign media_bg_class = ''
-                if product.tags contains 'primarstufe'
-                  assign media_bg_class = 'arc-card__media--primarstufe'
-                elsif product.tags contains 'sekundarstufe'
-                  assign media_bg_class = 'arc-card__media--sekundarstufe'
-                endif
-              -%}
-              <a href="{{ product.url }}" class="arc-item" data-index="{{ forloop.index0 }}">
-              <div class="arc-card">
-                <div class="arc-card__media {{ media_bg_class }}">
-                  {%- if product.featured_image -%}
-                    {%- assign img = product.featured_image -%}
-                    {{
-                      img
-                      | image_url: width: 800
-                      | image_tag: alt: product.title, loading: 'lazy', class: 'arc-card__img'
-                    }}
-                  {%- else -%}
-                    {{ 'image' | placeholder_svg_tag: 'arc-card__img placeholder' }}
-                  {%- endif -%}
+      <!-- Angle Slider Container -->
+      <div class="js-angle-slider">
+       
+
+        <!-- Slider Body -->
+        <div class="js-angle-slider__body">
+          <div class="js-angle-slider__list" data-slide-angle="8" data-show="7" data-speed="400" data-drag-speed-ratio="0.1" data-dots="true">
+            {%- if selected_collection and total > 0 -%}
+              {%- for product in products -%}
+                {% comment %} Hide products with price of 0 {% endcomment %}
+                  {%- liquid
+                    assign media_bg_class = ''
+                    if product.tags contains 'primarstufe'
+                      assign media_bg_class = 'arc-card__media--primarstufe'
+                    elsif product.tags contains 'sekundarstufe'
+                      assign media_bg_class = 'arc-card__media--sekundarstufe'
+                    endif
+                  -%}
+                  <div class="js-angle-slider__item">
+                    <a href="{{ product.url }}" class="arc-card-link">
+                      <div class="arc-card">
+                        <div class="arc-card__media {{ media_bg_class }}">
+                          {%- if product.featured_image -%}
+                            {%- assign img = product.featured_image -%}
+                            {{
+                              img
+                              | image_url: width: 400
+                              | image_tag: alt: product.title, loading: 'lazy', class: 'arc-card__img'
+                            }}
+                          {%- else -%}
+                            {{ 'image' | placeholder_svg_tag: 'arc-card__img placeholder' }}
+                          {%- endif -%}
+                        </div>
+                        <div class="arc-card__meta">
+                          <div class="arc-card__title">{{ product.title }}</div>
+                          {%- if product.price -%}
+                            <div class="arc-card__price">{{ product.price | money }}</div>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+              {%- endfor -%}
+            {%- else -%}
+              {%- for i in (1..8) -%}
+                <div class="js-angle-slider__item">
+                  <div class="arc-card">
+                    <div class="arc-card__media">
+                      {{ 'product-apparel-1' | placeholder_svg_tag: 'arc-card__img placeholder' }}
+                    </div>
+                    <div class="arc-card__meta">
+                      <div class="arc-card__title">{{ 'onboarding.product_title' | t }}</div>
+                    </div>
+                  </div>
                 </div>
-                <div class="arc-card__meta">
-                  <div class="arc-card__title">{{ product.title }}</div>
-                  {%- if product.price -%}
-                    <div class="arc-card__price">{{ product.price | money }}</div>
-                  {%- endif -%}
-                </div>
-              </div>
-            </a>
-            {% endunless %}
-          {%- endfor -%}
-        {%- else -%}
-          {%- for i in (1..10) -%}
-            <div class="arc-item" aria-hidden="true">
-              <div class="arc-card">
-                <div class="arc-card__media">
-                  {{ 'product-apparel-1' | placeholder_svg_tag: 'arc-card__img placeholder' }}
-                </div>
-                <div class="arc-card__meta">
-                  <div class="arc-card__title">{{ 'onboarding.product_title' | t }}</div>
-                </div>
-              </div>
-            </div>
-          {%- endfor -%}
-        {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </div>
       </div>
+ <!-- Navigation Buttons -->
+        <div class="js-angle-slider__pager">
+          <button class="js-angle-slider__prev arc-nav arc-nav--prev" type="button" aria-label="{{ 'general.previous' | t }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="69.428" height="37.894" viewBox="0 0 69.428 37.894">
+              <g id="Gruppe_78" data-name="Gruppe 78" transform="translate(2.5 3.518)">
+                <g id="Gruppe_50" data-name="Gruppe 50" transform="translate(44.508 30.858) rotate(-90)">
+                  <line id="Linie_18" data-name="Linie 18" x1="15.429" y2="18.902" transform="translate(15.429)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                  <line id="Linie_19" data-name="Linie 19" x2="15.429" y2="18.902" transform="translate(0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                </g>
+                <g id="Gruppe_51" data-name="Gruppe 51" transform="translate(0 15.429)">
+                  <line id="Linie_20" data-name="Linie 20" x1="63.41" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                </g>
+              </g>
+            </svg>
+          </button>
+          <button class="js-angle-slider__next arc-nav arc-nav--next" type="button" aria-label="{{ 'general.next' | t }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="69.428" height="37.893" viewBox="0 0 69.428 37.893">
+              <g id="Gruppe_78" data-name="Gruppe 78" transform="translate(2.5 3.518)">
+                <g id="Gruppe_50" data-name="Gruppe 50" transform="translate(63.41 0) rotate(90)">
+                  <line id="Linie_18" data-name="Linie 18" x1="15.429" y1="18.902" transform="translate(15.429 0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                  <line id="Linie_19" data-name="Linie 19" y1="18.902" x2="15.429" transform="translate(0 0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                </g>
+                <g id="Gruppe_51" data-name="Gruppe 51" transform="translate(0 15.429)">
+                  <line id="Linie_20" data-name="Linie 20" x1="63.41" transform="translate(0 0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
+      <!-- Background Arc -->
+      <div class="arc-bg" aria-hidden="true">
 
-      <button class="arc-nav arc-nav--prev" type="button" aria-label="{{ 'general.previous' | t }}" data-prev>
-        <svg xmlns="http://www.w3.org/2000/svg" width="69.428" height="37.894" viewBox="0 0 69.428 37.894">
-          <g id="Gruppe_78" data-name="Gruppe 78" transform="translate(2.5 3.518)">
-            <g id="Gruppe_50" data-name="Gruppe 50" transform="translate(44.508 30.858) rotate(-90)">
-              <line id="Linie_18" data-name="Linie 18" x1="15.429" y2="18.902" transform="translate(15.429)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
-              <line id="Linie_19" data-name="Linie 19" x2="15.429" y2="18.902" transform="translate(0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
-            </g>
-            <g id="Gruppe_51" data-name="Gruppe 51" transform="translate(0 15.429)">
-              <line id="Linie_20" data-name="Linie 20" x1="63.41" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
-            </g>
-          </g>
-        </svg>
-      </button>
-      <button class="arc-nav arc-nav--next" type="button" aria-label="{{ 'general.next' | t }}" data-next>
-        <svg xmlns="http://www.w3.org/2000/svg" width="69.428" height="37.893" viewBox="0 0 69.428 37.893">
-          <g id="Gruppe_78" data-name="Gruppe 78" transform="translate(2.5 3.518)">
-            <g id="Gruppe_50" data-name="Gruppe 50" transform="translate(63.41 0) rotate(90)">
-              <line id="Linie_18" data-name="Linie 18" x1="15.429" y1="18.902" transform="translate(15.429 0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
-              <line id="Linie_19" data-name="Linie 19" y1="18.902" x2="15.429" transform="translate(0 0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
-            </g>
-            <g id="Gruppe_51" data-name="Gruppe 51" transform="translate(0 15.429)">
-              <line id="Linie_20" data-name="Linie 20" x1="63.41" transform="translate(0 0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
-            </g>
-          </g>
-        </svg>
-      </button>
-
-      <div class="arc-bg" aria-hidden="true"></div>
-
+      
+        <!-- Caption Area -->
       <div class="arc-caption">
         {%- if section.settings.heading != blank -%}
           <h2 class="arc-caption__title" style="--caption-color: {{ section.settings.caption_color }}">
@@ -112,14 +124,25 @@
           </a>
         {%- endif -%}
       </div>
+      </div>
+
+      
     </div>
   </div>
 </section>
 
 {% stylesheet %}
-  .arc-carousel { position: relative; }
-  .arc-carousel__inner.full-width { width: 100%; }
-  .arc-carousel__inner.page-width { max-width: var(--normal-page-width); margin-inline: auto; }
+  .arc-carousel { 
+    position: relative; 
+  }
+
+  .arc-carousel__inner.full-width { 
+    width: 100%; 
+  }
+
+  .arc-carousel__inner.page-width { 
+    margin-inline: auto; 
+  }
 
   .arc-carousel__stage {
     position: relative;
@@ -131,68 +154,110 @@
     height: 120vh;
   }
 
-  .arc-item{
-    transition: transform .35s var(--animation-easing, ease-in-out),
-               opacity .25s ease;
+  /* Angle Slider Styles */
+  .js-angle-slider {
+    position: relative;
+    width: 100%;
+    height: 630px;
   }
 
-  /* semicircle background */
-  .arc-bg {
-    position: absolute;
-    height: 100vw;
-    border-top-left-radius: 1000%;
-    border-top-right-radius: 1000%;
-    background: var(--arc-color, #3F9FB8);
-    z-index: 0;
-    box-shadow: inset 0 1px #ffffff40;
-    width: 180vw;
-    top: 20vw;
-   }
-
-  @media (max-width: 749px) {
-    .arc-bg { 
-      height: min(60vh, 600px);
-      top: 35vw;
-    }
+  .js-angle-slider__body {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
   }
 
-  @media (min-width: 750px) and (max-width: 999px) {
-    .arc-bg {
-      height: 80vw;
-      top: 32vw;
-    }
+  .js-angle-slider__list {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 100%;
+    margin-top: 100px;
   }
 
-  /* curved rail */
-  .arc-carousel__rail { 
-    position: absolute; 
-    top: 8%; 
-    left: 0; 
-    right: 0; 
-    pointer-events: none;
-   }
-  .arc-item {
+  .js-angle-slider__list.is-initialized .js-angle-slider__item {
     position: absolute;
     top: 0;
+    left: 0;
+  }
+
+  .js-angle-slider__item {
+    flex-shrink: 0;
     width: clamp(140px, 16vw, 220px);
+    padding: 0 10px;
+    box-sizing: border-box;
     transform-origin: center bottom;
-    will-change: transform, opacity;
-    pointer-events: auto;
-    text-decoration: none;
+    will-change: transform;
+    cursor: pointer;
   }
 
-  @media (max-width: 749px) {
-    .arc-item {
-      top: 8vw;
+  @media screen and (max-width: 749px) {
+    .js-angle-slider__item {
       width: clamp(200px, 50vw, 280px);
+      padding: 0 15px;
     }
   }
 
-  @media (min-width: 750px) and (max-width: 999px) {
-    .arc-item {
-      top: 5vw;
+  @media screen and (min-width: 750px) and (max-width: 999px) {
+    .js-angle-slider__item {
       width: clamp(160px, 25vw, 240px);
+      padding: 0 12px;
     }
+  }
+
+  .js-angle-slider__item img {
+    height: auto;
+    width: 100%;
+    vertical-align: top;
+  }
+
+  .js-angle-slider__pager {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    pointer-events: none;
+    height: 100%;
+  }
+
+  .js-angle-slider__pager .arc-nav {
+    pointer-events: auto;
+  }
+
+  .js-angle-slider__dots-list {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .js-angle-slider__dots-item {
+    margin: 0 8px;
+  }
+
+  .js-angle-slider__dots-button {
+    height: 12px;
+    width: 12px;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background-color 0.4s;
+  }
+
+  .js-angle-slider__dots-button.is-active {
+    background-color: #fff;
+  }
+
+  /* Arc Card Styles */
+  .arc-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
   }
 
   .arc-card {
@@ -201,32 +266,74 @@
     box-shadow: 0 10px 24px rgb(0 0 0 / .12);
     overflow: hidden;
     border: 1px solid rgb(var(--color-border-rgb, 0 0 0) / .08);
-    transition: all 0.5s ease;
-   }
-
-  .arc-card:hover{
-    transform: translateY(-100px);
+    transition: all 0.3s ease;
   }
+
+  .arc-card:hover {
+    transform: translateY(-100px);
+    box-shadow: 0 20px 40px rgb(0 0 0 / .2);
+  }
+
   .arc-card__media { 
-    aspect-ratio: 3 / 4; background: rgb(0 0 0 / .04); display: grid; place-items: center;
-  padding: 20px;
+    aspect-ratio: 3 / 4; 
+    background: rgb(0 0 0 / .04); 
+    display: grid; 
+    place-items: center;
+    padding: 20px;
   }
   
   /* Tag-based background colors */
   .arc-card__media--primarstufe {
-    background-color: rgba(63, 159, 184, 0.3) !important; /* #3F9FB8 with 30% alpha */
+    background-color: rgba(63, 159, 184, 0.3) !important;
   }
   
   .arc-card__media--sekundarstufe {
-    background-color: rgba(227, 6, 19, 0.3) !important; /* #E30613 with 30% alpha */
+    background-color: rgba(227, 6, 19, 0.3) !important;
   }
   
-  .arc-card__img { width: 100%; height: 100%; object-fit: cover; }
-  .arc-card__meta { padding: .5rem .75rem .75rem; text-align: center; }
-  .arc-card__title { font: 600 0.9rem var(--font-body--family, system-ui, sans-serif); line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .arc-card__price { margin-top: .25rem; font: 600 0.9rem var(--font-body--family, system-ui, sans-serif); }
+  .arc-card__img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+  }
 
-  /* caption area on the semicircle */
+  .arc-card__meta { 
+    padding: .5rem .75rem .75rem; 
+    text-align: center; 
+  }
+
+  .arc-card__title { 
+    font: 600 0.9rem var(--font-body--family, system-ui, sans-serif); 
+    line-height: 1.2; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 2; 
+    line-clamp: 2;
+    -webkit-box-orient: vertical; 
+    overflow: hidden; 
+  }
+
+  .arc-card__price { 
+    margin-top: .25rem; 
+    font: 600 0.9rem var(--font-body--family, system-ui, sans-serif); 
+  }
+
+  /* Background arc */
+  .arc-bg {
+    position: relative;
+    height: 100vw;
+    border-top-left-radius: 1000%;
+    border-top-right-radius: 1000%;
+    background: var(--arc-color, #3F9FB8);
+    z-index: 0;
+    box-shadow: inset 0 1px #ffffff40;
+        width: 140vw;
+    top: -290px;
+    left: -20vw;
+  }
+
+  
+
+  /* Caption area */
   .arc-caption {
     position: relative;
     z-index: 2;
@@ -239,47 +346,36 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20vw;
+    margin-top: 100px;
   }
 
   .arc-caption__title { 
     color: inherit; 
     margin: 0; 
-    font-size: 3.125vw; 
+    font-size: 60px; 
     font-weight: 400; 
-   }
+    max-width: 530px;
+  }
+
   .arc-caption__text { 
     color: inherit; 
-    font-size: 1.667vw; 
-    max-width: 56.146vw;
+    font-size: 29px; 
+    max-width: 1100px;
     text-transform: uppercase;
     font-weight: 300;
   }
-  .arc-caption .button { 
-    justify-self: center; 
-    border-radius: 1000px;
-    background-color: #fff;
-    border: 2px solid white;
-    color: #3F9FB8;
-    font-weight:400;
-    text-transform: uppercase;
-    font-size: 2.083vw;
-    line-height: 1;
-  }
 
-  .arc-caption .button:hover {
-    background-color: #3F9FB8;
-    color: white;
-  } 
 
-  /* nav buttons */
+  /* Navigation buttons */
   .arc-nav {
     position: absolute;
-    bottom: 48%;
+    top: 470px;
     width: 5.313vw;
     height: 5.313vw;
+    min-width: 60px;
+    min-height: 60px;
     border-radius: 50%;
-    border: 0.26vw solid #E32013;
+    border: 2px solid #E32013;
     background: white;
     box-shadow: var(--shadow-button, 0 2px 6px rgb(0 0 0 / .2));
     display: grid;
@@ -287,169 +383,551 @@
     font-size: 26px;
     line-height: 1;
     cursor: pointer;
-    z-index: 3;
+    z-index: 15;
+    pointer-events: auto;
   }
 
   .arc-nav--prev { 
-    left: 12px;
+    left: 50px;
+    transform: rotate(-208deg);
+  }
 
-    transform: rotate(-200deg);
-   }
   .arc-nav--next {
-    right: 12px;
-    transform: rotate(20deg);
-   }
+    right: 50px;
+    transform: rotate(28deg);
+  }
 
-   .arc-caption__title{
-    max-width: 27.604vw;
-   }
-
-  /* responsive */
+  /* Responsive adjustments */
   @media (max-width: 749px) {
-    .arc-caption { margin-top: min(25vh, 200px); }
+    .arc-caption { 
+      margin-top: min(35vh, 250px); 
+    }
   }
 
   @media (min-width: 750px) and (max-width: 999px) {
-    .arc-caption { margin-top: min(20vh, 160px); }
+    .arc-caption { 
+      margin-top: min(30vh, 200px); 
+    }
+  }
+
+  @media (max-width: 1400px) {
+    .arc-bg { 
+      width: 160vw;
+    top: -290px;
+    left: -30vw;
+    }
+
+      .arc-nav {
+        top:410px;
+      }
+  }
+
+  @media (max-width: 749px) {
+    .arc-bg { 
+      height: 100vh;
+      width: 236vw;
+      left: -68vw;
+      top:-220px;
+    }
+  }
+
+  @media (min-width: 750px) and (max-width: 999px) {
+    .arc-bg {
+      height: 80vw;
+      top: 42vw;
+    }
   }
 {% endstylesheet %}
 
 <script>
-  (function () {
-    const root = document.getElementById('ArcCarousel-{{ section.id }}');
-    if (!root) return;
+// Angle Slider Implementation
+(function() {
+  const angleSliders = document.querySelectorAll('.js-angle-slider');
+  if (angleSliders.length === 0) {
+    return;
+  }
 
-    const rail = root.querySelector('[data-items]');
-    const items = Array.from(rail?.children || []);
-    const stage = root.querySelector('.arc-carousel__stage');
-    const arcEl = root.querySelector('.arc-bg');
-    if (!items.length || !arcEl) return;
-
-    let current = 0;
-    const V_DESK = 5; // desktop shows 4 for better spacing
-    const V_TAB = 3; // tablet shows 3
-    const V_MOB = 1; // mobile shows 1
-    const EDGE = 0.7; // Higher value to keep products in valid arc range
-
-    /** point on upper arc (semi-ellipse) for t ∈ [-1, 1] */
-    function pointOnArc(t) {
-      const arcRect = arcEl.getBoundingClientRect();
-      const stageRect = stage.getBoundingClientRect();
-      const W = arcRect.width;
-      const H = arcRect.height;
-
-      const a = W / 2;
-      const b = H * 0.6; // Reduced height factor for less curvature
-
-      // Back to original ellipse formula for arc top edge
-      const xRel = t * a * 0.85;
-      const yTop = b - b * Math.sqrt(Math.max(0, 1 - (xRel * xRel) / (a * a)));
-
-      const left = arcRect.left - stageRect.left;
-      const top = arcRect.top - stageRect.top;
-
-      const x = left + a + xRel;
-      const y = top + yTop; // This is the top edge of the blue arc
-
-      return { x, y };
+  angleSliders.forEach((angleSlider, sliderIndex) => {
+    const slider = angleSlider.querySelector('.js-angle-slider__list');
+    const sliderBody = angleSlider.querySelector('.js-angle-slider__body');
+    if (!slider || !sliderBody) {
+      return;
     }
 
-    /** tangent angle on arc (numerical) */
-    function angleOnArc(t) {
-      const dt = 0.0001;
-      const p1 = pointOnArc(Math.max(-1, Math.min(1, t - dt)));
-      const p2 = pointOnArc(Math.max(-1, Math.min(1, t + dt)));
-      return (Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180) / Math.PI;
+    // Set unique ID
+    let sliderId = slider.getAttribute('id');
+    if (!sliderId) {
+      slider.setAttribute('id', 'angle-slider-' + (sliderIndex + 1));
+      sliderId = slider.getAttribute('id');
+    }
+    slider.setAttribute('role', 'tabpanel');
+    slider.setAttribute('aria-label', 'Carousel preview');
+
+    // Clone items for smooth infinite loop
+    let showLen = slider.dataset.show ? Number(slider.dataset.show) : 7;
+    showLen *= 2;
+
+    const children = slider.children;
+    let cloneListBefore = [];
+    let cloneListAfter = [];
+    let baseChildren = '';
+
+    // Set up original items
+    for (let i = 0; i < children.length; i++) {
+      children[i].setAttribute('role', 'tabpanel');
+      children[i].setAttribute('aria-roledescription', 'slide');
+      children[i].ariaHidden = true;
+      children[i].dataset.index = i;
     }
 
-    function layout() {
-      const isMobile = window.matchMedia('(max-width: 749px)').matches;
-      const isTablet = window.matchMedia('(min-width: 750px) and (max-width: 999px)').matches;
+    // Create clones
+    for (let i = 0; i < children.length; i++) {
+      const cloneBefore = children[i].cloneNode(true);
+      cloneBefore.classList.add('is-clone', 'is-before');
+      cloneListBefore.push(cloneBefore.outerHTML);
+
+      const cloneAfter = children[i].cloneNode(true);
+      cloneAfter.classList.add('is-clone', 'is-after');
+      cloneListAfter.push(cloneAfter.outerHTML);
+
+      children[i].classList.add('is-base');
+      if (i === 0) {
+        children[i].classList.add('is-active');
+      }
+      children[i].ariaHidden = false;
+      baseChildren += children[i].outerHTML;
+    }
+
+    // Arrange slides
+    let slideList = [...cloneListBefore, baseChildren, ...cloneListAfter];
+    while (slideList.length < showLen) {
+      slideList = [...cloneListBefore, ...slideList, ...cloneListAfter];
+    }
+
+    // Reset slider content
+    slider.innerHTML = '';
+    for (let i = 0; i < slideList.length; i++) {
+      slider.insertAdjacentHTML('beforeend', slideList[i]);
+    }
+
+    // Get configuration
+    const baseAngle = slider.dataset.slideAngle ? Number(slider.dataset.slideAngle) : 5;
+    const items = slider.children;
+    const beforeItems = [];
+    const baseItems = [];
+    const baseAfterItems = [];
+    const afterItems = [];
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item.classList.contains('is-before')) {
+        beforeItems.push(item);
+        continue;
+      }
+      if (item.classList.contains('is-base')) {
+        baseItems.push(item);
+        baseAfterItems.push(item);
+        continue;
+      }
+      if (item.classList.contains('is-after')) {
+        baseAfterItems.push(item);
+        afterItems.push(item);
+        continue;
+      }
+    }
+
+    const baseLen = baseItems.length;
+    const beforeLen = beforeItems.length;
+    const itemsLen = items.length;
+
+    // Dots navigation
+    let isDots = slider.dataset.dots === 'true';
+    const dotsList = [];
+
+    // Base values for positioning
+    let winWidth, winWidthHalf, itemWidth, itemWidthHalf, itemHeight;
+    const getBaseVal = () => {
+      const baseItem = angleSlider.querySelector('.js-angle-slider__item.is-active') || items[0];
+      itemHeight = baseItem.getBoundingClientRect().height;
+      itemWidth = baseItem.getBoundingClientRect().width;
+      itemWidthHalf = itemWidth / 2;
+      winWidth = window.innerWidth;
+      winWidthHalf = winWidth / 2;
+    };
+    getBaseVal();
+
+    // Calculate position based on angle
+    const getPosition = (angle) => {
+      const angleLength = Math.abs(angle) / baseAngle + 1;
+      let x = winWidthHalf - itemWidthHalf;
+      let y = 0;
+      const isPositive = angle >= 0;
+
+      for (let i = 1; i < angleLength; i++) {
+        const thisAngle = baseAngle * i;
+        const beforeAngle = thisAngle - baseAngle;
+        const radian = thisAngle * Math.PI / 180;
+        const beforeRadian = beforeAngle * Math.PI / 180;
+        
+        const tiltHeight = itemWidthHalf * Math.sin(radian);
+        const beforeTiltHeight = itemWidthHalf * Math.sin(beforeRadian);
+        y += tiltHeight + beforeTiltHeight;
+        
+        const distance = itemWidthHalf - (itemWidthHalf * Math.cos(radian));
+        const beforeDistance = itemWidthHalf - (itemWidthHalf * Math.cos(beforeRadian));
+        const setX = itemWidth - distance - beforeDistance;
+        
+        if (isPositive) {
+          x += setX;
+        } else {
+          x -= setX;
+        }
+      }
+
+      return { x: x, y: y };
+    };
+
+    // Normalize and interpolate
+    const norm = (v, a, b) => (v - a) / (b - a);
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    // Set element position
+    const setPosition = (elm, angle) => {
+      const checkAngle = angle / baseAngle;
+      let x, y;
       
-      let visible;
-      if (isMobile) {
-        visible = V_MOB;
-      } else if (isTablet) {
-        visible = V_TAB;
+      if (Number.isInteger(checkAngle)) {
+        const position = getPosition(angle);
+        x = position.x;
+        y = position.y;
       } else {
-        visible = V_DESK;
+        const beforeAngle = baseAngle * Math.floor(checkAngle);
+        const afterAngle = baseAngle * Math.ceil(checkAngle);
+        const beforePosition = getPosition(beforeAngle);
+        const afterPosition = getPosition(afterAngle);
+        const ratio = norm(angle, beforeAngle, afterAngle);
+        x = lerp(beforePosition.x, afterPosition.x, ratio);
+        y = lerp(beforePosition.y, afterPosition.y, ratio);
       }
 
-      // Exact visible window:
-      // even -> [-visible/2 .. visible/2 - 1]  e.g. 6 -> [-3..2]
-      // odd  -> [-(visible-1)/2 .. (visible-1)/2] e.g. 5 -> [-2..2]
-      let minDiff, maxDiff;
-      if (visible % 2 === 0) {
-        minDiff = -visible / 2;
-        maxDiff = visible / 2 - 1;
-      } else {
-        minDiff = -(visible - 1) / 2;
-        maxDiff = (visible - 1) / 2;
+      elm.angle = angle;
+      elm.x = x;
+      elm.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${angle}deg)`;
+    };
+
+    // Initialize slider
+    slider.classList.add('is-initialized');
+
+    const resetItems = () => {
+      for (let i = 0; i < beforeLen; i++) {
+        const setAngle = (baseAngle * i) - (baseAngle * beforeLen);
+        setPosition(beforeItems[i], setAngle);
       }
+      for (let i = 0; i < baseAfterItems.length; i++) {
+        const setAngle = baseAngle * i;
+        setPosition(baseAfterItems[i], setAngle);
+      }
+    };
+    resetItems();
 
-      for (let i = 0; i < items.length; i++) {
-        const el = items[i];
+    // Set slider height
+    const setSliderHeight = () => {
+      // Remove dynamic height calculation to prevent layout changes at different breakpoints
+      // Height is now controlled by CSS only
+    };
+    setSliderHeight();
 
-        // cyclic distance
-        let diff = i - current;
-        if (diff > items.length / 2) diff -= items.length;
-        if (diff < -items.length / 2) diff += items.length;
+    // Reset position check for infinite loop
+    const resetPointBefore = beforeItems[beforeLen - baseLen];
+    const resetPointAfter = afterItems[0];
+    const checkResetPosition = () => {
+      if (resetPointBefore.angle >= 0 || resetPointAfter.angle <= 0) {
+        resetItems();
+      }
+    };
 
-        if (diff < minDiff || diff > maxDiff) {
-          el.style.opacity = 0;
-          el.style.pointerEvents = 'none';
-          el.style.transform = 'translate(-9999px,-9999px)';
-          continue;
+    // Active state management
+    const changeActiveDots = (index) => {
+      for (let i = 0; i < baseLen; i++) {
+        if (i === index) {
+          dotsList[i].classList.add('is-active');
+        } else {
+          dotsList[i].classList.remove('is-active');
+        }
+      }
+    };
+
+    const changeActiveClass = () => {
+      for (let i = 0; i < itemsLen; i++) {
+        const elm = items[i];
+        if (elm.angle === 0) {
+          elm.classList.add('is-active');
+          changeActiveDots(Number(elm.dataset.index));
+        } else {
+          elm.classList.remove('is-active');
+        }
+      }
+    };
+
+    // Animation system
+    const setWillChange = () => {
+      for (let i = 0; i < itemsLen; i++) {
+        items[i].style.willChange = 'transform';
+      }
+    };
+
+    const removeWillChange = () => {
+      for (let i = 0; i < itemsLen; i++) {
+        items[i].style.willChange = '';
+      }
+    };
+
+    // Easing function
+    const easing = (t, b, c, d) => {
+      return -c * ((t = t / d - 1) * t * t * t - 1) + b;
+    };
+
+    const animeSpeed = slider.dataset.speed ? Number(slider.dataset.speed) : 400;
+    let isBusy = false;
+
+    // Animation function
+    const moveAnime = (elm, changeAmount, isLast) => {
+      const startAngle = elm.angle;
+      const start = new Date();
+      
+      const move = () => {
+        let elapsedTime = new Date() - start;
+        
+        if (elapsedTime > animeSpeed) {
+          setPosition(elm, Math.round(elm.angle));
+          if (isLast) {
+            checkResetPosition();
+            isBusy = false;
+            changeActiveClass();
+            removeWillChange();
+          }
+          return;
+        }
+        
+        const moveAngle = easing(elapsedTime, startAngle, changeAmount, animeSpeed);
+        setPosition(elm, moveAngle);
+        elm.requestID = requestAnimationFrame(move);
+      };
+      
+      setWillChange();
+      elm.requestID = requestAnimationFrame(move);
+    };
+
+    // Navigation function
+    const navMove = (moveAngle) => {
+      if (isBusy) return;
+      isBusy = true;
+      
+      const lastIndex = itemsLen - 1;
+      for (let i = 0; i < itemsLen; i++) {
+        moveAnime(items[i], moveAngle, i === lastIndex);
+      }
+    };
+
+    // Button controls
+    const next = angleSlider.querySelector('.js-angle-slider__next');
+    console.log('Next button found:', next);
+    if (next) {
+      next.setAttribute('aria-controls', sliderId);
+      next.addEventListener('click', () => {
+        console.log('Next button clicked');
+        navMove(-baseAngle);
+      });
+    }
+
+    const prev = angleSlider.querySelector('.js-angle-slider__prev');
+    console.log('Prev button found:', prev);
+    if (prev) {
+      prev.setAttribute('aria-controls', sliderId);
+      prev.addEventListener('click', () => {
+        console.log('Prev button clicked');
+        navMove(baseAngle);
+      });
+    }
+
+    // Dots navigation
+    const dotsInitialize = () => {
+      if (!isDots) return;
+      
+      const ul = document.createElement('ul');
+      ul.className = 'js-angle-slider__dots-list';
+      ul.setAttribute('role', 'tablist');
+      ul.setAttribute('aria-label', 'Select a slide to show');
+
+      const listItems = [];
+      for (let i = 0; i < baseLen; i++) {
+        const li = document.createElement('li');
+        li.className = 'js-angle-slider__dots-item';
+        li.setAttribute('role', 'presentation');
+
+        const button = document.createElement('button');
+        button.className = 'js-angle-slider__dots-button';
+        if (i === 0) {
+          button.className += ' is-active';
         }
 
-        // Map diff → slot 0..visible-1
-        const slot = diff - minDiff;
-        const tWithin = EDGE + (slot / (visible - 1)) * (1 - 2 * EDGE); // 0..1
-        let t = tWithin * 2 - 1; // -1..1
-        // clamp to avoid off-arc placements due to rounding
-        t = Math.max(-1, Math.min(1, t));
+        button.setAttribute('type', 'button');
+        button.setAttribute('data-index', i);
+        button.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        button.setAttribute('aria-controls', sliderId);
+        button.setAttribute('role', 'tab');
+        dotsList.push(button);
 
-        const { x, y } = pointOnArc(t);
-        const angle = angleOnArc(t) * 0.7; // Moderate rotation factor
-
-        const ex = x - el.offsetWidth / 2;
-        const ey = y - el.offsetHeight + 20; // Bottom of product sits just above arc edge
-
-        el.style.opacity = 1;
-        el.style.pointerEvents = 'auto';
-        el.style.transform = `translate(${ex}px, ${ey}px) rotate(${angle}deg)`;
+        li.append(button);
+        listItems.push(li);
       }
-    }
+      ul.append(...listItems);
 
-    function next() {
-      current = (current + 1) % items.length;
-      layout();
-    }
-    function prev() {
-      current = (current - 1 + items.length) % items.length;
-      layout();
-    }
+      let appendArea = angleSlider.querySelector('.js-angle-slider__dots');
+      if (!appendArea) {
+        appendArea = document.createElement('div');
+        appendArea.className = 'js-angle-slider__dots';
+        sliderBody.append(appendArea);
+      }
+      appendArea.append(ul);
 
-    root.querySelector('[data-next]')?.addEventListener('click', next);
-    root.querySelector('[data-prev]')?.addEventListener('click', prev);
-    window.addEventListener('resize', layout);
-
-    // after images load (and fallback)
-    const imgs = root.querySelectorAll('img');
-    let ready = 0,
-      total = imgs.length || 1;
-    if (!imgs.length) layout();
-    imgs.forEach((img) => {
-      if (img.complete) {
-        if (++ready >= total) layout();
-      } else {
-        img.addEventListener('load', () => {
-          if (++ready >= total) layout();
+      // Dots click events
+      for (let i = 0; i < baseLen; i++) {
+        const button = dotsList[i];
+        button.addEventListener('click', () => {
+          if (button.classList.contains('is-active')) return;
+          const target = baseItems[Number(button.dataset.index)];
+          navMove(-target.angle);
         });
       }
+    };
+    dotsInitialize();
+
+    // Item click events
+    for (let i = 0; i < itemsLen; i++) {
+      const elm = items[i];
+      elm.addEventListener('click', () => {
+        if (!elm.classList.contains('is-active')) {
+          navMove(-elm.angle);
+        }
+      });
+    }
+
+    // Touch/drag support
+    let isDown = false;
+    let startX;
+    let moveX;
+    let beforeX;
+    let isRightMove = false;
+    const dragSpeedRatio = slider.dataset.dragSpeedRatio ? Number(slider.dataset.dragSpeedRatio) : 0.1;
+
+    const startFunc = e => {
+      if (e.type === 'touchstart') {
+        startX = e.changedTouches[0].pageX;
+      } else {
+        e.preventDefault();
+        startX = e.pageX;
+      }
+      
+      slider.classList.add('is-drag');
+      isDown = true;
+      slider.style.cursor = 'grabbing';
+      beforeX = 0;
+    };
+
+    const moveFunc = e => {
+      if (!isDown) return;
+      e.preventDefault();
+      
+      if (e.type === 'touchmove') {
+        moveX = startX - e.changedTouches[0].pageX;
+      } else {
+        moveX = startX - e.pageX;
+      }
+      
+      isRightMove = moveX < 0;
+      
+      let changeAngle = (moveX - beforeX) * dragSpeedRatio;
+      for (let i = 0; i < itemsLen; i++) {
+        const elm = items[i];
+        elm.requestID = requestAnimationFrame(() => {
+          setPosition(elm, elm.angle - changeAngle);
+        });
+      }
+      
+      checkResetPosition();
+      beforeX = moveX;
+      setWillChange();
+    };
+
+    const endFunc = e => {
+      if (e.type !== 'touchend') {
+        e.preventDefault();
+      }
+      
+      slider.classList.remove('is-drag');
+      isDown = false;
+      slider.style.cursor = 'grab';
+      
+      const approximateAngle = [];
+      for (let i = 0; i < itemsLen; i++) {
+        const elm = items[i];
+        const checkAngle = Math.abs(elm.angle / baseAngle);
+        if (checkAngle < 1 && checkAngle !== 0) {
+          approximateAngle.push(elm.angle);
+        }
+      }
+      
+      if (approximateAngle.length > 0) {
+        const approximateAngleLeft = approximateAngle[0];
+        const approximateAngleRight = approximateAngle[1];
+        const isMoveSetPoint = Math.abs(moveX) > 40;
+        
+        if (isRightMove && isMoveSetPoint) {
+          navMove(-approximateAngleLeft);
+          return;
+        }
+        if (!isRightMove && isMoveSetPoint) {
+          navMove(-approximateAngleRight);
+          return;
+        }
+        
+        if (Math.abs(approximateAngleLeft) > Math.abs(approximateAngleRight)) {
+          navMove(-approximateAngleRight);
+        } else {
+          navMove(-approximateAngleLeft);
+        }
+      }
+      
+      removeWillChange();
+    };
+
+    // Event listeners
+    slider.addEventListener('touchstart', startFunc);
+    slider.addEventListener('touchmove', moveFunc);
+    slider.addEventListener('touchend', endFunc);
+    slider.addEventListener('mouseenter', () => {
+      slider.style.cursor = 'grab';
     });
-    setTimeout(layout, 250);
-  })();
+    slider.addEventListener('mousedown', startFunc);
+    slider.addEventListener('mousemove', moveFunc);
+    slider.addEventListener('mouseup', endFunc);
+    slider.addEventListener('mouseleave', endFunc);
+
+    // Responsive handling
+    const resizeObserver = new ResizeObserver(() => {
+      getBaseVal();
+      for (let i = 0; i < itemsLen; i++) {
+        const elm = items[i];
+        elm.requestID = requestAnimationFrame(() => {
+          setPosition(elm, elm.angle);
+        });
+      }
+      setSliderHeight();
+    });
+    resizeObserver.observe(slider);
+  });
+})();
 </script>
 
 {% schema %}
