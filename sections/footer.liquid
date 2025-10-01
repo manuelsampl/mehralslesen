@@ -76,33 +76,33 @@
         
         {% if section.settings.show_social %}
           <div class="footer__social-links">
-            {% if settings.social_facebook_link != blank %}
-              <a href="{{ settings.social_facebook_link }}" class="footer__social-link" target="_blank" rel="noopener">
+            {% if section.settings.facebook_link != blank %}
+              <a href="{{ section.settings.facebook_link }}" class="footer__social-link" target="_blank" rel="noopener">
                 <span class="footer__social-text">Facebook</span>
               </a>
             {% endif %}
-            {% if settings.social_instagram_link != blank %}
-              <a href="{{ settings.social_instagram_link }}" class="footer__social-link" target="_blank" rel="noopener">
+            {% if section.settings.instagram_link != blank %}
+              <a href="{{ section.settings.instagram_link }}" class="footer__social-link" target="_blank" rel="noopener">
                 <span class="footer__social-text">Instagram</span>
               </a>
             {% endif %}
-            {% if settings.social_youtube_link != blank %}
-              <a href="{{ settings.social_youtube_link }}" class="footer__social-link" target="_blank" rel="noopener">
+            {% if section.settings.youtube_link != blank %}
+              <a href="{{ section.settings.youtube_link }}" class="footer__social-link" target="_blank" rel="noopener">
                 <span class="footer__social-text">Youtube</span>
               </a>
             {% endif %}
-            {% if settings.social_twitter_link != blank %}
-              <a href="{{ settings.social_twitter_link }}" class="footer__social-link" target="_blank" rel="noopener">
+            {% if section.settings.twitter_link != blank %}
+              <a href="{{ section.settings.twitter_link }}" class="footer__social-link" target="_blank" rel="noopener">
                 <span class="footer__social-text">Twitter</span>
               </a>
             {% endif %}
-            {% if settings.social_linkedin_link != blank %}
-              <a href="{{ settings.social_linkedin_link }}" class="footer__social-link" target="_blank" rel="noopener">
+            {% if section.settings.linkedin_link != blank %}
+              <a href="{{ section.settings.linkedin_link }}" class="footer__social-link" target="_blank" rel="noopener">
                 <span class="footer__social-text">LinkedIn</span>
               </a>
             {% endif %}
-            {% if settings.social_tiktok_link != blank %}
-              <a href="{{ settings.social_tiktok_link }}" class="footer__social-link" target="_blank" rel="noopener">
+            {% if section.settings.tiktok_link != blank %}
+              <a href="{{ section.settings.tiktok_link }}" class="footer__social-link" target="_blank" rel="noopener">
                 <span class="footer__social-text">TikTok</span>
               </a>
             {% endif %}
@@ -368,8 +368,37 @@ footer{
       "type": "checkbox",
       "id": "show_social",
       "label": "Show Social Media Links",
-      "default": true,
-      "info": "Configure social media links in Theme settings > Social media"
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "facebook_link",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "instagram_link",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "youtube_link",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "url",
+      "id": "twitter_link",
+      "label": "Twitter URL"
+    },
+    {
+      "type": "url",
+      "id": "linkedin_link",
+      "label": "LinkedIn URL"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_link",
+      "label": "TikTok URL"
     },
     {
       "type": "header",
