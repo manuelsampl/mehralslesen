@@ -138,12 +138,19 @@
 
 .footer__columns {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--footer-columns-gap);
   align-items: flex-start;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 990px) {
+  .footer__columns {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media screen and (max-width: 750px) {
   .footer__columns {
     grid-template-columns: 1fr;
     gap: 2rem;
