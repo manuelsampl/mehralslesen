@@ -35,10 +35,10 @@
         "footer_column_YG6djd": {
           "type": "footer_column",
           "settings": {
-            "headline": "Über uns",
+            "headline": "Links",
             "content_type": "menu",
             "text": "",
-            "menu": ""
+            "menu": "links"
           }
         },
         "footer_column_HANTxY": {
@@ -47,7 +47,7 @@
             "headline": "Rechtliches",
             "content_type": "menu",
             "text": "",
-            "menu": ""
+            "menu": "rechtliches"
           }
         }
       },
