@@ -14,126 +14,64 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "divider_hFm3am": {
-          "type": "_divider",
-          "name": "t:names.divider",
+        "footer_column_hMUEgW": {
+          "type": "footer_column",
           "settings": {
-            "thickness": 1,
-            "corner_radius": "square",
-            "width_percent": 100,
-            "padding-block-start": 0,
-            "padding-block-end": 0
-          },
-          "blocks": {}
+            "headline": "Column Title",
+            "content_type": "text",
+            "text": "",
+            "menu": ""
+          }
         },
-        "footer_utilities_KRaGcH": {
-          "type": "footer-utilities",
-          "name": "t:names.footer_utilities",
+        "footer_column_PjzkXn": {
+          "type": "footer_column",
           "settings": {
-            "divider_thickness": 0,
-            "padding-block-start": 12,
-            "padding-block-end": 0
-          },
-          "blocks": {
-            "copyright": {
-              "type": "_footer-copyright",
-              "static": true,
-              "settings": {
-                "show_powered_by": true,
-                "font_size": "0.75rem",
-                "case": "none"
-              },
-              "blocks": {}
-            },
-            "policy_list": {
-              "type": "_footer-policy-list",
-              "static": true,
-              "settings": {
-                "font_size": "0.75rem",
-                "case": "none"
-              },
-              "blocks": {}
-            },
-            "social_icons": {
-              "type": "_footer-social-icons",
-              "static": true,
-              "settings": {},
-              "blocks": {
-                "social_link_JnLXB6": {
-                  "type": "_social-link",
-                  "name": "Facebook",
-                  "settings": {
-                    "link": "https://www.facebook.com/"
-                  },
-                  "blocks": {}
-                },
-                "social_link_9i9EqD": {
-                  "type": "_social-link",
-                  "name": "Instagram ",
-                  "settings": {
-                    "link": "https://www.instagram.com/"
-                  },
-                  "blocks": {}
-                },
-                "social_link_kd8UUt": {
-                  "type": "_social-link",
-                  "name": "TikTok",
-                  "settings": {
-                    "link": "https://www.tiktok.com/"
-                  },
-                  "blocks": {}
-                },
-                "social_link_Qw9AXL": {
-                  "type": "_social-link",
-                  "name": "X / Twitter",
-                  "settings": {
-                    "link": "https://x.com/"
-                  },
-                  "blocks": {}
-                },
-                "social_link_aAH768": {
-                  "type": "_social-link",
-                  "name": "YouTube",
-                  "settings": {
-                    "link": "https://www.youtube.com/"
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "social_link_JnLXB6",
-                "social_link_9i9EqD",
-                "social_link_kd8UUt",
-                "social_link_Qw9AXL",
-                "social_link_aAH768"
-              ]
-            }
-          },
-          "block_order": []
+            "headline": "Column Title",
+            "content_type": "text",
+            "text": "",
+            "menu": ""
+          }
+        },
+        "footer_column_YG6djd": {
+          "type": "footer_column",
+          "settings": {
+            "headline": "Column Title",
+            "content_type": "text",
+            "text": "",
+            "menu": ""
+          }
+        },
+        "footer_column_HANTxY": {
+          "type": "footer_column",
+          "settings": {
+            "headline": "Column Title",
+            "content_type": "text",
+            "text": "",
+            "menu": ""
+          }
         }
       },
       "block_order": [
-        "divider_hFm3am",
-        "footer_utilities_KRaGcH"
+        "footer_column_hMUEgW",
+        "footer_column_PjzkXn",
+        "footer_column_YG6djd",
+        "footer_column_HANTxY"
       ],
       "name": "Footer",
       "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "center",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 48,
+        "logo_image": "shopify://shop_images/logo_MAL.png",
+        "logo_width": 200,
+        "social_title": "We are on Social",
+        "show_social": true,
+        "columns_gap": 40,
+        "social_gap": 15,
         "section_width": "page-width",
-        "section_height": "",
         "color_scheme": "scheme-4e8a0a4e-f85d-4a09-8ed2-30f20c76a6a8",
         "background_media": "none",
         "video_position": "cover",
         "background_image_position": "cover",
-        "padding-block-start": 0,
-        "padding-block-end": 30
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     }
   },
