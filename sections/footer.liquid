@@ -1,10 +1,13 @@
 
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
-<div
-  class="
-    section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}
-    {% if section.settings.section_height != "" %} {{ section.settings.section_height | prepend: "section--height-" }}{% endif %}
+<footer
+  class="footer section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  style="
+    --footer-padding-top: {{ section.settings.padding_top }}px;
+    --footer-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --footer-columns-gap: {{ section.settings.columns_gap }}px;
+    --footer-social-gap: {{ section.settings.social_gap }}px;
   "
 >
   {% render 'background-media',
@@ -15,22 +18,260 @@
     background_image_position: section.settings.background_image_position
   %}
 
-  <div
-    class="
-      spacing-style
-      layout-panel-flex
-      layout-panel-flex--{{ section.settings.content_direction }}
-      section-content-wrapper
-      {% if section.settings.vertical_on_mobile %} mobile-column{% endif %}
-    "
-    style="
-      {% render 'layout-panel-style', settings: section.settings %}
-      {%  render 'spacing-style', settings: section.settings %}
-    "
-  >
-    {% content_for 'blocks' %}
+  <div class="footer__container">
+    <!-- Logo Section -->
+    {% if section.settings.logo_image %}
+      <div class="footer__logo">
+        <img 
+          src="{{ section.settings.logo_image | image_url: width: section.settings.logo_width }}" 
+          alt="{{ shop.name }}"
+          width="{{ section.settings.logo_width }}"
+          height="auto"
+          loading="lazy"
+        >
+      </div>
+    {% endif %}
+
+    <!-- Main Footer Columns -->
+    <div class="footer__columns">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'footer_column' %}
+            <div class="footer__column" {{ block.shopify_attributes }}>
+              {% if block.settings.headline %}
+                <h3 class="footer__column-title">{{ block.settings.headline }}</h3>
+              {% endif %}
+              
+              {% if block.settings.content_type == 'text' and block.settings.text %}
+                <div class="footer__column-text">
+                  {{ block.settings.text }}
+                </div>
+              {% elsif block.settings.content_type == 'menu' and block.settings.menu != blank %}
+                <nav class="footer__column-menu">
+                  <ul class="footer__menu-list">
+                    {% for link in linklists[block.settings.menu].links %}
+                      <li class="footer__menu-item">
+                        <a href="{{ link.url }}" class="footer__menu-link">
+                          {{ link.title }}
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </nav>
+              {% endif %}
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+
+    <!-- Social Media Section -->
+    {% if section.settings.social_title or section.settings.show_social %}
+      <div class="footer__social">
+        {% if section.settings.social_title %}
+          <h3 class="footer__social-title">{{ section.settings.social_title }}</h3>
+        {% endif %}
+        
+        {% if section.settings.show_social %}
+          <div class="footer__social-links">
+            {% if settings.social_facebook_link != blank %}
+              <a href="{{ settings.social_facebook_link }}" class="footer__social-link" target="_blank" rel="noopener">
+                <span class="footer__social-text">Facebook</span>
+              </a>
+            {% endif %}
+            {% if settings.social_instagram_link != blank %}
+              <a href="{{ settings.social_instagram_link }}" class="footer__social-link" target="_blank" rel="noopener">
+                <span class="footer__social-text">Instagram</span>
+              </a>
+            {% endif %}
+            {% if settings.social_youtube_link != blank %}
+              <a href="{{ settings.social_youtube_link }}" class="footer__social-link" target="_blank" rel="noopener">
+                <span class="footer__social-text">Youtube</span>
+              </a>
+            {% endif %}
+            {% if settings.social_twitter_link != blank %}
+              <a href="{{ settings.social_twitter_link }}" class="footer__social-link" target="_blank" rel="noopener">
+                <span class="footer__social-text">Twitter</span>
+              </a>
+            {% endif %}
+            {% if settings.social_linkedin_link != blank %}
+              <a href="{{ settings.social_linkedin_link }}" class="footer__social-link" target="_blank" rel="noopener">
+                <span class="footer__social-text">LinkedIn</span>
+              </a>
+            {% endif %}
+            {% if settings.social_tiktok_link != blank %}
+              <a href="{{ settings.social_tiktok_link }}" class="footer__social-link" target="_blank" rel="noopener">
+                <span class="footer__social-text">TikTok</span>
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
   </div>
-</div>
+</footer>
+
+{% stylesheet %}
+.footer {
+  padding: var(--footer-padding-top) 0 var(--footer-padding-bottom);
+  background-color: rgb(var(--color-background));
+}
+
+.footer__container {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 var(--page-margin);
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.footer__logo {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+.footer__logo img {
+  max-width: 100%;
+  height: auto;
+}
+
+.footer__columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--footer-columns-gap);
+  align-items: flex-start;
+}
+
+@media screen and (max-width: 768px) {
+  .footer__columns {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.footer__column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.footer__column-title {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-size: 1.125rem;
+  line-height: 1.4;
+  margin: 0;
+  color: rgb(var(--color-foreground));
+}
+
+.footer__column-text {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgb(var(--color-foreground));
+}
+
+.footer__column-text p {
+  margin: 0 0 0.5rem 0;
+}
+
+.footer__column-text p:last-child {
+  margin-bottom: 0;
+}
+
+.footer__column-menu {
+  width: 100%;
+}
+
+.footer__menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer__menu-item {
+  margin: 0;
+}
+
+.footer__menu-link {
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  transition: color 0.2s ease;
+}
+
+.footer__menu-link:hover,
+.footer__menu-link:focus {
+  color: rgb(var(--color-foreground-secondary));
+  text-decoration: underline;
+}
+
+.footer__social {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.footer__social-title {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-size: 1.125rem;
+  line-height: 1.4;
+  margin: 0;
+  color: rgb(var(--color-foreground));
+}
+
+.footer__social-links {
+  display: flex;
+  gap: var(--footer-social-gap);
+  flex-wrap: wrap;
+}
+
+.footer__social-link {
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  transition: color 0.2s ease;
+  padding: 0.25rem 0;
+}
+
+.footer__social-link:hover,
+.footer__social-link:focus {
+  color: rgb(var(--color-foreground-secondary));
+  text-decoration: underline;
+}
+
+.footer__social-text {
+  display: inline-block;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 990px) {
+  .footer__container {
+    gap: 2rem;
+  }
+  
+  .footer__columns {
+    gap: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .footer__social-links {
+    gap: calc(var(--footer-social-gap) * 0.75);
+  }
+  
+  .footer__social-link {
+    font-size: 0.8125rem;
+  }
+}
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -39,191 +280,107 @@
   "tag": "footer",
   "blocks": [
     {
-      "type": "_divider"
-    },
-    {
-      "type": "@app"
-    },
-    {
-      "type": "button"
-    },
-    {
-      "type": "email-signup"
-    },
-    {
-      "type": "follow-on-shop"
-    },
-    {
-      "type": "footer-utilities"
-    },
-    {
-      "type": "group"
-    },
-    {
-      "type": "icon"
-    },
-    {
-      "type": "image"
-    },
-    {
-      "type": "menu"
-    },
-    {
-      "type": "payment-icons"
-    },
-    {
-      "type": "text"
-    },
-    {
-      "type": "logo"
-    },
-    {
-      "type": "jumbo-text"
+      "type": "footer_column",
+      "name": "Footer Column",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "headline",
+          "label": "Column Headline",
+          "default": "Column Title"
+        },
+        {
+          "type": "select",
+          "id": "content_type",
+          "label": "Content Type",
+          "options": [
+            {
+              "value": "text",
+              "label": "Text"
+            },
+            {
+              "value": "menu",
+              "label": "Menu"
+            }
+          ],
+          "default": "text"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text Content",
+          "visible_if": "{{ block.settings.content_type == 'text' }}"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "visible_if": "{{ block.settings.content_type == 'menu' }}"
+        }
+      ]
     }
   ],
-  "enabled_on": {
-    "groups": ["footer"]
-  },
   "settings": [
     {
       "type": "header",
-      "content": "t:content.layout"
+      "content": "Logo Settings"
     },
     {
-      "type": "select",
-      "id": "content_direction",
-      "label": "t:settings.direction",
-      "options": [
-        {
-          "value": "column",
-          "label": "t:options.vertical"
-        },
-        {
-          "value": "row",
-          "label": "t:options.horizontal"
-        }
-      ],
-      "default": "column"
-    },
-    {
-      "type": "checkbox",
-      "id": "vertical_on_mobile",
-      "label": "t:settings.vertical_on_mobile",
-      "default": true,
-      "visible_if": "{{ section.settings.content_direction == 'row' }}"
-    },
-    {
-      "type": "select",
-      "id": "horizontal_alignment",
-      "label": "t:settings.alignment",
-      "options": [
-        {
-          "value": "flex-start",
-          "label": "t:options.left"
-        },
-        {
-          "value": "center",
-          "label": "t:options.center"
-        },
-        {
-          "value": "flex-end",
-          "label": "t:options.right"
-        },
-        {
-          "value": "space-between",
-          "label": "t:options.space_between"
-        }
-      ],
-      "default": "flex-start",
-      "visible_if": "{{ section.settings.content_direction == 'row' }}"
-    },
-    {
-      "type": "select",
-      "id": "vertical_alignment",
-      "label": "t:settings.position",
-      "options": [
-        {
-          "value": "flex-start",
-          "label": "t:options.top"
-        },
-        {
-          "value": "center",
-          "label": "t:options.center"
-        },
-        {
-          "value": "flex-end",
-          "label": "t:options.bottom"
-        }
-      ],
-      "default": "center",
-      "visible_if": "{{ section.settings.content_direction == 'row' }}"
-    },
-    {
-      "type": "checkbox",
-      "id": "align_baseline",
-      "label": "t:settings.align_baseline",
-      "default": false,
-      "visible_if": "{{ section.settings.vertical_alignment == 'flex-end' }}"
-    },
-    {
-      "type": "select",
-      "id": "horizontal_alignment_flex_direction_column",
-      "label": "t:settings.alignment",
-      "options": [
-        {
-          "value": "flex-start",
-          "label": "t:options.left"
-        },
-        {
-          "value": "center",
-          "label": "t:options.center"
-        },
-        {
-          "value": "flex-end",
-          "label": "t:options.right"
-        }
-      ],
-      "default": "flex-start",
-      "visible_if": "{{ section.settings.content_direction != 'row' }}"
-    },
-    {
-      "type": "select",
-      "id": "vertical_alignment_flex_direction_column",
-      "label": "t:settings.position",
-      "options": [
-        {
-          "value": "flex-start",
-          "label": "t:options.top"
-        },
-        {
-          "value": "center",
-          "label": "t:options.center"
-        },
-        {
-          "value": "flex-end",
-          "label": "t:options.bottom"
-        },
-        {
-          "value": "space-between",
-          "label": "t:options.space_between"
-        }
-      ],
-      "default": "center",
-      "visible_if": "{{ section.settings.content_direction == 'column' }}"
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo Image"
     },
     {
       "type": "range",
-      "id": "gap",
-      "label": "t:settings.gap",
-      "min": 0,
-      "max": 100,
-      "step": 1,
+      "id": "logo_width",
+      "label": "Logo Width",
+      "min": 100,
+      "max": 400,
+      "step": 10,
       "unit": "px",
-      "default": 12
+      "default": 200
     },
     {
       "type": "header",
-      "content": "t:content.size"
+      "content": "Social Media Settings"
+    },
+    {
+      "type": "text",
+      "id": "social_title",
+      "label": "Social Media Title",
+      "default": "We are on Social"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show Social Media Links",
+      "default": true,
+      "info": "Configure social media links in Theme settings > Social media"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "columns_gap",
+      "label": "Gap between columns",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "social_gap",
+      "label": "Gap between social icons",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 15
     },
     {
       "type": "select",
@@ -240,34 +397,6 @@
         }
       ],
       "default": "page-width"
-    },
-    {
-      "type": "select",
-      "id": "section_height",
-      "label": "t:settings.height",
-      "options": [
-        {
-          "value": "",
-          "label": "t:options.auto"
-        },
-        {
-          "value": "small",
-          "label": "t:options.small"
-        },
-        {
-          "value": "medium",
-          "label": "t:options.medium"
-        },
-        {
-          "value": "large",
-          "label": "t:options.large"
-        },
-        {
-          "value": "full-screen",
-          "label": "t:options.full_screen"
-        }
-      ],
-      "default": ""
     },
     {
       "type": "header",
@@ -351,23 +480,59 @@
     },
     {
       "type": "range",
-      "id": "padding-block-start",
+      "id": "padding_top",
       "label": "t:settings.top",
       "min": 0,
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 0
+      "default": 40
     },
     {
       "type": "range",
-      "id": "padding-block-end",
+      "id": "padding_bottom",
       "label": "t:settings.bottom",
       "min": 0,
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 0
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Footer",
+      "blocks": [
+        {
+          "type": "footer_column",
+          "settings": {
+            "headline": "Spendenkonto",
+            "content_type": "text",
+            "text": "<p>Erste Bank<br>IBAN:<br>AT20 2011 1000 0255 1063<br>BIC:<br>GIBAATWWXXX<br><br>spende.roteskreuz.at</p>"
+          }
+        },
+        {
+          "type": "footer_column",
+          "settings": {
+            "headline": "Service",
+            "content_type": "menu"
+          }
+        },
+        {
+          "type": "footer_column",
+          "settings": {
+            "headline": "Über uns",
+            "content_type": "menu"
+          }
+        },
+        {
+          "type": "footer_column",
+          "settings": {
+            "headline": "Rechtliches",
+            "content_type": "menu"
+          }
+        }
+      ]
     }
   ]
 }
