@@ -1,6 +1,18 @@
 
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+ <!-- Logo Section -->
+    {% if section.settings.logo_image %}
+      <div class="footer__logo">
+        <img 
+          src="{{ section.settings.logo_image | image_url: width: section.settings.logo_width }}" 
+          alt="{{ shop.name }}"
+          width="{{ section.settings.logo_width }}"
+          height="auto"
+          loading="lazy"
+        >
+      </div>
+    {% endif %}
 <footer
   class="footer section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
   style="
@@ -18,19 +30,10 @@
     background_image_position: section.settings.background_image_position
   %}
 
+  
+
   <div class="footer__container">
-    <!-- Logo Section -->
-    {% if section.settings.logo_image %}
-      <div class="footer__logo">
-        <img 
-          src="{{ section.settings.logo_image | image_url: width: section.settings.logo_width }}" 
-          alt="{{ shop.name }}"
-          width="{{ section.settings.logo_width }}"
-          height="auto"
-          loading="lazy"
-        >
-      </div>
-    {% endif %}
+   
 
     <!-- Main Footer Columns -->
     <div class="footer__columns">
@@ -111,13 +114,18 @@
 </footer>
 
 {% stylesheet %}
+footer{
+
+  margin-top: 140px;
+}
 .footer {
   padding: var(--footer-padding-top) 0 var(--footer-padding-bottom);
   background-color: rgb(var(--color-background));
 }
 
 .footer__container {
-  max-width: var(--page-width);
+  position: relative;
+  width: 100%;
   margin: 0 auto;
   padding: 0 var(--page-margin);
   display: flex;
@@ -126,9 +134,10 @@
 }
 
 .footer__logo {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 1rem;
+  position: absolute;
+  z-index: 2;
+  left: 40px;
+  top: -50px
 }
 
 .footer__logo img {
