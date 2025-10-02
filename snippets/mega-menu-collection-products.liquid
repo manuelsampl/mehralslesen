@@ -1,0 +1,101 @@
+{%- doc -%}
+  Renders products from a collection in a mega menu dropdown.
+
+  @param {string} collection_handle - The handle of the collection to display products from
+  @param {string} [id] - Unique ID to assign to the menu
+  @param {number} [content_aspect_ratio] - The aspect ratio to display the product images
+  @param {number} [image_border_radius] - The border radius used for the product images
+{%- enddoc -%}
+
+{% liquid
+  assign collection = collections[collection_handle]
+  assign product_limit = 8
+  assign columns_desktop = 4
+  assign columns_tablet = 3
+  
+  if content_aspect_ratio == blank
+    assign content_aspect_ratio = '4 / 5'
+  endif
+  
+  if image_border_radius == blank
+    assign image_border_radius = 0
+  endif
+%}
+
+<div class="mega-menu section section--full-width-margin">
+  <div
+    class="mega-menu__collection-products"
+    data-menu-grid-id="{{ id }}"
+    style="--menu-columns-desktop: {{ columns_desktop }}; --menu-columns-tablet: {{ columns_tablet }};"
+  >
+    {% if collection and collection.products.size > 0 %}
+      <div class="mega-menu__content-list mega-menu__content-list--products">
+        {% for product in collection.products limit: product_limit %}
+          <div class="mega-menu__content-list-item">
+            {% render 'resource-card',
+              resource: product,
+              resource_type: 'product',
+              image_aspect_ratio: content_aspect_ratio,
+              style: 'default'
+            %}
+          </div>
+        {% endfor %}
+      </div>
+      
+      {% if collection.products.size > product_limit %}
+        <div class="mega-menu__view-all">
+          <a href="{{ collection.url }}" class="button button--secondary">
+            {{ 'actions.view_all' | t }}
+          </a>
+        </div>
+      {% endif %}
+    {% else %}
+      <p class="mega-menu__empty">No products available</p>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .mega-menu__collection-products {
+    width: 100%;
+  }
+
+  .mega-menu__collection-products .mega-menu__content-list--products {
+    display: grid;
+    grid-template-columns: repeat(var(--menu-columns-tablet), minmax(0, 1fr));
+    gap: var(--gap-xl);
+    width: 100%;
+  }
+
+  @media screen and (min-width: 990px) {
+    .mega-menu__collection-products .mega-menu__content-list--products {
+      grid-template-columns: repeat(var(--menu-columns-desktop), minmax(0, 1fr));
+    }
+  }
+
+  .mega-menu__content-list-item .resource-card__title {
+    text-transform: var(--title-case);
+  }
+
+  .mega-menu__view-all {
+    margin-top: var(--margin-lg);
+    text-align: center;
+  }
+
+  .mega-menu__empty {
+    padding: var(--padding-xl);
+    text-align: center;
+    color: var(--color-foreground-muted);
+  }
+
+  /* Hide collection product dropdowns on mobile */
+  @media screen and (max-width: 989px) {
+    .menu-list__list-item--collection .menu-list__submenu {
+      display: none !important;
+    }
+    
+    .menu-list__list-item--collection .menu-list__link[aria-haspopup] {
+      pointer-events: none;
+    }
+  }
+{% endstylesheet %}

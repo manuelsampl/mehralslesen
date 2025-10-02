@@ -25,9 +25,23 @@
 
 {% capture children %}
   {% for link in block_settings.menu.links %}
+    {% liquid
+      # Check if this is a collection link without child links
+      assign is_collection_link = false
+      assign collection_handle = ''
+      if link.links == blank and link.type == 'collection_link'
+        assign is_collection_link = true
+        assign collection_handle = link.url | split: '/collections/' | last | split: '?' | first | split: '#' | first
+      endif
+      
+      assign has_submenu = false
+      if link.links != blank or is_collection_link
+        assign has_submenu = true
+      endif
+    %}
     <li
       role="presentation"
-      class="menu-list__list-item"
+      class="menu-list__list-item{% if is_collection_link %} menu-list__list-item--collection{% endif %}"
       on:focus="/activate"
       on:blur="/deactivate"
       on:pointerenter="/activate"
@@ -36,7 +50,7 @@
       <a
         href="{{ link.url }}"
         class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}"
-        {%- if link.links != blank -%}
+        {%- if has_submenu -%}
           aria-controls="submenu-{{ forloop.index }}"
           aria-haspopup="true"
           aria-expanded="false"
@@ -45,7 +59,7 @@
       >
         <span class="menu-list__link-title">{{- link.title -}}</span>
       </a>
-      {%- if link.links != blank -%}
+      {%- if has_submenu -%}
         <div class="menu-list__submenu{{ color_scheme_classes }}" ref="submenu[]">
           <div
             id="submenu-{{ forloop.index }}"
@@ -53,13 +67,22 @@
             style="{% render 'submenu-font-styles', settings: block_settings %}"
           >
             {% assign list_id = 'MegaMenuList-' | append: forloop.index %}
-            {% render 'mega-menu',
-              parent_link: link,
-              id: list_id,
-              menu_content_type: menu_content_type,
-              content_aspect_ratio: ratio,
-              image_border_radius: image_border_radius
-            %}
+            {% if is_collection_link %}
+              {% render 'mega-menu-collection-products',
+                collection_handle: collection_handle,
+                id: list_id,
+                content_aspect_ratio: ratio,
+                image_border_radius: image_border_radius
+              %}
+            {% else %}
+              {% render 'mega-menu',
+                parent_link: link,
+                id: list_id,
+                menu_content_type: menu_content_type,
+                content_aspect_ratio: ratio,
+                image_border_radius: image_border_radius
+              %}
+            {% endif %}
           </div>
         </div>
       {%- endif -%}
