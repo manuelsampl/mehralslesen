@@ -267,6 +267,7 @@
         "group_73MVnw",
         "group_RmHiFk"
       ],
+      "disabled": true,
       "name": "t:names.split_showcase",
       "settings": {
         "content_direction": "row",
