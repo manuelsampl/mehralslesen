@@ -17,9 +17,9 @@
         "footer_column_hMUEgW": {
           "type": "footer_column",
           "settings": {
-            "headline": "Spendenkonto",
+            "headline": "Bankverbindung",
             "content_type": "text",
-            "text": "<p>Erste Bank<br/>IBAN: <br/>AT92 2011 1000 0255 1063<br/>BIC: <br/>GIBAATWWXXX<br/><br/><a href=\"https://spende.roteskreuz.at\" target=\"_blank\" title=\"https://spende.roteskreuz.at\">spende.roteskreuz.at</a></p>",
+            "text": "<p>Erste Bank<br/>IBAN: <br/>AT98 2011 1200 3443 3205<br/>BIC: <br/>GIBAATWWXXX</p>",
             "menu": ""
           }
         },
