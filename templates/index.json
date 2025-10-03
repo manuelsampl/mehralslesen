@@ -36,6 +36,14 @@
             "subtitle": "VOLKSSCHULLEHRERIN, NIEDERÖSTERREICH"
           }
         },
+        "testimonial_MG46HQ": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/thisisengineering-TXxiFuQLBKQ-unsplash_1.jpg",
+            "text": "Space und Spot bringen Abwechslung in meinen Deutschunterricht. Ich nutze www.cyber-space.at und www.cyber-spot.at auch gern für Hausübungen oder Supplierstunden.",
+            "subtitle": "MITTELDCHULLEHRERIN, SALZBURG"
+          }
+        },
         "testimonial_AjRNdL": {
           "type": "testimonial",
           "settings": {
@@ -63,6 +71,7 @@
       },
       "block_order": [
         "testimonial_gfpaRU",
+        "testimonial_MG46HQ",
         "testimonial_AjRNdL",
         "testimonial_PQabPw",
         "testimonial_7xYEN7"
