@@ -290,4 +290,5 @@ select {
     border: none !important;
     position: absolute;
     right: -13vw;
+    bottom: 0vw;
 }
