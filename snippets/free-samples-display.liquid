@@ -233,48 +233,28 @@
   // ============================================================================
   
   function checkVariantAndToggleDisplay() {
-    // Find the variant picker
-    const variantPicker = document.querySelector('variant-picker');
-    if (!variantPicker) {
-      console.log('⚠️ No variant picker found');
-      return;
-    }
-
-    // Get selected variant from the hidden input or select
-    const variantInput = document.querySelector('input[name="id"]') || 
-                        document.querySelector('select[name="id"]');
+    // Find the "Jahresabo" option in variant picker
+    const jahresaboFieldset = document.querySelector('fieldset[data-option-id*="jahresabo"]');
     
-    if (!variantInput) {
-      console.log('⚠️ No variant input found');
+    if (!jahresaboFieldset) {
+      console.log('⚠️ No Jahresabo fieldset found');
       return;
     }
 
-    const selectedVariantId = variantInput.value;
-    console.log('🔍 Selected variant ID:', selectedVariantId);
-
-    // Get variant data from the variant picker's JSON script
-    const variantDataScript = variantPicker.querySelector('script[type="application/json"]');
-    if (!variantDataScript) {
-      console.log('⚠️ No variant data found');
+    // Find the checked radio button
+    const checkedRadio = jahresaboFieldset.querySelector('input[type="radio"]:checked');
+    
+    if (!checkedRadio) {
+      console.log('⚠️ No checked radio found');
       return;
     }
 
-    const variants = JSON.parse(variantDataScript.textContent);
-    const selectedVariant = variants.find(v => v.id.toString() === selectedVariantId.toString());
+    // Get the value (e.g., "Privatabo" or "Schüler:innen Abo")
+    const selectedValue = checkedRadio.value;
+    console.log('� Selected Jahresabo value:', selectedValue);
 
-    if (!selectedVariant) {
-      console.log('⚠️ Selected variant not found in data');
-      return;
-    }
-
-    console.log('📦 Selected variant:', selectedVariant);
-
-    // Check if variant title contains "Privatabo"
-    const isPrivatabo = selectedVariant.title.toLowerCase().includes('privatabo') ||
-                       selectedVariant.option1?.toLowerCase().includes('privatabo') ||
-                       selectedVariant.option2?.toLowerCase().includes('privatabo') ||
-                       selectedVariant.option3?.toLowerCase().includes('privatabo');
-
+    // Check if "Privatabo" is selected
+    const isPrivatabo = selectedValue.toLowerCase().includes('privatabo');
     console.log('🏷️ Is Privatabo variant?', isPrivatabo);
 
     // Show/hide free samples display
@@ -300,22 +280,22 @@
     checkVariantAndToggleDisplay();
   }
 
-  // Listen for variant changes
+  // Listen for variant changes - direct radio button events
+  document.addEventListener('change', function(event) {
+    // Check if the changed element is a Jahresabo radio button
+    if (event.target.matches('input[type="radio"][name*="Jahresabo"]')) {
+      console.log('🔄 Jahresabo radio changed:', event.target.value);
+      checkVariantAndToggleDisplay();
+    }
+  });
+
+  // Also listen for variant:change events (if theme dispatches them)
   document.addEventListener('variant:change', function(event) {
-    console.log('🔄 Variant changed:', event.detail);
-    setTimeout(checkVariantAndToggleDisplay, 100); // Small delay to ensure DOM is updated
+    console.log('🔄 Variant changed event:', event.detail);
+    setTimeout(checkVariantAndToggleDisplay, 100);
   });
 
-  // Also listen for input changes on variant selects/inputs
-  const variantInputs = document.querySelectorAll('input[name="id"], select[name="id"], .variant-option input, .variant-option select');
-  variantInputs.forEach(input => {
-    input.addEventListener('change', function() {
-      console.log('🔄 Variant input changed');
-      setTimeout(checkVariantAndToggleDisplay, 100);
-    });
-  });
-
-  // Watch for variant picker updates with MutationObserver
+  // Watch for variant picker updates with MutationObserver as fallback
   const variantPicker = document.querySelector('variant-picker');
   if (variantPicker) {
     const observer = new MutationObserver(() => {
