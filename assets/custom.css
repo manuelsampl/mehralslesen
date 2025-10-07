@@ -356,3 +356,8 @@ select {
 .featured-product .card-gallery slideshow-slides {
     height: 100%;
 }
+
+.variant-picker__form legend {
+    color: #3F9FB8 !important;
+    font-size: 24px !important;
+}
