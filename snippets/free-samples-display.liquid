@@ -217,6 +217,7 @@
 
   <script>
 (function() {
+  const freeSamplesContainer = document.querySelector('.rk-free-samples');
   const teacherInput = document.getElementById('rk-teacher-samples');
   const socialInput = document.getElementById('rk-social-samples');
 
@@ -226,6 +227,109 @@
 
   console.log('🚀 RK Free Samples Widget loaded for product {{ product.id }}');
   console.log('📋 Custom Fields:', { lehrerexemplarId, freiexemplarId });
+
+  // ============================================================================
+  // VARIANT CHANGE DETECTION - Hide/Show based on variant selection
+  // ============================================================================
+  
+  function checkVariantAndToggleDisplay() {
+    // Find the variant picker
+    const variantPicker = document.querySelector('variant-picker');
+    if (!variantPicker) {
+      console.log('⚠️ No variant picker found');
+      return;
+    }
+
+    // Get selected variant from the hidden input or select
+    const variantInput = document.querySelector('input[name="id"]') || 
+                        document.querySelector('select[name="id"]');
+    
+    if (!variantInput) {
+      console.log('⚠️ No variant input found');
+      return;
+    }
+
+    const selectedVariantId = variantInput.value;
+    console.log('🔍 Selected variant ID:', selectedVariantId);
+
+    // Get variant data from the variant picker's JSON script
+    const variantDataScript = variantPicker.querySelector('script[type="application/json"]');
+    if (!variantDataScript) {
+      console.log('⚠️ No variant data found');
+      return;
+    }
+
+    const variants = JSON.parse(variantDataScript.textContent);
+    const selectedVariant = variants.find(v => v.id.toString() === selectedVariantId.toString());
+
+    if (!selectedVariant) {
+      console.log('⚠️ Selected variant not found in data');
+      return;
+    }
+
+    console.log('📦 Selected variant:', selectedVariant);
+
+    // Check if variant title contains "Privatabo"
+    const isPrivatabo = selectedVariant.title.toLowerCase().includes('privatabo') ||
+                       selectedVariant.option1?.toLowerCase().includes('privatabo') ||
+                       selectedVariant.option2?.toLowerCase().includes('privatabo') ||
+                       selectedVariant.option3?.toLowerCase().includes('privatabo');
+
+    console.log('🏷️ Is Privatabo variant?', isPrivatabo);
+
+    // Show/hide free samples display
+    if (freeSamplesContainer) {
+      if (isPrivatabo) {
+        freeSamplesContainer.style.display = 'none';
+        console.log('✅ Free samples hidden (Privatabo selected)');
+        
+        // Reset quantities
+        if (teacherInput) teacherInput.value = '0';
+        if (socialInput) socialInput.value = '0';
+      } else {
+        freeSamplesContainer.style.display = 'block';
+        console.log('✅ Free samples shown (other variant selected)');
+      }
+    }
+  }
+
+  // Check on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkVariantAndToggleDisplay);
+  } else {
+    checkVariantAndToggleDisplay();
+  }
+
+  // Listen for variant changes
+  document.addEventListener('variant:change', function(event) {
+    console.log('🔄 Variant changed:', event.detail);
+    setTimeout(checkVariantAndToggleDisplay, 100); // Small delay to ensure DOM is updated
+  });
+
+  // Also listen for input changes on variant selects/inputs
+  const variantInputs = document.querySelectorAll('input[name="id"], select[name="id"], .variant-option input, .variant-option select');
+  variantInputs.forEach(input => {
+    input.addEventListener('change', function() {
+      console.log('🔄 Variant input changed');
+      setTimeout(checkVariantAndToggleDisplay, 100);
+    });
+  });
+
+  // Watch for variant picker updates with MutationObserver
+  const variantPicker = document.querySelector('variant-picker');
+  if (variantPicker) {
+    const observer = new MutationObserver(() => {
+      console.log('👁️ Variant picker DOM changed');
+      checkVariantAndToggleDisplay();
+    });
+
+    observer.observe(variantPicker, {
+      attributes: true,
+      childList: true,
+      subtree: true
+    });
+  }
+
   console.log('🎯 Starting comprehensive debugging...');
 
   // DEBUG: Log all available buttons on page

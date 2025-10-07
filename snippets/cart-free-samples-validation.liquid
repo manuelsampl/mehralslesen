@@ -1,0 +1,141 @@
+{% doc %}
+  Validates that free samples (Lehrerexemplar and Schülerfreiexemplar) 
+  don't exceed 10% of main products in cart.
+
+  @example
+  {% render 'cart-free-samples-validation' %}
+{% enddoc %}
+
+<div id="cart-free-samples-validation" class="cart-validation-message" style="display: none;">
+  <div class="cart-validation-message__content">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V13H11V15ZM11 11H9V5H11V11Z" fill="currentColor"/>
+    </svg>
+    <div>
+      <strong>Freiexemplare überschreiten die 10%-Grenze</strong>
+      <p id="validation-details"></p>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .cart-validation-message {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-block-end: 1rem;
+    color: #856404;
+  }
+
+  .cart-validation-message__content {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .cart-validation-message__content svg {
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .cart-validation-message strong {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .cart-validation-message p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .cart__checkout-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+(function() {
+  console.log('🔍 Cart Free Samples Validation loaded');
+
+  function validateFreeSamples() {
+    const cartItems = {{ cart.items | json }};
+    
+    // Find all main products (not free samples)
+    const mainProducts = cartItems.filter(item => {
+      const props = item.properties || {};
+      return !props._type || (props._type !== 'Lehrerexemplar' && props._type !== 'Schülerfreiexemplar');
+    });
+
+    // Find free sample items
+    const teacherSamples = cartItems.filter(item => {
+      const props = item.properties || {};
+      return props._type === 'Lehrerexemplar';
+    });
+
+    const socialSamples = cartItems.filter(item => {
+      const props = item.properties || {};
+      return props._type === 'Schülerfreiexemplar';
+    });
+
+    // Calculate totals
+    const mainProductQty = mainProducts.reduce((sum, item) => sum + item.quantity, 0);
+    const teacherQty = teacherSamples.reduce((sum, item) => sum + item.quantity, 0);
+    const socialQty = socialSamples.reduce((sum, item) => sum + item.quantity, 0);
+    const totalFreeSamples = teacherQty + socialQty;
+
+    const maxAllowed = Math.floor(mainProductQty * 0.1);
+
+    console.log('📊 Cart validation:', {
+      mainProductQty,
+      teacherQty,
+      socialQty,
+      totalFreeSamples,
+      maxAllowed,
+      isValid: totalFreeSamples <= maxAllowed
+    });
+
+    const validationDiv = document.getElementById('cart-free-samples-validation');
+    const detailsP = document.getElementById('validation-details');
+    const checkoutButton = document.getElementById('checkout');
+
+    if (totalFreeSamples > maxAllowed && mainProductQty > 0) {
+      // Show validation error
+      const excess = totalFreeSamples - maxAllowed;
+      detailsP.textContent = `Sie haben ${totalFreeSamples} Freiexemplar(e) im Warenkorb, aber nur ${maxAllowed} sind erlaubt (10% von ${mainProductQty} Hauptprodukten). Bitte entfernen Sie ${excess} Freiexemplar(e).`;
+      
+      validationDiv.style.display = 'block';
+      
+      if (checkoutButton) {
+        checkoutButton.disabled = true;
+        checkoutButton.setAttribute('aria-disabled', 'true');
+      }
+    } else {
+      // Hide validation error
+      validationDiv.style.display = 'none';
+      
+      if (checkoutButton && {{ cart.item_count }} > 0) {
+        checkoutButton.disabled = false;
+        checkoutButton.removeAttribute('aria-disabled');
+      }
+    }
+  }
+
+  // Run validation on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', validateFreeSamples);
+  } else {
+    validateFreeSamples();
+  }
+
+  // Re-validate when cart updates
+  document.addEventListener('cart:updated', validateFreeSamples);
+  document.addEventListener('cart:refresh', validateFreeSamples);
+  
+  // Also listen for Shopify's cart update events
+  if (window.Shopify && window.Shopify.on) {
+    window.Shopify.on('cart:update', validateFreeSamples);
+  }
+})();
+{% endjavascript %}
