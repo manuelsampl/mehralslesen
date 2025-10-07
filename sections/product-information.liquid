@@ -262,7 +262,7 @@
         .product-information__grid--half,
         :has(.product-information__media:empty)
       ).product-information--media-left {
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 1fr 1fr;
     }
 
     .product-information__grid:not(
@@ -275,6 +275,22 @@
 
   .product-information__grid--limit-details .product-details > .group-block {
     max-width: var(--sidebar-width);
+  }
+
+  /* Style product details with white background box */
+  @media screen and (min-width: 750px) {
+    .product-information--media-left .product-details,
+    .product-information--media-right .product-details {
+      background-color: #ffffff;
+      padding: var(--padding-2xl);
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  /* Adjust spacing inside the product details box */
+  .product-details > .group-block {
+    gap: var(--gap-lg);
   }
 
   /* If the header is sticky, make product details content stick underneath the header */

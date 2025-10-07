@@ -32,9 +32,29 @@
     {% endif %}
   >
     <span class="visually-hidden">{{ 'accessibility.decrease_quantity' | t }}</span
-    ><span class="svg-wrapper icon-plus">
-      {{- 'icon-minus.svg' | inline_asset_content -}}
-    </span>
+    ><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="95.695" height="86.121" viewBox="0 0 95.695 86.121">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rechteck_58" data-name="Rechteck 58" width="56.856" height="51.485" transform="translate(0 0)" fill="none" stroke="#3f9fb8" stroke-width="2"/>
+    </clipPath>
+    <filter id="Pfad_511" x="0" y="3.836" width="95.695" height="82.285" filterUnits="userSpaceOnUse">
+      <feOffset dy="7" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="13" result="blur"/>
+      <feFlood flood-opacity="0.051"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Gruppe_366" data-name="Gruppe 366" transform="translate(9.771)">
+    <g id="Gruppe_357" data-name="Gruppe 357" transform="matrix(0.819, 0.574, -0.574, 0.819, 29.531, 0)" clip-path="url(#clip-path)">
+      <path id="Pfad_510" data-name="Pfad 510" d="M22.866,41.126C9.956,41.32,4.344,34.281,1.4,24.5a51.483,51.483,0,0,1-1.08-5.228,16.88,16.88,0,0,1-.209-4.949A38.01,38.01,0,0,1,.733,9.861,12.921,12.921,0,0,1,8.819.9C12.5-.533,18.508-.064,22.238.974,31.624,3.585,38.972,8.125,43.4,15.682c1.837,3.139,3.185,8.64,1.5,12.931-2.445,6.222-8.445,9.362-15.127,11.363a45.88,45.88,0,0,1-4.6.941l-2.3.209" transform="translate(5.596 5.178)" fill="none" stroke="#3f9fb8" stroke-width="2" fill-rule="evenodd"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, -9.77, 0)" filter="url(#Pfad_511)">
+      <path id="Pfad_511-2" data-name="Pfad 511" d="M11.179-4.2H1.092V-7.484H17.787V-4.2Z" transform="translate(38.41 43.82)" fill="#3f9fb8" stroke="#3f9fb8" stroke-width="1"/>
+    </g>
+  </g>
+</svg>
+
   </button>
   <input
     type="number"
@@ -67,8 +87,28 @@
     {% endif %}
   >
     <span class="visually-hidden">{{ 'accessibility.increase_quantity' | t }}</span
-    ><span class="svg-wrapper icon-plus">
-      {{- 'icon-plus.svg' | inline_asset_content -}}
-    </span>
+    ><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="95.695" height="95.502" viewBox="0 0 95.695 95.502">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rechteck_58" data-name="Rechteck 58" width="56.856" height="51.485" transform="translate(0 0)" fill="none" stroke="#3f9fb8" stroke-width="2"/>
+    </clipPath>
+    <filter id="Pfad_511" x="0" y="0" width="95.695" height="95.502" filterUnits="userSpaceOnUse">
+      <feOffset dy="7" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="13" result="blur"/>
+      <feFlood flood-opacity="0.051"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Gruppe_367" data-name="Gruppe 367" transform="translate(9.771 2.773)">
+    <g id="Gruppe_357" data-name="Gruppe 357" transform="matrix(0.819, 0.574, -0.574, 0.819, 29.531, 0)" clip-path="url(#clip-path)">
+      <path id="Pfad_510" data-name="Pfad 510" d="M22.866,41.126C9.956,41.32,4.344,34.281,1.4,24.5a51.483,51.483,0,0,1-1.08-5.228,16.88,16.88,0,0,1-.209-4.949A38.01,38.01,0,0,1,.733,9.861,12.921,12.921,0,0,1,8.819.9C12.5-.533,18.508-.064,22.238.974,31.624,3.585,38.972,8.125,43.4,15.682c1.837,3.139,3.185,8.64,1.5,12.931-2.445,6.222-8.445,9.362-15.127,11.363a45.88,45.88,0,0,1-4.6.941l-2.3.209" transform="translate(5.596 5.178)" fill="none" stroke="#3f9fb8" stroke-width="2" fill-rule="evenodd"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, -9.77, -2.77)" filter="url(#Pfad_511)">
+      <path id="Pfad_511-2" data-name="Pfad 511" d="M11.179-4.2V2.41H7.7V-4.2H1.092V-7.484H7.7v-6.608h3.478v6.608h6.608V-4.2Z" transform="translate(38.41 46.59)" fill="#3f9fb8" stroke="#3f9fb8" stroke-width="1"/>
+    </g>
+  </g>
+</svg>
+
   </button>
 </quantity-selector-component>

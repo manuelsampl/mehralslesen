@@ -32,7 +32,7 @@
     # Checks if product handle does not match the closest product's handle (i.e. product card)
     # and if the currency code is enabled for product cards
   elsif product.handle != closest.product.handle and settings.currency_code_enabled_product_cards
-    assign price = price | money_with_currency
+    assign price = price | money_with_currency 
     assign compare_at_price = compare_at_price | money_with_currency
 
   else
@@ -41,7 +41,8 @@
   endif
 -%}
 
-<div ref="priceContainer">
+<div class="priceContainer" ref="priceContainer">
+  <h4>Preis</h4>
   {% if show_sale_price_first == false and show_compare_price %}
     <span role="group">
       <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>

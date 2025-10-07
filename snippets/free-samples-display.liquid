@@ -3,42 +3,204 @@
 {% if product.metafields.custom.lehrerexemplar_id and product.metafields.custom.freiexemplar_id %}
   <div class="rk-free-samples">
     <!-- Teacher Samples -->
-    <div class="rk-sample-group">
-      <span>🎓</span>
+    <div class="quantity-selector-container">
       <div>
-        <label for="rk-teacher-samples">Lehrerexemplare (kostenfrei)</label>
-        <div class="rk-quantity-controls">
-          <button type="button" data-action="minus" data-target="teacher">−</button>
-          <input type="number" id="rk-teacher-samples" value="0" min="0">
-          <button type="button" data-action="plus" data-target="teacher">+</button>
-        </div>
+        <label for="rk-teacher-samples">Lehrer:innenexemplar (kostenfrei)</label>
+        <div>Bis zu 10 % der bezahlten Abos können Sie als Lehrer:innen-Exemplare in Anspruch nehmen.</div>
+        <quantity-selector-component class="quantity-selector rk-quantity-selector">
+          <button
+            class="button quantity-minus button-unstyled"
+            type="button"
+            name="minus"
+            data-action="minus"
+            data-target="teacher"
+          >
+            <span class="visually-hidden">{{ 'accessibility.decrease_quantity' | t }}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="95.695" height="86.121" viewBox="0 0 95.695 86.121">
+              <defs>
+                <clipPath id="clip-path-minus-teacher">
+                  <rect width="56.856" height="51.485" transform="translate(0 0)" fill="none" stroke="#3f9fb8" stroke-width="2"/>
+                </clipPath>
+                <filter id="filter-minus-teacher" x="0" y="3.836" width="95.695" height="82.285" filterUnits="userSpaceOnUse">
+                  <feOffset dy="7" input="SourceAlpha"/>
+                  <feGaussianBlur stdDeviation="13" result="blur"/>
+                  <feFlood flood-opacity="0.051"/>
+                  <feComposite operator="in" in2="blur"/>
+                  <feComposite in="SourceGraphic"/>
+                </filter>
+              </defs>
+              <g transform="translate(9.771)">
+                <g transform="matrix(0.819, 0.574, -0.574, 0.819, 29.531, 0)" clip-path="url(#clip-path-minus-teacher)">
+                  <path d="M22.866,41.126C9.956,41.32,4.344,34.281,1.4,24.5a51.483,51.483,0,0,1-1.08-5.228,16.88,16.88,0,0,1-.209-4.949A38.01,38.01,0,0,1,.733,9.861,12.921,12.921,0,0,1,8.819.9C12.5-.533,18.508-.064,22.238.974,31.624,3.585,38.972,8.125,43.4,15.682c1.837,3.139,3.185,8.64,1.5,12.931-2.445,6.222-8.445,9.362-15.127,11.363a45.88,45.88,0,0,1-4.6.941l-2.3.209" transform="translate(5.596 5.178)" fill="none" stroke="#3f9fb8" stroke-width="2" fill-rule="evenodd"/>
+                </g>
+                <g transform="matrix(1, 0, 0, 1, -9.77, 0)" filter="url(#filter-minus-teacher)">
+                  <path d="M11.179-4.2H1.092V-7.484H17.787V-4.2Z" transform="translate(38.41 43.82)" fill="#3f9fb8" stroke="#3f9fb8" stroke-width="1"/>
+                </g>
+              </g>
+            </svg>
+          </button>
+          <input
+            type="number"
+            id="rk-teacher-samples"
+            name="teacher-samples"
+            value="0"
+            min="0"
+            aria-label="Lehrerexemplare Anzahl"
+          >
+          <button
+            class="button quantity-plus button-unstyled"
+            type="button"
+            name="plus"
+            data-action="plus"
+            data-target="teacher"
+          >
+            <span class="visually-hidden">{{ 'accessibility.increase_quantity' | t }}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="95.695" height="95.502" viewBox="0 0 95.695 95.502">
+              <defs>
+                <clipPath id="clip-path-plus-teacher">
+                  <rect width="56.856" height="51.485" transform="translate(0 0)" fill="none" stroke="#3f9fb8" stroke-width="2"/>
+                </clipPath>
+                <filter id="filter-plus-teacher" x="0" y="0" width="95.695" height="95.502" filterUnits="userSpaceOnUse">
+                  <feOffset dy="7" input="SourceAlpha"/>
+                  <feGaussianBlur stdDeviation="13" result="blur"/>
+                  <feFlood flood-opacity="0.051"/>
+                  <feComposite operator="in" in2="blur"/>
+                  <feComposite in="SourceGraphic"/>
+                </filter>
+              </defs>
+              <g transform="translate(9.771 2.773)">
+                <g transform="matrix(0.819, 0.574, -0.574, 0.819, 29.531, 0)" clip-path="url(#clip-path-plus-teacher)">
+                  <path d="M22.866,41.126C9.956,41.32,4.344,34.281,1.4,24.5a51.483,51.483,0,0,1-1.08-5.228,16.88,16.88,0,0,1-.209-4.949A38.01,38.01,0,0,1,.733,9.861,12.921,12.921,0,0,1,8.819.9C12.5-.533,18.508-.064,22.238.974,31.624,3.585,38.972,8.125,43.4,15.682c1.837,3.139,3.185,8.64,1.5,12.931-2.445,6.222-8.445,9.362-15.127,11.363a45.88,45.88,0,0,1-4.6.941l-2.3.209" transform="translate(5.596 5.178)" fill="none" stroke="#3f9fb8" stroke-width="2" fill-rule="evenodd"/>
+                </g>
+                <g transform="matrix(1, 0, 0, 1, -9.77, -2.77)" filter="url(#filter-plus-teacher)">
+                  <path d="M11.179-4.2V2.41H7.7V-4.2H1.092V-7.484H7.7v-6.608h3.478v6.608h6.608V-4.2Z" transform="translate(38.41 46.59)" fill="#3f9fb8" stroke="#3f9fb8" stroke-width="1"/>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </quantity-selector-component>
       </div>
     </div>
 
     <!-- Social Samples -->
-    <div class="rk-sample-group">
-      <span>🤝</span>
+    <div class="quantity-selector-container">
       <div>
-        <label for="rk-social-samples">Zusätzliche Freiexemplare für sozial benachteiligte Kinder</label>
-        <div class="rk-quantity-controls">
-          <button type="button" data-action="minus" data-target="social">−</button>
-          <input type="number" id="rk-social-samples" value="0" min="0">
-          <button type="button" data-action="plus" data-target="social">+</button>
-        </div>
+        <label for="rk-social-samples">Freiexemplare für sozial benachteiligte Kinder</label>
+        <div>Bis zu 10 % der bezahlten Abos können Sie als Schüler:innen-Freiexemplare beziehen (für soziale Härtefälle).</div>
+        <quantity-selector-component class="quantity-selector rk-quantity-selector">
+          <button
+            class="button quantity-minus button-unstyled"
+            type="button"
+            name="minus"
+            data-action="minus"
+            data-target="social"
+          >
+            <span class="visually-hidden">{{ 'accessibility.decrease_quantity' | t }}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="95.695" height="86.121" viewBox="0 0 95.695 86.121">
+              <defs>
+                <clipPath id="clip-path-minus-social">
+                  <rect width="56.856" height="51.485" transform="translate(0 0)" fill="none" stroke="#3f9fb8" stroke-width="2"/>
+                </clipPath>
+                <filter id="filter-minus-social" x="0" y="3.836" width="95.695" height="82.285" filterUnits="userSpaceOnUse">
+                  <feOffset dy="7" input="SourceAlpha"/>
+                  <feGaussianBlur stdDeviation="13" result="blur"/>
+                  <feFlood flood-opacity="0.051"/>
+                  <feComposite operator="in" in2="blur"/>
+                  <feComposite in="SourceGraphic"/>
+                </filter>
+              </defs>
+              <g transform="translate(9.771)">
+                <g transform="matrix(0.819, 0.574, -0.574, 0.819, 29.531, 0)" clip-path="url(#clip-path-minus-social)">
+                  <path d="M22.866,41.126C9.956,41.32,4.344,34.281,1.4,24.5a51.483,51.483,0,0,1-1.08-5.228,16.88,16.88,0,0,1-.209-4.949A38.01,38.01,0,0,1,.733,9.861,12.921,12.921,0,0,1,8.819.9C12.5-.533,18.508-.064,22.238.974,31.624,3.585,38.972,8.125,43.4,15.682c1.837,3.139,3.185,8.64,1.5,12.931-2.445,6.222-8.445,9.362-15.127,11.363a45.88,45.88,0,0,1-4.6.941l-2.3.209" transform="translate(5.596 5.178)" fill="none" stroke="#3f9fb8" stroke-width="2" fill-rule="evenodd"/>
+                </g>
+                <g transform="matrix(1, 0, 0, 1, -9.77, 0)" filter="url(#filter-minus-social)">
+                  <path d="M11.179-4.2H1.092V-7.484H17.787V-4.2Z" transform="translate(38.41 43.82)" fill="#3f9fb8" stroke="#3f9fb8" stroke-width="1"/>
+                </g>
+              </g>
+            </svg>
+          </button>
+          <input
+            type="number"
+            id="rk-social-samples"
+            name="social-samples"
+            value="0"
+            min="0"
+            aria-label="Freiexemplare Anzahl"
+          >
+          <button
+            class="button quantity-plus button-unstyled"
+            type="button"
+            name="plus"
+            data-action="plus"
+            data-target="social"
+          >
+            <span class="visually-hidden">{{ 'accessibility.increase_quantity' | t }}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="95.695" height="95.502" viewBox="0 0 95.695 95.502">
+              <defs>
+                <clipPath id="clip-path-plus-social">
+                  <rect width="56.856" height="51.485" transform="translate(0 0)" fill="none" stroke="#3f9fb8" stroke-width="2"/>
+                </clipPath>
+                <filter id="filter-plus-social" x="0" y="0" width="95.695" height="95.502" filterUnits="userSpaceOnUse">
+                  <feOffset dy="7" input="SourceAlpha"/>
+                  <feGaussianBlur stdDeviation="13" result="blur"/>
+                  <feFlood flood-opacity="0.051"/>
+                  <feComposite operator="in" in2="blur"/>
+                  <feComposite in="SourceGraphic"/>
+                </filter>
+              </defs>
+              <g transform="translate(9.771 2.773)">
+                <g transform="matrix(0.819, 0.574, -0.574, 0.819, 29.531, 0)" clip-path="url(#clip-path-plus-social)">
+                  <path d="M22.866,41.126C9.956,41.32,4.344,34.281,1.4,24.5a51.483,51.483,0,0,1-1.08-5.228,16.88,16.88,0,0,1-.209-4.949A38.01,38.01,0,0,1,.733,9.861,12.921,12.921,0,0,1,8.819.9C12.5-.533,18.508-.064,22.238.974,31.624,3.585,38.972,8.125,43.4,15.682c1.837,3.139,3.185,8.64,1.5,12.931-2.445,6.222-8.445,9.362-15.127,11.363a45.88,45.88,0,0,1-4.6.941l-2.3.209" transform="translate(5.596 5.178)" fill="none" stroke="#3f9fb8" stroke-width="2" fill-rule="evenodd"/>
+                </g>
+                <g transform="matrix(1, 0, 0, 1, -9.77, -2.77)" filter="url(#filter-plus-social)">
+                  <path d="M11.179-4.2V2.41H7.7V-4.2H1.092V-7.484H7.7v-6.608h3.478v6.608h6.608V-4.2Z" transform="translate(38.41 46.59)" fill="#3f9fb8" stroke="#3f9fb8" stroke-width="1"/>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </quantity-selector-component>
       </div>
     </div>
   </div>
 
   <style>
-    .rk-free-samples { margin: 1rem 0; }
-    .rk-sample-group { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.75rem; background: white; border-radius: 6px; border: 1px solid #dee2e6; }
-    .rk-sample-group span { font-size: 1.25rem; width: 2rem; text-align: center; }
-    .rk-sample-group > div { flex: 1; }
-    .rk-sample-group label { display: block; font-weight: 500; color: #495057; margin-bottom: 0.25rem; font-size: 0.9rem; }
-    .rk-quantity-controls { display: flex; align-items: center; gap: 0.5rem; }
-    .rk-quantity-controls button { background: #6c757d; color: white; border: none; width: 32px; height: 32px; border-radius: 4px; cursor: pointer; font-size: 1.2rem; }
-    .rk-quantity-controls button[data-action="plus"] { background: #28a745; }
-    .rk-quantity-controls input { width: 60px; height: 32px; text-align: center; border: 1px solid #dee2e6; border-radius: 4px; font-size: 0.9rem; }
+    .rk-free-samples { 
+      margin: 1rem 0; 
+    }
+    
+    .rk-sample-group { 
+      display: flex; 
+      align-items: center; 
+      gap: 1rem; 
+      margin-bottom: 1rem; 
+      padding: 0.75rem; 
+      background: white; 
+      border-radius: 6px; 
+      border: 1px solid #dee2e6; 
+    }
+    
+    .rk-sample-group span { 
+      font-size: 1.25rem; 
+      width: 2rem; 
+      text-align: center; 
+    }
+    
+    .rk-sample-group > div { 
+      flex: 1; 
+    }
+    
+    .rk-sample-group label { 
+      display: block; 
+      font-weight: 500; 
+      color: #495057; 
+      margin-bottom: 0.5rem; 
+      font-size: 0.9rem; 
+    }
+    
+    /* Ensure the quantity selector uses the theme's default styles */
+    .rk-quantity-selector {
+      margin-top: 0.25rem;
+    }
   </style>
 
   <script>

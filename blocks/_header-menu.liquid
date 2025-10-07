@@ -250,7 +250,6 @@
     position: absolute;
     top: calc(100% - 1px + var(--border-bottom-width));
     left: 0;
-    width: 100%;
     height: var(--submenu-height);
     background-color: var(--color-background);
     box-shadow: var(--shadow-popover);
@@ -277,7 +276,32 @@
     }
   }
 
-  .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu,
+  .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__submenu {
+    --submenu-content-opacity: 0;
+    --submenu-content-animation: opacity calc(var(--submenu-animation-speed) * 0.75) var(--animation-easing);
+
+    box-shadow: var(--shadow-drawer);
+    visibility: hidden;
+    position: absolute;
+    width: max-content;
+    background-color: #3f9fb8;
+    max-width: calc(100vw - var(--page-margin) * 2);
+    left: -15vw;
+    top: calc(100% - 1px + var(--border-bottom-width));
+    z-index: var(--layer-header-menu);
+    padding-inline: var(--padding-xl);
+    padding-top: 30px;
+    color: white;
+    clip-path: rect(0 100% var(--submenu-height) 0); /* stylelint-disable-line */
+    transition: clip-path var(--submenu-animation-speed) var(--ease-out-cubic);
+  }
+
+  .resource-card a,
+  .resource-card__content,
+ .resource-card__title  {
+    color: white!important;
+  }
+
   .overflow-menu::part(overflow) {
     --submenu-content-opacity: 0;
     --submenu-content-animation: opacity calc(var(--submenu-animation-speed) * 0.75) var(--animation-easing);
@@ -317,7 +341,17 @@
     }
   }
 
-  .menu-list__submenu-inner,
+  .menu-list__submenu-inner {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    opacity: var(--submenu-content-opacity);
+    transition: var(--submenu-content-animation);
+    padding-block-start: var(--submenu-padding-block-start);
+    padding-block-end: var(--submenu-padding-block-end);
+  }
+  
   .overflow-menu::part(overflow-list) {
     grid-column: 2;
     padding-block-start: var(--submenu-padding-block-start);
@@ -394,6 +428,8 @@
     flex-wrap: wrap;
     opacity: var(--submenu-content-opacity);
     transition: var(--submenu-content-animation);
+    padding-block-start: var(--submenu-padding-block-start);
+    padding-block-end: var(--submenu-padding-block-end);
   }
 
   .mega-menu__link {
@@ -427,6 +463,10 @@
     &:hover {
       color: var(--menu-parent-active-font-color);
     }
+  }
+
+  .mega-menu__content-list-item{
+    width: 10vw;
   }
 
   @media screen and (max-width: 989px) {
@@ -486,6 +526,19 @@
     @media screen and (min-width: 990px) {
       grid-template-columns: repeat(var(--menu-columns-desktop), minmax(0, 1fr));
     }
+  }
+
+  /* Override section styles for mega-menu to prevent full-width behavior */
+  .mega-menu {
+    width: auto;
+    max-width: none;
+    padding-inline: 0;
+    margin-inline: 0;
+  }
+
+  .mega-menu > * {
+    padding-inline: 0;
+    margin-inline: 0;
   }
 
   .mega-menu__column {
@@ -573,6 +626,10 @@
 
   .menu-list__list-item[slot='overflow'] .section .mega-menu__grid {
     grid-column: 1;
+  }
+
+  .menu-list__list-item{
+    position: relative;
   }
 
   .mega-menu__content-list li {
