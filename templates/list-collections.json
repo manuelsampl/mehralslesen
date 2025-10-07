@@ -825,7 +825,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Auch Privat erhältlich </p>",
+                "text": "<p>Auch privat erhältlich </p>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "center",
