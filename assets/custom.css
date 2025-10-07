@@ -367,6 +367,7 @@ select {
     background-color: white !important;
     color: #3f9fb8 !important;
     box-shadow: none !important;
+    border-radius: 100px !important;
 }
 
 .variant-option__button-label:hover {
@@ -383,6 +384,7 @@ select {
     background-color: #3f9fb8 !important;
     color: white !important;
     box-shadow: none !important;
+    border-radius: 100px !important;
 }
 
 .variant-option__button-label:has(:checked):hover {
