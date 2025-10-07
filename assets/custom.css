@@ -167,7 +167,7 @@ select {
     box-shadow: none !important;
 }
 
-.product-price-round {
+.product-details .product-price-round {
     background-color: #3f9fb8;
     width: 10vw !important;
     height: 10vw !important;
@@ -180,7 +180,7 @@ select {
     right: -13vw;
 }
 
-.priceContainer {
+.product-details .priceContainer {
     width: 100% !important;
     height: 100% !important;
     display: flex;
@@ -191,14 +191,14 @@ select {
     transform: rotate(15deg);
 }
 
-.priceContainer h4 {
+.product-details .priceContainer h4 {
     color: white !important;
     text-transform: uppercase;
     font-size: 18px;
 
 }
 
-.priceContainer .price {
+.product-details .priceContainer .price {
     font-size: 34px !important;
     color: white !important;
 }
@@ -250,7 +250,7 @@ select {
     justify-content: center;
 }
 
-.quantity-selector input[type='number'] {
+.product-details .quantity-selector input[type='number'] {
     border: 2px solid #3f9fb8;
     width: 100px;
     border-radius: 100px;
@@ -260,7 +260,7 @@ select {
     position: relative;
 }
 
-.quantity-selector-container label {
+.product-details .quantity-selector-container label {
     color: #3F9FB8;
     font-size: 24px;
     width: 400px !important;
