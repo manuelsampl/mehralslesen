@@ -67,7 +67,19 @@
           closest.product: closest.product
         -%}
 
-        {% content_for 'blocks' %}
+        {%- if closest.product.title != blank or closest.product.description != blank -%}
+          <div class="product-information__media-content">
+            {%- if closest.product.title != blank -%}
+              <h1 class="product-information__media-title">{{ closest.product.title }}</h1>
+            {%- endif -%}
+            
+            {%- if closest.product.description != blank -%}
+              <div class="product-information__media-description rte">
+                {{ closest.product.description }}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
       </div>
     {% endcapture %}
 
@@ -150,9 +162,6 @@
           padding-right: calc(var(--gap, 0) / 2);
         }
 
-        .product-details {
-          padding-left: calc(var(--gap, 0) / 2);
-        }
 
         &:has(.media-gallery--extend) {
           grid-column: 1 / 3;
@@ -293,6 +302,43 @@
   /* Adjust spacing inside the product details box */
   .product-details > .group-block {
     gap: var(--gap-lg);
+  }
+
+  /* Product title and description below media */
+  .product-information__media-content {
+    margin-top: var(--margin-xl);
+    padding-top: var(--padding-lg);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .product-information__media-title {
+    font-family: var(--font-heading-family);
+    font-size: var(--font-size--2xl);
+    font-weight: var(--font-heading-weight);
+    line-height: var(--font-heading-line-height);
+    margin-bottom: var(--margin-md);
+    color: var(--color-foreground);
+  }
+
+  .product-information__media-description {
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--color-background);
+  }
+
+  .product-information__media-description p {
+    margin-bottom: var(--margin-sm);
+  }
+
+  .product-information__media-description p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Responsive adjustments */
+  @media screen and (max-width: 749px) {
+    .product-information__media-title {
+      font-size: var(--font-size--xl);
+    }
   }
 
   /* If the header is sticky, make product details content stick underneath the header */

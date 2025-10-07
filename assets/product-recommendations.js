@@ -29,6 +29,13 @@ class ProductRecommendations extends HTMLElement {
       )
         continue;
 
+      // Ignore error state changes to prevent infinite loop
+      if (
+        mutation.attributeName === 'data-error' ||
+        mutation.attributeName === 'class'
+      )
+        continue;
+
       // All other attribute changes trigger a reload
       this.#loadRecommendations();
       break;
@@ -134,8 +141,11 @@ class ProductRecommendations extends HTMLElement {
    */
   #handleError(error) {
     console.error('Product recommendations error:', error);
-    this.classList.add('hidden');
+
+    // Mark as performed to prevent retry loops
+    this.dataset.recommendationsPerformed = 'true';
     this.dataset.error = 'Error loading product recommendations';
+    this.classList.add('hidden');
   }
 }
 

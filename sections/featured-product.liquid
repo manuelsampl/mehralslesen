@@ -9,20 +9,10 @@
   class="
     featured-product-section
     section
-    section--full-width
+    section--page-width
     color-{{ section.settings.color_scheme }}
-  "
+  "r
 >
-  <div
-    class="section-content-wrapper spacing-style size-style border-style"
-    style="
-      {% render 'spacing-style', settings: section.settings %}
-      --media-height: 100%;
-      {% if request.visual_preview_mode %}
-        --visual-preview--height: 100%;
-      {% endif %}
-    "
-  >
     {% capture featured_product_media %}
       {% content_for 'block', type: '_media-without-appearance', id: 'media', closest.product: section.settings.product %}
     {% endcapture %}
@@ -38,7 +28,6 @@
       {{ featured_product_content }}
       {{ featured_product_media }}
     {% endif %}
-  </div>
 </div>
 
 {% stylesheet %}

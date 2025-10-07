@@ -159,15 +159,20 @@ select {
     background-color: #3f9fb8 !important;
 }
 
-.product-information--media-left .product-details,
-.product-information--media-right .product-details {
+.product-details {
     padding: 20px;
     border: 2px solid #3f9fb8;
     border-radius: 0px !important;
     box-shadow: none !important;
+    height: 100% !important;
 }
 
-.product-details .product-price-round {
+.product-details>.group-block {
+    height: 100% !important;
+}
+
+.product-details .product-price-round,
+.featured-product .product-price-round {
     background-color: #3f9fb8;
     width: 10vw !important;
     height: 10vw !important;
@@ -180,7 +185,8 @@ select {
     right: -13vw;
 }
 
-.product-details .priceContainer {
+.product-details .priceContainer,
+.featured-product .priceContainer {
     width: 100% !important;
     height: 100% !important;
     display: flex;
@@ -191,7 +197,8 @@ select {
     transform: rotate(15deg);
 }
 
-.product-details .priceContainer h4 {
+.product-details .priceContainer h4,
+.featured-product .priceContainer h4 {
     color: white !important;
     text-transform: uppercase;
     font-size: 18px;
@@ -291,4 +298,61 @@ select {
     position: absolute;
     right: -13vw;
     bottom: 0vw;
+}
+
+.product-information__media-content {
+    border-top: 0px !important;
+    padding: 20px !important;
+
+}
+
+.product-information__media-title {
+    color: white !important;
+    font-size: 42px !important;
+}
+
+.product-card {
+    text-align: center !important;
+}
+
+.product-card .text-block p {
+    font-size: 30px !important;
+    color: #3f9fb8 !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    margin-top: 20px;
+}
+
+.product-card .priceContainer {
+    text-align: center !important;
+    display: none;
+}
+
+.product-card .priceContainer h4 {
+    display: none !important;
+}
+
+.featured-product .product-card .priceContainer {
+    text-align: center !important;
+    display: block;
+}
+
+.featured-product .product-card .priceContainer h4 {
+    display: block !important;
+}
+
+.featured-product .card-gallery {
+    height: 300px;
+}
+
+.featured-product .card-gallery slideshow-component {
+    height: 100%;
+}
+
+.featured-product .card-gallery slideshow-container {
+    height: 100%;
+}
+
+.featured-product .card-gallery slideshow-slides {
+    height: 100%;
 }
