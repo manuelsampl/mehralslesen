@@ -13,7 +13,6 @@
 {% liquid
   assign variant = product.selected_or_first_available_variant
 %}
-<h3>Stück</h3>
 <quantity-selector-component
   class="quantity-selector{% if class %} {{ class }}{% endif %}"
   {% if line_index == null %}
