@@ -173,7 +173,7 @@ select {
 
 .product-details .product-price-round,
 .featured-product .product-price-round {
-    background-color: #3f9fb8;
+    background-color: #afca0b;
     width: 10vw !important;
     height: 10vw !important;
     border-radius: 1000px;
@@ -194,7 +194,6 @@ select {
     align-items: center;
     justify-content: center;
     color: white !important;
-    transform: rotate(15deg);
 }
 
 .product-details .priceContainer h4,
