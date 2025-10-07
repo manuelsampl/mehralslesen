@@ -194,12 +194,12 @@ select {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: white !important;
+    color: #E30613 !important;
 }
 
 .product-details .priceContainer h4,
 .featured-product .priceContainer h4 {
-    color: white !important;
+    color: #E30613 !important;
     text-transform: uppercase;
     font-size: 18px;
 
