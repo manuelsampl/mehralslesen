@@ -141,10 +141,10 @@
         "padding-block-end": 0
       }
     },
-    "section_xH6PXQ": {
+    "section_hdWgEA": {
       "type": "section",
       "blocks": {
-        "image_wDMY9J": {
+        "image_LgHNgR": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/cdc-GDokEYnOfnE-unsplash.png",
@@ -152,7 +152,7 @@
             "image_ratio": "square",
             "width": "fill",
             "custom_width": 100,
-            "width_mobile": "fill",
+            "width_mobile": "fit-content",
             "custom_width_mobile": 100,
             "height": "fit",
             "border": "none",
@@ -166,7 +166,7 @@
           },
           "blocks": {}
         },
-        "group_Phqpbc": {
+        "group_hq7WHk": {
           "type": "group",
           "settings": {
             "link": "",
@@ -205,11 +205,11 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_yCiAHr": {
+            "text_DRMf8c": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>Bestellung & Abwicklung</p>",
+                "text": "<p>Service & Kontakt </p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -231,18 +231,18 @@
               },
               "blocks": {}
             },
-            "text_R7aFcQ": {
+            "text_3n9Yzn": {
               "type": "text",
               "settings": {
-                "text": "<p>In drei einfachen Schritten zur Bestellung:</p>",
+                "text": "<p>Fragen zur Bestellung?</p>",
                 "width": "fit-content",
-                "max_width": "none",
+                "max_width": "narrow",
                 "alignment": "left",
                 "type_preset": "custom",
                 "font": "var(--font-body--family)",
                 "font_size": "1.5rem",
                 "line_height": "normal",
-                "letter_spacing": "loose",
+                "letter_spacing": "normal",
                 "case": "uppercase",
                 "wrap": "pretty",
                 "color": "var(--color-foreground)",
@@ -256,17 +256,17 @@
               },
               "blocks": {}
             },
-            "text_VtCkMz": {
+            "text_669W3e": {
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Sie bestellen einmalig online – bequem und sicher.<br/><br/>Änderungen sind flexibel bis 20. September möglich – per E-Mail an <a href=\"mailto:abo@mehralslesen.at\" title=\"mailto:abo@mehralslesen.at\">abo@mehralslesen.at</a> oder telefonisch unter 01 589 00-170.<br/><br/>Die Rechnung erhalten Sie Anfang Oktober per E-Mail.</p><ul><li>Lehrer:innen-Exemplare bei Sammelbestellungen kostenlos</li><li>Schüler:innen-Freiexemplare (bis zu 10 % der Gesamtbestellung) für soziale Härtefälle</li><li>Digitale Zusatzmaterialien im Abo inkludiert</li><li>Abo mit monatlichen Ausgaben für das Schuljahr 2024/25</li><li>Option auf Braille-Ausgaben für Schüler:innen mit Sehbeeinträchtigung<br/></li></ul>",
+                "text": "<p>Unser freundliches Abo-Service-Team steht Ihnen bei allen Fragen rund um Bestellung, Lieferung und Abos mit Rat und Tat zur Seite.</p><p></p><p>Österreichisches Jugendrotkreuz<br/>Wiedner Hauptstraße 32, 1040 Wien<br/><br/><a href=\"mailto:abo@mehralslesen.at\" title=\"mailto:abo@mehralslesen.at\">abo@mehralslesen.at</a><br/><a href=\"tel:+43158900170\" title=\"tel:+43158900170\">01 / 589 00-170</a><br/><br/>Mo–Do 7.30–15.00, Fr 7.30–13.00</p>",
                 "width": "fit-content",
-                "max_width": "none",
+                "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "custom",
+                "type_preset": "rte",
                 "font": "var(--font-body--family)",
-                "font_size": "1.5rem",
+                "font_size": "1rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
@@ -281,18 +281,33 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "button_PcYqLV": {
+              "type": "button",
+              "settings": {
+                "label": "Mehr Erfahren",
+                "link": "shopify://pages/contact",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
             }
           },
           "block_order": [
-            "text_yCiAHr",
-            "text_R7aFcQ",
-            "text_VtCkMz"
+            "text_DRMf8c",
+            "text_3n9Yzn",
+            "text_669W3e",
+            "button_PcYqLV"
           ]
         }
       },
       "block_order": [
-        "image_wDMY9J",
-        "group_Phqpbc"
+        "image_LgHNgR",
+        "group_hq7WHk"
       ],
       "name": "t:names.image_with_text",
       "settings": {
@@ -303,7 +318,7 @@
         "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
-        "gap": 32,
+        "gap": 100,
         "section_width": "page-width",
         "section_height": "",
         "section_height_custom": 50,
@@ -365,11 +380,11 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_YzAVaM": {
+            "text_FMFN4D": {
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<p>Kontakt</p>",
+                "text": "<p>Bestellung & Abwicklung</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -391,11 +406,36 @@
               },
               "blocks": {}
             },
-            "text_9wJf4R": {
+            "text_RGinmp": {
+              "type": "text",
+              "settings": {
+                "text": "<p>In drei einfachen Schritten zur Bestellung:</p>",
+                "width": "fit-content",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-body--family)",
+                "font_size": "1.5rem",
+                "line_height": "normal",
+                "letter_spacing": "loose",
+                "case": "uppercase",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_GptP97": {
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Für allgemeine Anfragen:<br/><strong>E-Mail:</strong> <a href=\"mailto:jugendrotkreuz@roteskreuz.at\" title=\"mailto:jugendrotkreuz@roteskreuz.at\">jugendrotkreuz@roteskreuz.at</a><br/><strong>Telefon:</strong> 01 589 00-173<br/><br/>Österreichisches Jugendrotkreuz<br/>Wiedner Hauptstraße 32, 1040 Wien<br/><br/>Kontakt für Braille-Ausgaben:<br/><strong>E-Mail:</strong> <a href=\"mailto:verkauf@bbi.at\" title=\"mailto:verkauf@bbi.at\">verkauf@bbi.at</a><br/>Ansprechpartnerin: Ursula Sztuparits</p>",
+                "text": "<p>Sie bestellen einmalig online – bequem und sicher.<br/><br/>Änderungen sind flexibel bis 20. September möglich – per E-Mail an <a href=\"mailto:abo@mehralslesen.at\" title=\"mailto:abo@mehralslesen.at\">abo@mehralslesen.at</a> oder telefonisch unter 01 589 00-170.<br/><br/>Die Rechnung erhalten Sie Anfang Oktober per E-Mail.</p><ul><li>Lehrer:innen-Exemplare bei Sammelbestellungen kostenlos</li><li>Schüler:innen-Freiexemplare (bis zu 10 % der Gesamtbestellung) für soziale Härtefälle</li><li>Digitale Zusatzmaterialien im Abo inkludiert</li><li>Abo mit monatlichen Ausgaben für das Schuljahr 2024/25</li><li>Option auf Braille-Ausgaben für Schüler:innen mit Sehbeeinträchtigung<br/></li></ul>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
@@ -419,8 +459,9 @@
             }
           },
           "block_order": [
-            "text_YzAVaM",
-            "text_9wJf4R"
+            "text_FMFN4D",
+            "text_RGinmp",
+            "text_GptP97"
           ]
         },
         "image_yTqnHX": {
@@ -845,6 +886,7 @@
         "text_JHgtan",
         "group_YLaJFd"
       ],
+      "disabled": true,
       "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
@@ -919,7 +961,7 @@
   },
   "order": [
     "section_RVFUMf",
-    "section_xH6PXQ",
+    "section_hdWgEA",
     "section_xznbTT",
     "section_NbLDg7",
     "main"
