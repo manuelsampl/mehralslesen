@@ -671,12 +671,4 @@
   // End of free samples integration
 })();
   </script>
-{% else %}
-  <!-- Debug: Custom Fields not found -->
-  <div style="background: #f8f9fa; border: 1px solid #dee2e6; padding: 1rem; margin: 1rem 0; border-radius: 4px;">
-    <p><strong>Debug Info:</strong> Freiexemplar-Widget nicht verfügbar</p>
-    <p>Lehrerexemplar ID: {{ product.metafields.custom.lehrerexemplar_id | default: 'nicht konfiguriert' }}</p>
-    <p>Freiexemplar ID: {{ product.metafields.custom.freiexemplar_id | default: 'nicht konfiguriert' }}</p>
-    <p><em>Produkt muss zuerst im Backend konfiguriert werden</em></p>
-  </div>
 {% endif %}
