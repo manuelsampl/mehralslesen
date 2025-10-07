@@ -361,3 +361,33 @@ select {
     color: #3F9FB8 !important;
     font-size: 24px !important;
 }
+
+.variant-option__button-label {
+    border-color: #3f9fb8 !important;
+    background-color: white !important;
+    color: #3f9fb8 !important;
+    box-shadow: none !important;
+}
+
+.variant-option__button-label:hover {
+    border: 2px solid #3f9fb8 !important;
+    border-color: #3f9fb8 !important;
+    background-color: #3f9fb8 !important;
+    color: white !important;
+    box-shadow: none !important;
+}
+
+.variant-option__button-label:has(:checked) {
+    border: 2px solid #3f9fb8 !important;
+    border-color: #3f9fb8 !important;
+    background-color: #3f9fb8 !important;
+    color: white !important;
+    box-shadow: none !important;
+}
+
+.variant-option__button-label:has(:checked):hover {
+    border-color: #3f9fb8 !important;
+    background-color: white !important;
+    color: #3f9fb8 !important;
+    box-shadow: none !important;
+}
