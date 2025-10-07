@@ -36,11 +36,19 @@
             "subtitle": "VOLKSSCHULLEHRERIN, NIEDERÖSTERREICH"
           }
         },
+        "testimonial_MG46HQ": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/christian-buehner-DItYlc26zVI-unsplash_3.jpg",
+            "text": "Space und Spot bringen Abwechslung in meinen Deutschunterricht. Ich nutze www.cyber-space.at und www.cyber-spot.at auch gern für Hausübungen oder Supplierstunden.",
+            "subtitle": "MITTELSCHULLEHRER, SALZBURG"
+          }
+        },
         "testimonial_AjRNdL": {
           "type": "testimonial",
           "settings": {
             "image": "shopify://shop_images/centre-for-ageing-better-cPyO3GEYjZ4-unsplash.jpg",
-            "text": "Die Hefte fördern Lesemotivation und bieten perfekt abgestimmte Inhalte zum Lehrplan 2023.",
+            "text": "Die Hefte fördern Lesemotivation und bieten perfekt abgestimmte Inhalte zum neuen Lehrplan.",
             "subtitle": "VOLKSSCHULLEHRERIN, STEIERMARK"
           }
         },
@@ -48,21 +56,22 @@
           "type": "testimonial",
           "settings": {
             "image": "shopify://shop_images/moses-vega-_YfoApRxd4I-unsplash.jpg",
-            "text": "Sir Winston ist cool! Ich kann schon ein bisschen Englisch sagen.",
-            "subtitle": "SAMUEL, 9 JAHRE"
+            "text": "Sir Winston ist cool! Ich kann schon ein bisschen auf Englisch sagen.",
+            "subtitle": "SAMUEL, 7 JAHRE"
           }
         },
         "testimonial_7xYEN7": {
           "type": "testimonial",
           "settings": {
             "image": "shopify://shop_images/adam-winger-7fF0iei80AQ-unsplash.jpg",
-            "text": "Mit dem Winston Express gelingt auch der Einstieg ins Englischlernen spielerisch und kindgerecht.",
+            "text": "Mit dem Winston Express habe ich alles, was ich für den Englischunterricht brauche.",
             "subtitle": "Lehrerin, Tirol"
           }
         }
       },
       "block_order": [
         "testimonial_gfpaRU",
+        "testimonial_MG46HQ",
         "testimonial_AjRNdL",
         "testimonial_PQabPw",
         "testimonial_7xYEN7"
@@ -83,7 +92,7 @@
         "image_idWBJk": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/Gruppe_442.jpg",
+            "image": "shopify://shop_images/cdc-GDokEYnOfnE-unsplash.png",
             "link": "",
             "image_ratio": "square",
             "width": "fill",

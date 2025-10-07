@@ -17,9 +17,9 @@
         "footer_column_hMUEgW": {
           "type": "footer_column",
           "settings": {
-            "headline": "Spendenkonto",
+            "headline": "Bankverbindung",
             "content_type": "text",
-            "text": "<p>Erste Bank<br/>IBAN: <br/>AT92 2011 1000 0255 1063<br/>BIC: <br/>GIBAATWWXXX<br/><br/><a href=\"https://spende.roteskreuz.at\" target=\"_blank\" title=\"https://spende.roteskreuz.at\">spende.roteskreuz.at</a></p>",
+            "text": "<p>Erste Bank<br/>IBAN: <br/>AT98 2011 1200 3443 3205<br/>BIC: <br/>GIBAATWWXXX</p>",
             "menu": ""
           }
         },
@@ -63,12 +63,12 @@
         "logo_width": 300,
         "social_title": "We are on Social Media",
         "show_social": true,
-        "facebook_link": "https://www.facebook.com/jugendrotkreuz.at/",
-        "instagram_link": "https://www.instagram.com/jugendrotkreuz_at/",
-        "youtube_link": "https://www.youtube.com/channel/UC7k-ojQJCrhOUUzValVbR-Q",
-        "twitter_link": "https://x.com/roteskreuzat",
-        "linkedin_link": "https://www.linkedin.com/uas/login?session_redirect=%2Fcompany%2F2084265%2F",
-        "tiktok_link": "https://www.tiktok.com/@roteskreuz_at",
+        "facebook_link": "https://www.facebook.com/mehralslesen/",
+        "instagram_link": "https://www.instagram.com/mehr_als_lesen/",
+        "youtube_link": "",
+        "twitter_link": "",
+        "linkedin_link": "",
+        "tiktok_link": "",
         "columns_gap": 40,
         "social_gap": 15,
         "section_width": "page-width",

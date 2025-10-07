@@ -1207,6 +1207,7 @@
         "text_xCLwWe",
         "group_cYDkty"
       ],
+      "disabled": true,
       "name": "t:names.faq_section",
       "settings": {
         "content_direction": "column",
