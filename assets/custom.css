@@ -173,10 +173,11 @@ select {
 
 .product-details .product-price-round,
 .featured-product .product-price-round {
-    background-color: #afca0b;
+    background-color: white;
     width: 10vw !important;
     height: 10vw !important;
     border-radius: 1000px;
+    border: 2px solid #E30613;
     display: flex;
     align-items: center;
     justify-content: center;
