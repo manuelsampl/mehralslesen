@@ -57,7 +57,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "← ZURÜCK",
-                "link": "shopify://collections/all",
+                "link": "shopify://collections",
                 "open_in_new_tab": false,
                 "style_class": "link",
                 "width": "fit-content",
@@ -72,7 +72,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "SEKUNDARSTUFE →",
-                "link": "shopify://collections/all",
+                "link": "shopify://collections/sekundarstufe",
                 "open_in_new_tab": false,
                 "style_class": "link",
                 "width": "fit-content",
@@ -1236,9 +1236,9 @@
   },
   "order": [
     "section_kyCji3",
-    "section_UCbYRW",
     "section",
     "main",
+    "section_UCbYRW",
     "section_N4x7gR",
     "section_iKzddN"
   ]
