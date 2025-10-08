@@ -79,7 +79,7 @@
     "view_in_your_space": "In deinem Bereich anzeigen",
     "show_filters": "Filtern",
     "clear": "Löschen",
-    "continue_shopping": "Weiter einkaufen",
+    "continue_shopping": "Weiter bestellen",
     "log_in_html": "Hast du ein Konto? <a href=\"{{ link }}\">Logge dich ein</a>, damit es beim Checkout schneller geht.",
     "see_items": {
       "one": "{{ count }} Artikel anzeigen",
