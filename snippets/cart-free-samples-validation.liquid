@@ -55,12 +55,23 @@
   }
 {% endstylesheet %}
 
+<script type="application/json" id="cart-items-data">
+  {{ cart.items | json }}
+</script>
+
 {% javascript %}
 (function() {
   console.log('🔍 Cart Free Samples Validation loaded');
 
   function validateFreeSamples() {
-    const cartItems = {{ cart.items | json }};
+    // Get cart items from JSON script tag
+    const cartDataElement = document.getElementById('cart-items-data');
+    if (!cartDataElement) {
+      console.error('❌ Cart items data not found');
+      return;
+    }
+    
+    const cartItems = JSON.parse(cartDataElement.textContent);
     
     // Find all main products (not free samples)
     const mainProducts = cartItems.filter(item => {
@@ -115,7 +126,7 @@
       // Hide validation error
       validationDiv.style.display = 'none';
       
-      if (checkoutButton && {{ cart.item_count }} > 0) {
+      if (checkoutButton && cartItems.length > 0) {
         checkoutButton.disabled = false;
         checkoutButton.removeAttribute('aria-disabled');
       }

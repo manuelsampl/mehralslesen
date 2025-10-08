@@ -551,19 +551,15 @@
         }
 
         if (isCheckoutElement) {
-          // Prevent immediately
-          event.preventDefault();
-          event.stopPropagation();
-          event.stopImmediatePropagation();
-
-          // Validate and show error
-          validateCart().then((isValid) => {
-            if (!isValid) {
-              showError(['Checkout nicht möglich - zu viele Freiexemplare im Warenkorb']);
-            }
-          });
-
-          return false;
+          // Check if element is already marked as disabled by our validation
+          if (target && target.getAttribute('data-rk-disabled') === 'true') {
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            showError(['Checkout nicht möglich - zu viele Freiexemplare im Warenkorb']);
+            return false;
+          }
+          // If not disabled, let it through
         }
       },
       true
