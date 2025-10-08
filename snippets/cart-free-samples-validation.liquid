@@ -108,9 +108,8 @@
     const mainProductQty = mainProducts.reduce((sum, item) => sum + item.quantity, 0);
     const teacherQty = teacherSamples.reduce((sum, item) => sum + item.quantity, 0);
     const socialQty = socialSamples.reduce((sum, item) => sum + item.quantity, 0);
-    const totalFreeSamples = teacherQty + socialQty;
 
-    const maxAllowed = Math.floor(mainProductQty * 0.1);
+    const maxAllowedPerType = Math.floor(mainProductQty * 0.1);
 
     console.log('📊 Cart validation:', {
       mainProducts: mainProducts.length,
@@ -119,19 +118,36 @@
       mainProductQty,
       teacherQty,
       socialQty,
-      totalFreeSamples,
-      maxAllowed,
-      isValid: totalFreeSamples <= maxAllowed
+      maxAllowedPerType,
+      teacherValid: teacherQty <= maxAllowedPerType,
+      socialValid: socialQty <= maxAllowedPerType
     });
 
     const validationDiv = document.getElementById('cart-free-samples-validation');
     const detailsP = document.getElementById('validation-details');
     const checkoutButton = document.getElementById('checkout');
 
-    if (totalFreeSamples > maxAllowed && mainProductQty > 0) {
-      // Show validation error
-      const excess = totalFreeSamples - maxAllowed;
-      detailsP.textContent = `Sie haben ${totalFreeSamples} Freiexemplar(e) im Warenkorb, aber nur ${maxAllowed} sind erlaubt (10% von ${mainProductQty} Hauptprodukten). Bitte entfernen Sie ${excess} Freiexemplar(e).`;
+    const teacherExceeded = teacherQty > maxAllowedPerType;
+    const socialExceeded = socialQty > maxAllowedPerType;
+    const anyExceeded = teacherExceeded || socialExceeded;
+
+    if (anyExceeded && mainProductQty > 0) {
+      // Build error message
+      let errorMessages = [];
+      
+      if (teacherExceeded) {
+        const excess = teacherQty - maxAllowedPerType;
+        errorMessages.push(`Lehrerexemplare: ${teacherQty}/${maxAllowedPerType} (${excess} zu viel)`);
+      }
+      
+      if (socialExceeded) {
+        const excess = socialQty - maxAllowedPerType;
+        errorMessages.push(`Schülerfreiexemplare: ${socialQty}/${maxAllowedPerType} (${excess} zu viel)`);
+      }
+      
+      detailsP.innerHTML = `Sie haben zu viele Freiexemplare im Warenkorb.<br>
+        Erlaubt sind jeweils 10% von ${mainProductQty} Hauptprodukten = ${maxAllowedPerType} pro Typ.<br><br>
+        ${errorMessages.join('<br>')}`;
       
       validationDiv.style.display = 'block';
       
