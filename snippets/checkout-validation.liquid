@@ -137,7 +137,7 @@
             (item.properties['custom.freiexemplar_id']);
 
           // Priority 1: Check if this is explicitly marked as a free sample
-          if (itemType === 'Lehrerexemplar' || itemType === 'Freiexemplar') {
+          if (itemType === 'Lehrerexemplar' || itemType === 'Schülerfreiexemplar') {
             // This is a free sample
             // Find or create the main product group
             let mainGroupKey = null;
@@ -165,7 +165,7 @@
             // Add to the correct category
             if (itemType === 'Lehrerexemplar') {
               productGroups[mainGroupKey].teacherQuantity += item.quantity;
-            } else {
+            } else if (itemType === 'Schülerfreiexemplar') {
               productGroups[mainGroupKey].socialQuantity += item.quantity;
             }
           } else {
