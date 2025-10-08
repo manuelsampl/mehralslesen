@@ -281,27 +281,12 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "button_PcYqLV": {
-              "type": "button",
-              "settings": {
-                "label": "Mehr Erfahren",
-                "link": "shopify://pages/contact",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
             }
           },
           "block_order": [
             "text_DRMf8c",
             "text_3n9Yzn",
-            "text_669W3e",
-            "button_PcYqLV"
+            "text_669W3e"
           ]
         }
       },
