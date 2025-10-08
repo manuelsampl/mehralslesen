@@ -439,7 +439,7 @@
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
-                "type_preset": "custom",
+                "type_preset": "rte",
                 "font": "var(--font-body--family)",
                 "font_size": "1.5rem",
                 "line_height": "normal",
