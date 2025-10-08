@@ -39,13 +39,9 @@
           // Check product.metafields object
           if (product.metafields) {
             teacherId =
-              product.metafields['custom.lehrerexemplar_id'] ||
-              product.metafields['lehrerexemplar_id'] ||
-              product.metafields['custom:lehrerexemplar_id'];
+              product.metafields['custom.lehrerexemplar_id'];
             socialId =
-              product.metafields['custom.freiexemplar_id'] ||
-              product.metafields['freiexemplar_id'] ||
-              product.metafields['custom:freiexemplar_id'];
+              product.metafields['custom.freiexemplar_id'];
           }
 
           // Check metafields array format
@@ -99,8 +95,8 @@
 
         cart.items.forEach((item) => {
           if (item.properties) {
-            const teacherId = item.properties['custom.lehrerexemplar_id'] || item.properties['_lehrerexemplar_id'];
-            const socialId = item.properties['custom.freiexemplar_id'] || item.properties['_freiexemplar_id'];
+            const teacherId = item.properties['custom.lehrerexemplar_id'];
+            const socialId = item.properties['custom.freiexemplar_id'];
 
             if (teacherId && socialId) {
               if (!productMetafields[item.variant_id]) {
@@ -135,14 +131,10 @@
           const mainProductTitle = item.properties && item.properties['_main_product'];
           const teacherId =
             item.properties &&
-            (item.properties['custom.lehrerexemplar_id'] ||
-              item.properties['_lehrerexemplar_id'] ||
-              item.properties['lehrerexemplar_id']);
+            (item.properties['custom.lehrerexemplar_id']);
           const socialId =
             item.properties &&
-            (item.properties['custom.freiexemplar_id'] ||
-              item.properties['_freiexemplar_id'] ||
-              item.properties['freiexemplar_id']);
+            (item.properties['custom.freiexemplar_id']);
 
           // Priority 1: Check if this is explicitly marked as a free sample
           if (itemType === 'Lehrerexemplar' || itemType === 'Freiexemplar') {
