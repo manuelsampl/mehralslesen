@@ -341,6 +341,23 @@
       },
       "processing": {
         "your_order_has_been_received_title": "Vielen Dank für Ihre Bestellung."
+      },
+      "payment": {
+        "markets_pro_disclaimer_privacy_policy": "Datenschutz",
+        "markets_pro_disclaimer_express_privacy_policy": "Datenschutz"
+      },
+      "marketing": {
+        "sms": {
+          "disclaimer": {
+            "privacy_policy": "Datenschutz"
+          }
+        },
+        "disclaimer": {
+          "privacy_policy": "Datenschutz"
+        }
+      },
+      "shop_policies": {
+        "privacy_policy": "Datenschutz"
       }
     },
     "email_marketing": {
