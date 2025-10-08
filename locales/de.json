@@ -330,7 +330,12 @@
         "location_title": "Standort der Schule"
       },
       "general": {
-        "pay_now_button_label": "Jetzt bezahlen"
+        "pay_now_button_label": "Jetzt bezahlen",
+        "errors": {
+          "buyer_identity": {
+            "customer_account_required": "Sie müssen sich anmelden um fortzufahren."
+          }
+        }
       }
     }
   },
