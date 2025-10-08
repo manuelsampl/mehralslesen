@@ -73,10 +73,24 @@
     
     const cartItems = JSON.parse(cartDataElement.textContent);
     
+    console.log('🔍 All cart items:', cartItems.map(item => ({
+      title: item.product_title,
+      variant_title: item.variant_title,
+      quantity: item.quantity,
+      properties: item.properties
+    })));
+    
     // Find all main products (not free samples)
     const mainProducts = cartItems.filter(item => {
       const props = item.properties || {};
-      return !props._type || (props._type !== 'Lehrerexemplar' && props._type !== 'Schülerfreiexemplar');
+      const itemType = props._type;
+      
+      // Explicitly check: only exclude items that are marked as samples
+      const isSample = itemType === 'Lehrerexemplar' || itemType === 'Schülerfreiexemplar';
+      
+      console.log(`Item "${item.product_title}": type="${itemType}", isSample=${isSample}`);
+      
+      return !isSample;
     });
 
     // Find free sample items
@@ -99,6 +113,9 @@
     const maxAllowed = Math.floor(mainProductQty * 0.1);
 
     console.log('📊 Cart validation:', {
+      mainProducts: mainProducts.length,
+      teacherSamples: teacherSamples.length,
+      socialSamples: socialSamples.length,
       mainProductQty,
       teacherQty,
       socialQty,
