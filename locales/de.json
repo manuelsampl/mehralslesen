@@ -319,7 +319,8 @@
         "address_company_too_long": "Schulname ist zu lang. (max. 255 Zeichen)"
       },
       "thank_you": {
-        "company_location_section_title": "Schule und Standort"
+        "company_location_section_title": "Schule und Standort",
+        "title": "Vielen Dank für Ihre Bestellung."
       },
       "review": {
         "blocks": {
@@ -336,6 +337,14 @@
             "customer_account_required": "Sie müssen sich anmelden um fortzufahren."
           }
         }
+      },
+      "processing": {
+        "your_order_has_been_received_title": "Vielen Dank für Ihre Bestellung."
+      }
+    },
+    "email_marketing": {
+      "subscribed": {
+        "confirmation": "Vielen Dank, dass Sie sich für unsere Mailingliste angemeldet haben."
       }
     }
   },
