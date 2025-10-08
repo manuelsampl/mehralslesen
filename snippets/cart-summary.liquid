@@ -49,7 +49,7 @@
 
   {%- liquid
     if settings.currency_code_enabled_cart_total
-      assign total_price = cart.total_price | money_with_currency
+      assign total_price = cart.total_price | money
     else
       assign total_price = cart.total_price | money
     endif
