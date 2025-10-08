@@ -1,6 +1,6 @@
 {%- doc -%}
   Renders the cart summary totals.
-  
+
   @param {string} [section_id] - The section ID for discount form
 {%- enddoc -%}
 
@@ -36,16 +36,15 @@
     {%- endif -%}
   </div>
 
-    <div class="cart-actions">
-      
-      {% if settings.show_cart_note %}
-        {% render 'cart-note' %}
-      {% endif %}
+  <div class="cart-actions">
+    {% if settings.show_cart_note %}
+      {% render 'cart-note' %}
+    {% endif %}
 
-      {% if settings.show_add_discount_code %}
-        {% render 'cart-discount', section_id: section_id %}
-      {% endif %}
-    </div>
+    {% if settings.show_add_discount_code %}
+      {% render 'cart-discount', section_id: section_id %}
+    {% endif %}
+  </div>
 
   {%- liquid
     if settings.currency_code_enabled_cart_total
