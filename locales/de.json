@@ -320,7 +320,8 @@
       },
       "thank_you": {
         "company_location_section_title": "Schule und Standort",
-        "title": "Vielen Dank für Ihre Bestellung."
+        "title": "Vielen Dank für Ihre Bestellung.",
+        "contact_us_html": "Benötigen Sie Hilfe {{ contact_us }}?"
       },
       "review": {
         "blocks": {
