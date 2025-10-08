@@ -357,7 +357,8 @@
         }
       },
       "shop_policies": {
-        "privacy_policy": "Datenschutz"
+        "privacy_policy": "Datenschutz",
+        "cookie_preferences": "Cookies"
       }
     },
     "email_marketing": {
