@@ -388,6 +388,9 @@
           }
         }
       }
+    },
+    "orders": {
+      "buy_again": "Erneut bestellen"
     }
   }
 }
