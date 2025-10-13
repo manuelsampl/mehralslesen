@@ -10,8 +10,28 @@
 {% liquid
   assign collection = collections[collection_handle]
   assign product_limit = 8
-  assign columns_desktop = 4
-  assign columns_tablet = 3
+  
+  # Calculate columns based on actual product count
+  if collection and collection.products.size > 0
+    assign product_count = collection.products.size
+    if product_count > product_limit
+      assign product_count = product_limit
+    endif
+    
+    # Set columns based on product count (max 4)
+    assign columns_desktop = 4
+    if product_count < 4
+      assign columns_desktop = product_count
+    endif
+    
+    assign columns_tablet = 3
+    if product_count < 3
+      assign columns_tablet = product_count
+    endif
+  else
+    assign columns_desktop = 4
+    assign columns_tablet = 3
+  endif
   
   if content_aspect_ratio == blank
     assign content_aspect_ratio = '4 / 5'
@@ -75,6 +95,14 @@
 
   .mega-menu__content-list-item .resource-card__title {
     text-transform: var(--title-case);
+    /* Show full title in mega menu, allow multi-line wrapping */
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    display: block;
+    overflow: visible;
+    white-space: normal;
+    word-break: break-word;
+    hyphens: auto;
   }
 
   .mega-menu__view-all {
