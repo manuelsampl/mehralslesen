@@ -44,8 +44,15 @@
     {% paginate collection.products by 24 %}
       {% capture children %}
         {% for product in collection.products %}
-          {% comment %} Hide products with price of 0 {% endcomment %}
-          {% unless product.price == 0 %}
+          {% comment %} Hide products with price of 0, except those with tag "schuleinschreibung" {% endcomment %}
+          {% assign show_product = true %}
+          {% if product.price == 0 %}
+            {% unless product.tags contains 'schuleinschreibung' %}
+              {% assign show_product = false %}
+            {% endunless %}
+          {% endif %}
+          
+          {% if show_product %}
             <li
               id="{{ section.id }}-{{ product.id }}"
               class="product-grid__item product-grid__item--{{ forloop.index0 }}"
@@ -57,7 +64,7 @@
               {% content_for 'block', type: '_product-card', id: 'product-card', closest.product: product %}
               {% # theme-check-enable %}
             </li>
-          {% endunless %}
+          {% endif %}
         {% endfor %}
       {% endcapture %}
 
