@@ -19,7 +19,7 @@
           "settings": {
             "headline": "Bankverbindung",
             "content_type": "text",
-            "text": "<p>Erste Bank<br/>IBAN: <br/>AT98 2011 1200 3443 3205<br/>BIC: <br/>GIBAATWWXXX</p>",
+            "text": "<p></p><p>Österreichisches Rotes Kreuz</p><p>Erste Bank<br/>IBAN: <br/>AT98 2011 1200 3443 3205<br/>BIC: <br/>GIBAATWWXXX</p>",
             "menu": ""
           }
         },

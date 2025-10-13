@@ -319,7 +319,9 @@
         "address_company_too_long": "Schulname ist zu lang. (max. 255 Zeichen)"
       },
       "thank_you": {
-        "company_location_section_title": "Schule und Standort"
+        "company_location_section_title": "Schule und Standort",
+        "title": "Vielen Dank für Ihre Bestellung.",
+        "contact_us_html": "Benötigen Sie Hilfe {{ contact_us }}?"
       },
       "review": {
         "blocks": {
@@ -330,7 +332,39 @@
         "location_title": "Standort der Schule"
       },
       "general": {
-        "pay_now_button_label": "Jetzt bezahlen"
+        "pay_now_button_label": "Jetzt bezahlen",
+        "errors": {
+          "buyer_identity": {
+            "customer_account_required": "Sie müssen sich anmelden um fortzufahren."
+          }
+        },
+        "complete_purchase_button_label": "Bestellung abschließen"
+      },
+      "processing": {
+        "your_order_has_been_received_title": "Vielen Dank für Ihre Bestellung."
+      },
+      "payment": {
+        "markets_pro_disclaimer_privacy_policy": "Datenschutz",
+        "markets_pro_disclaimer_express_privacy_policy": "Datenschutz"
+      },
+      "marketing": {
+        "sms": {
+          "disclaimer": {
+            "privacy_policy": "Datenschutz"
+          }
+        },
+        "disclaimer": {
+          "privacy_policy": "Datenschutz"
+        }
+      },
+      "shop_policies": {
+        "privacy_policy": "Datenschutz",
+        "cookie_preferences": "Cookies"
+      }
+    },
+    "email_marketing": {
+      "subscribed": {
+        "confirmation": "Vielen Dank, dass Sie sich für unsere Mailingliste angemeldet haben."
       }
     }
   },
@@ -346,7 +380,17 @@
       "account_information": {
         "company_card_name_label": "Name der Schule",
         "company_card_section_accessibility_label": "Schule"
+      },
+      "draft_order_details": {
+        "payment_status": {
+          "pending": {
+            "description_waiting_for_manual_payment": " "
+          }
+        }
       }
+    },
+    "orders": {
+      "buy_again": "Erneut bestellen"
     }
   }
 }
