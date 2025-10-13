@@ -406,6 +406,9 @@
         "shipping_used_as_billing_notice": "Diese wird auch als Ihre Rechnungsadresse für diese Bestellung verwendet.",
         "address_confirm": "Möchten Sie diese Adresse wirklich aus Ihrem Konto löschen?",
         "split_shipping_multiple_shipment_notice": "Ihre Bestellung wird in mehreren Lieferungen zugestellt"
+      },
+      "shipping_errors": {
+        "empty_state": "Geben Sie Ihre Lieferadresse ein, um verfügbare Versandarten anzuzeigen."
       }
     },
     "email_marketing": {
