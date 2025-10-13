@@ -312,7 +312,8 @@
       "contact": {
         "change_company_location_link_label": "Standort der Schule ändern",
         "company_label": "Schule",
-        "optional_company_label": "Schule (optional)"
+        "optional_company_label": "Schule (optional)",
+        "phone_tooltip": "Falls wir Sie zu Ihrer Bestellung kontaktieren müssen."
       },
       "field_errors": {
         "address_company_blank": "Gib einen Schulnamen ein",
@@ -321,7 +322,11 @@
       "thank_you": {
         "company_location_section_title": "Schule und Standort",
         "title": "Vielen Dank für Ihre Bestellung.",
-        "contact_us_html": "Benötigen Sie Hilfe {{ contact_us }}?"
+        "contact_us_html": "Benötigen Sie Hilfe {{ contact_us }}?",
+        "login_title": "Melden Sie sich an, um alle Bestelldetails anzuzeigen",
+        "customer_information_hidden_fields_message": "Melden Sie sich an, um alle Kundeninformationen anzuzeigen.",
+        "thank_you_confirmed_order_with_draft": "Wir lassen Sie es wissen, falls wir weitere Informationen benötigen oder wenn Ihre Bestellung bestätigt wurde.",
+        "thank_you_confirmed_order_with_draft_payment": "Wir lassen Sie es wissen, falls wir weitere Informationen benötigen oder wenn Ihre Bestellung bestätigt wurde."
       },
       "review": {
         "blocks": {
@@ -345,7 +350,10 @@
       },
       "payment": {
         "markets_pro_disclaimer_privacy_policy": "Datenschutz",
-        "markets_pro_disclaimer_express_privacy_policy": "Datenschutz"
+        "markets_pro_disclaimer_express_privacy_policy": "Datenschutz",
+        "google": {
+          "connect": "Hier klicken und mit Ihrem Google Pay-Konto verbinden"
+        }
       },
       "marketing": {
         "sms": {
@@ -355,11 +363,27 @@
         },
         "disclaimer": {
           "privacy_policy": "Datenschutz"
+        },
+        "unsubscribe": {
+          "title": "Sie haben sich abgemeldet."
         }
       },
       "shop_policies": {
         "privacy_policy": "Datenschutz",
         "cookie_preferences": "Cookies"
+      },
+      "order_summary": {
+        "customer_does_not_meet_discount_requirements_notice": "Der Rabattcode <strong style=\"text-transform:uppercase\">{{ code }}</strong> ist derzeit für Sie nicht verfügbar"
+      },
+      "payment_gateway": {
+        "generic_payment_terms": "Für Sie gelten die Bedingungen \"{{translatedName}}\". Ihre Zahlung ist am {{dueDate}} fällig.",
+        "login_prompt": {
+          "no_access": {
+            "link": "Loggen Sie sich"
+          }
+        },
+        "direct_payment_terms": "Für Sie gelten die Bedingungen \"{{translatedName}}\". Ihre Karte wird am {{dueDate}} belastet.",
+        "draft_order_payment_due_later_terms": "Für Sie gelten die Bedingungen \"{{translatedName}}\", sobald Ihre Bestellung bestätigt wurde."
       }
     },
     "email_marketing": {
