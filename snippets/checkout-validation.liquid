@@ -228,8 +228,7 @@
         const currentValidationState = {};
 
         Object.entries(productGroups).forEach(([mainVariantId, group]) => {
-          // Special rule: If 3 or more main products, always allow at least 2 teacher samples
-          // but NO social samples in this case
+          // Special rule for teacher samples: If 3 or more main products, always allow at least 2
           const hasMinimumForTeacherSamples = group.mainQuantity >= 3;
           const minTeacherSamplesAllowed = hasMinimumForTeacherSamples ? 2 : 0;
 
@@ -238,7 +237,7 @@
 
           // Effective limits
           const effectiveTeacherLimit = Math.max(maxAllowedPerType, minTeacherSamplesAllowed);
-          const effectiveSocialLimit = hasMinimumForTeacherSamples ? 0 : maxAllowedPerType;
+          const effectiveSocialLimit = maxAllowedPerType; // Social samples always 10%
 
           const productKey = group.productTitle;
           
@@ -281,11 +280,7 @@
             // 2. Previously was within limit and now exceeds again
             if (!lastState || !lastState.socialExceedsLimit) {
               if (!alertShownForProducts[productKey + '_social']) {
-                if (hasMinimumForTeacherSamples) {
-                  errors.push(`${group.productTitle}: Schülerfreiexemplare nicht erlaubt (bei ≥3 Hauptprodukten nur Lehrerexemplare)`);
-                } else {
-                  errors.push(`${group.productTitle}: Zu viele Schülerfreiexemplare (${group.socialQuantity}/${effectiveSocialLimit})`);
-                }
+                errors.push(`${group.productTitle}: Zu viele Schülerfreiexemplare (${group.socialQuantity}/${effectiveSocialLimit})`);
                 alertShownForProducts[productKey + '_social'] = true;
               }
             }

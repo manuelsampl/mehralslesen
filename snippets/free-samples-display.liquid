@@ -361,20 +361,19 @@
     // Determine if this is teacher or social input
     const isTeacherInput = input.id === 'rk-teacher-samples';
     
-    // Special rule: If 3 or more main products
-    const hasMinimumForTeacherSamples = mainQty >= 3;
-    const minTeacherSamplesAllowed = hasMinimumForTeacherSamples ? 2 : 0;
-    
     // Calculate max allowed based on 10% rule
     const maxAllowedPerType = Math.floor(mainQty * 0.1);
     
     // Effective limits
     let maxAllowed;
     if (isTeacherInput) {
+      // Teacher samples: minimum 2 if >= 3 main products, otherwise 10%
+      const hasMinimumForTeacherSamples = mainQty >= 3;
+      const minTeacherSamplesAllowed = hasMinimumForTeacherSamples ? 2 : 0;
       maxAllowed = Math.max(maxAllowedPerType, minTeacherSamplesAllowed);
     } else {
-      // Social samples: 0 if >= 3 main products, otherwise 10%
-      maxAllowed = hasMinimumForTeacherSamples ? 0 : maxAllowedPerType;
+      // Social samples: always 10%
+      maxAllowed = maxAllowedPerType;
     }
     
     let value = parseInt(input.value) || 0;
@@ -385,7 +384,6 @@
       maxAllowedPerType,
       maxAllowed, 
       mainQty,
-      hasMinimumForTeacherSamples,
       isTeacherInput
     });
 
@@ -393,10 +391,8 @@
       value = maxAllowed;
       input.value = maxAllowed;
       
-      if (isTeacherInput && hasMinimumForTeacherSamples) {
-        showNotification(`Maximum erreicht: ${maxAllowed} Stück (Mindestens ${minTeacherSamplesAllowed} bei ≥3 Hauptprodukten)`, 'warning');
-      } else if (!isTeacherInput && hasMinimumForTeacherSamples) {
-        showNotification(`Schülerfreiexemplare nicht erlaubt bei ${mainQty} Hauptprodukten (≥3). Nur Lehrerexemplare möglich.`, 'warning');
+      if (isTeacherInput && mainQty >= 3 && maxAllowed > maxAllowedPerType) {
+        showNotification(`Maximum erreicht: ${maxAllowed} Stück (Mindestens 2 bei ≥3 Hauptprodukten)`, 'warning');
       } else {
         showNotification(`Maximum erreicht: ${maxAllowed} Stück (10% von ${mainQty})`, 'warning');
       }
@@ -488,31 +484,19 @@
         
         const mainQty = getMainQuantity();
         
-        // Special rule: If 3 or more main products, NO social samples allowed (only teacher samples)
-        const hasMinimumForTeacherSamples = mainQty >= 3;
-        
-        // Calculate max allowed based on 10% rule
-        const maxAllowedPerType = Math.floor(mainQty * 0.1);
-        
-        // Effective limit for social samples (0 if main qty >= 3)
-        const maxAllowed = hasMinimumForTeacherSamples ? 0 : maxAllowedPerType;
+        // Social samples: always 10% of main products
+        const maxAllowed = Math.floor(mainQty * 0.1);
         
         const currentValue = parseInt(socialInput.value) || 0;
         
         console.log('➕ Social increase clicked:', { 
           currentValue, 
           mainQty,
-          maxAllowedPerType,
-          maxAllowed,
-          hasMinimumForTeacherSamples
+          maxAllowed
         });
         
         if (currentValue >= maxAllowed) {
-          if (hasMinimumForTeacherSamples) {
-            showNotification(`Schülerfreiexemplare nicht erlaubt bei ${mainQty} Hauptprodukten (≥3). Nur Lehrerexemplare möglich.`, 'warning');
-          } else {
-            showNotification(`Maximum erreicht: ${maxAllowed} Stück (10% von ${mainQty})`, 'warning');
-          }
+          showNotification(`Maximum erreicht: ${maxAllowed} Stück (10% von ${mainQty})`, 'warning');
           return;
         }
         

@@ -109,8 +109,7 @@
     const teacherQty = teacherSamples.reduce((sum, item) => sum + item.quantity, 0);
     const socialQty = socialSamples.reduce((sum, item) => sum + item.quantity, 0);
 
-    // Special rule: If 3 or more main products, always allow at least 2 teacher samples
-    // but NO social samples in this case
+    // Special rule for teacher samples: If 3 or more main products, always allow at least 2 teacher samples
     const hasMinimumForTeacherSamples = mainProductQty >= 3;
     const minTeacherSamplesAllowed = hasMinimumForTeacherSamples ? 2 : 0;
 
@@ -119,7 +118,7 @@
 
     // Effective limits
     const effectiveTeacherLimit = Math.max(maxAllowedPerType, minTeacherSamplesAllowed);
-    const effectiveSocialLimit = hasMinimumForTeacherSamples ? 0 : maxAllowedPerType;
+    const effectiveSocialLimit = maxAllowedPerType; // Social samples always 10%
 
     console.log('📊 Cart validation:', {
       mainProducts: mainProducts.length,
@@ -156,16 +155,12 @@
       
       if (socialExceeded) {
         const excess = socialQty - effectiveSocialLimit;
-        if (hasMinimumForTeacherSamples) {
-          errorMessages.push(`Schülerfreiexemplare: ${socialQty}/${effectiveSocialLimit} - Bei ≥3 Hauptprodukten sind keine Schülerfreiexemplare erlaubt, nur Lehrerexemplare.`);
-        } else {
-          errorMessages.push(`Schülerfreiexemplare: ${socialQty}/${effectiveSocialLimit} (${excess} zu viel)`);
-        }
+        errorMessages.push(`Schülerfreiexemplare: ${socialQty}/${effectiveSocialLimit} (${excess} zu viel)`);
       }
       
       let ruleExplanation = '';
       if (hasMinimumForTeacherSamples) {
-        ruleExplanation = `<br><strong>Sonderregel:</strong> Bei ${mainProductQty} Hauptprodukten (≥3) sind mindestens ${minTeacherSamplesAllowed} Lehrerexemplare erlaubt, aber keine Schülerfreiexemplare.`;
+        ruleExplanation = `<br><strong>Regel:</strong> Bei ${mainProductQty} Hauptprodukten (≥3) sind mindestens ${minTeacherSamplesAllowed} Lehrerexemplare und bis zu ${effectiveSocialLimit} Schülerfreiexemplare (10%) erlaubt.`;
       } else {
         ruleExplanation = `<br>Erlaubt sind jeweils 10% von ${mainProductQty} Hauptprodukten = ${maxAllowedPerType} pro Typ.`;
       }
