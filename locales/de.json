@@ -313,7 +313,8 @@
         "change_company_location_link_label": "Standort der Schule ändern",
         "company_label": "Schule",
         "optional_company_label": "Schule (optional)",
-        "phone_tooltip": "Falls wir Sie zu Ihrer Bestellung kontaktieren müssen."
+        "phone_tooltip": "Falls wir Sie zu Ihrer Bestellung kontaktieren müssen.",
+        "shipping_used_as_billing_notice": "Diese wird auch als Ihre Rechnungsadresse für diese Bestellung verwendet."
       },
       "field_errors": {
         "address_company_blank": "Gib einen Schulnamen ein",
@@ -340,10 +341,13 @@
         "pay_now_button_label": "Jetzt bezahlen",
         "errors": {
           "buyer_identity": {
-            "customer_account_required": "Sie müssen sich anmelden um fortzufahren."
-          }
+            "customer_account_required": "Sie müssen sich anmelden um fortzufahren.",
+            "buyer_identity_presentment_currency_does_not_match": "Bei der Verarbeitung Ihrer Bestellung ist ein Problem aufgetreten. Versuchen Sie es in ein paar Minuten noch einmal."
+          },
+          "session_identifier_not_unique_error": "Mit deiner Bestellung ist etwas schiefgelaufen, bitte versuchen Sie erneut auszuchecken."
         },
-        "complete_purchase_button_label": "Bestellung abschließen"
+        "complete_purchase_button_label": "Bestellung abschließen",
+        "submit_for_review_notice_label": "Ihre Zahlung ist erst fällig, sobald Ihre Bestellung überprüft wurde"
       },
       "processing": {
         "your_order_has_been_received_title": "Vielen Dank für Ihre Bestellung."
@@ -384,6 +388,24 @@
         },
         "direct_payment_terms": "Für Sie gelten die Bedingungen \"{{translatedName}}\". Ihre Karte wird am {{dueDate}} belastet.",
         "draft_order_payment_due_later_terms": "Für Sie gelten die Bedingungen \"{{translatedName}}\", sobald Ihre Bestellung bestätigt wurde."
+      },
+      "stock": {
+        "quantity_update": {
+          "description": "Die verfügbare Menge dieser Artikel hat sich geändert und wurde in Ihrem Warenkorb aktualisiert."
+        },
+        "unpurchasable_product": {
+          "header": "Einige Artikel wurden aus Ihrem Warenkorb entfernt"
+        },
+        "unpurchasable_product_generic": {
+          "header": "Einige Artikel wurden aus Ihrem Warenkorb entfernt"
+        }
+      },
+      "shipping": {
+        "please_enter_your_shipping_information_notice": "Bitte geben Sie Ihre Lieferdaten ein.",
+        "shipping_information_redirect_link": "Geben Sie Ihre Informationen hier ein.",
+        "shipping_used_as_billing_notice": "Diese wird auch als Ihre Rechnungsadresse für diese Bestellung verwendet.",
+        "address_confirm": "Möchten Sie diese Adresse wirklich aus Ihrem Konto löschen?",
+        "split_shipping_multiple_shipment_notice": "Ihre Bestellung wird in mehreren Lieferungen zugestellt"
       }
     },
     "email_marketing": {
