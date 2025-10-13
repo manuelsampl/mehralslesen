@@ -337,7 +337,8 @@
           "buyer_identity": {
             "customer_account_required": "Sie müssen sich anmelden um fortzufahren."
           }
-        }
+        },
+        "complete_purchase_button_label": "Bestellung abschließen"
       },
       "processing": {
         "your_order_has_been_received_title": "Vielen Dank für Ihre Bestellung."
