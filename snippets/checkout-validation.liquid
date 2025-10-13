@@ -228,20 +228,34 @@
         const currentValidationState = {};
 
         Object.entries(productGroups).forEach(([mainVariantId, group]) => {
-          const maxAllowed = Math.floor(group.mainQuantity * 0.1);
+          // Special rule: If 3 or more main products, always allow at least 2 teacher samples
+          // but NO social samples in this case
+          const hasMinimumForTeacherSamples = group.mainQuantity >= 3;
+          const minTeacherSamplesAllowed = hasMinimumForTeacherSamples ? 2 : 0;
+
+          // Calculate max allowed based on 10% rule
+          const maxAllowedPerType = Math.floor(group.mainQuantity * 0.1);
+
+          // Effective limits
+          const effectiveTeacherLimit = Math.max(maxAllowedPerType, minTeacherSamplesAllowed);
+          const effectiveSocialLimit = hasMinimumForTeacherSamples ? 0 : maxAllowedPerType;
+
           const productKey = group.productTitle;
           
           // Track current state
           currentValidationState[productKey] = {
             teacherQuantity: group.teacherQuantity,
             socialQuantity: group.socialQuantity,
-            maxAllowed: maxAllowed,
-            teacherExceedsLimit: group.teacherQuantity > maxAllowed,
-            socialExceedsLimit: group.socialQuantity > maxAllowed
+            maxAllowedPerType: maxAllowedPerType,
+            effectiveTeacherLimit: effectiveTeacherLimit,
+            effectiveSocialLimit: effectiveSocialLimit,
+            hasMinimumForTeacherSamples: hasMinimumForTeacherSamples,
+            teacherExceedsLimit: group.teacherQuantity > effectiveTeacherLimit,
+            socialExceedsLimit: group.socialQuantity > effectiveSocialLimit
           };
 
           // Check if we should show alert for teacher samples
-          if (group.teacherQuantity > maxAllowed) {
+          if (group.teacherQuantity > effectiveTeacherLimit) {
             const lastState = lastValidationState[productKey];
             
             // Show alert only if:
@@ -249,7 +263,7 @@
             // 2. Previously was within limit and now exceeds again
             if (!lastState || !lastState.teacherExceedsLimit) {
               if (!alertShownForProducts[productKey + '_teacher']) {
-                errors.push(`${group.productTitle}: Zu viele Lehrerexemplare (${group.teacherQuantity}/${maxAllowed})`);
+                errors.push(`${group.productTitle}: Zu viele Lehrerexemplare (${group.teacherQuantity}/${effectiveTeacherLimit})`);
                 alertShownForProducts[productKey + '_teacher'] = true;
               }
             }
@@ -259,7 +273,7 @@
           }
 
           // Check if we should show alert for social samples
-          if (group.socialQuantity > maxAllowed) {
+          if (group.socialQuantity > effectiveSocialLimit) {
             const lastState = lastValidationState[productKey];
             
             // Show alert only if:
@@ -267,7 +281,11 @@
             // 2. Previously was within limit and now exceeds again
             if (!lastState || !lastState.socialExceedsLimit) {
               if (!alertShownForProducts[productKey + '_social']) {
-                errors.push(`${group.productTitle}: Zu viele Freiexemplare (${group.socialQuantity}/${maxAllowed})`);
+                if (hasMinimumForTeacherSamples) {
+                  errors.push(`${group.productTitle}: Schülerfreiexemplare nicht erlaubt (bei ≥3 Hauptprodukten nur Lehrerexemplare)`);
+                } else {
+                  errors.push(`${group.productTitle}: Zu viele Schülerfreiexemplare (${group.socialQuantity}/${effectiveSocialLimit})`);
+                }
                 alertShownForProducts[productKey + '_social'] = true;
               }
             }

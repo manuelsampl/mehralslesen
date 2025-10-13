@@ -357,20 +357,49 @@
   // Override the quantity change validation
   const validateAndSetQuantity = (input, component) => {
     const mainQty = getMainQuantity();
-    const maxAllowed = Math.floor(mainQty * 0.1);
+    
+    // Determine if this is teacher or social input
+    const isTeacherInput = input.id === 'rk-teacher-samples';
+    
+    // Special rule: If 3 or more main products
+    const hasMinimumForTeacherSamples = mainQty >= 3;
+    const minTeacherSamplesAllowed = hasMinimumForTeacherSamples ? 2 : 0;
+    
+    // Calculate max allowed based on 10% rule
+    const maxAllowedPerType = Math.floor(mainQty * 0.1);
+    
+    // Effective limits
+    let maxAllowed;
+    if (isTeacherInput) {
+      maxAllowed = Math.max(maxAllowedPerType, minTeacherSamplesAllowed);
+    } else {
+      // Social samples: 0 if >= 3 main products, otherwise 10%
+      maxAllowed = hasMinimumForTeacherSamples ? 0 : maxAllowedPerType;
+    }
+    
     let value = parseInt(input.value) || 0;
     
-    console.log('� Validating:', { 
+    console.log('🔍 Validating:', { 
       input: input.id, 
       value, 
+      maxAllowedPerType,
       maxAllowed, 
-      mainQty 
+      mainQty,
+      hasMinimumForTeacherSamples,
+      isTeacherInput
     });
 
     if (value > maxAllowed) {
       value = maxAllowed;
       input.value = maxAllowed;
-      showNotification(`Maximum erreicht: ${maxAllowed} Stück (10% von ${mainQty})`, 'warning');
+      
+      if (isTeacherInput && hasMinimumForTeacherSamples) {
+        showNotification(`Maximum erreicht: ${maxAllowed} Stück (Mindestens ${minTeacherSamplesAllowed} bei ≥3 Hauptprodukten)`, 'warning');
+      } else if (!isTeacherInput && hasMinimumForTeacherSamples) {
+        showNotification(`Schülerfreiexemplare nicht erlaubt bei ${mainQty} Hauptprodukten (≥3). Nur Lehrerexemplare möglich.`, 'warning');
+      } else {
+        showNotification(`Maximum erreicht: ${maxAllowed} Stück (10% von ${mainQty})`, 'warning');
+      }
       return false;
     }
     
@@ -393,13 +422,34 @@
         event.stopPropagation();
         
         const mainQty = getMainQuantity();
-        const maxAllowed = Math.floor(mainQty * 0.1);
+        
+        // Special rule: If 3 or more main products, always allow at least 2 teacher samples
+        const hasMinimumForTeacherSamples = mainQty >= 3;
+        const minTeacherSamplesAllowed = hasMinimumForTeacherSamples ? 2 : 0;
+        
+        // Calculate max allowed based on 10% rule
+        const maxAllowedPerType = Math.floor(mainQty * 0.1);
+        
+        // Effective limit for teacher samples
+        const maxAllowed = Math.max(maxAllowedPerType, minTeacherSamplesAllowed);
+        
         const currentValue = parseInt(teacherInput.value) || 0;
         
-        console.log('➕ Teacher increase clicked:', { currentValue, maxAllowed });
+        console.log('➕ Teacher increase clicked:', { 
+          currentValue, 
+          mainQty,
+          maxAllowedPerType,
+          minTeacherSamplesAllowed,
+          maxAllowed,
+          hasMinimumForTeacherSamples
+        });
         
         if (currentValue >= maxAllowed) {
-          showNotification(`Maximum erreicht: ${maxAllowed} Stück (10% von ${mainQty})`, 'warning');
+          if (hasMinimumForTeacherSamples) {
+            showNotification(`Maximum erreicht: ${maxAllowed} Stück (Mindestens ${minTeacherSamplesAllowed} bei ≥3 Hauptprodukten)`, 'warning');
+          } else {
+            showNotification(`Maximum erreicht: ${maxAllowed} Stück (10% von ${mainQty})`, 'warning');
+          }
           return;
         }
         
@@ -437,13 +487,32 @@
         event.stopPropagation();
         
         const mainQty = getMainQuantity();
-        const maxAllowed = Math.floor(mainQty * 0.1);
+        
+        // Special rule: If 3 or more main products, NO social samples allowed (only teacher samples)
+        const hasMinimumForTeacherSamples = mainQty >= 3;
+        
+        // Calculate max allowed based on 10% rule
+        const maxAllowedPerType = Math.floor(mainQty * 0.1);
+        
+        // Effective limit for social samples (0 if main qty >= 3)
+        const maxAllowed = hasMinimumForTeacherSamples ? 0 : maxAllowedPerType;
+        
         const currentValue = parseInt(socialInput.value) || 0;
         
-        console.log('➕ Social increase clicked:', { currentValue, maxAllowed });
+        console.log('➕ Social increase clicked:', { 
+          currentValue, 
+          mainQty,
+          maxAllowedPerType,
+          maxAllowed,
+          hasMinimumForTeacherSamples
+        });
         
         if (currentValue >= maxAllowed) {
-          showNotification(`Maximum erreicht: ${maxAllowed} Stück (10% von ${mainQty})`, 'warning');
+          if (hasMinimumForTeacherSamples) {
+            showNotification(`Schülerfreiexemplare nicht erlaubt bei ${mainQty} Hauptprodukten (≥3). Nur Lehrerexemplare möglich.`, 'warning');
+          } else {
+            showNotification(`Maximum erreicht: ${maxAllowed} Stück (10% von ${mainQty})`, 'warning');
+          }
           return;
         }
         

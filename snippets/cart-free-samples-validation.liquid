@@ -109,7 +109,17 @@
     const teacherQty = teacherSamples.reduce((sum, item) => sum + item.quantity, 0);
     const socialQty = socialSamples.reduce((sum, item) => sum + item.quantity, 0);
 
+    // Special rule: If 3 or more main products, always allow at least 2 teacher samples
+    // but NO social samples in this case
+    const hasMinimumForTeacherSamples = mainProductQty >= 3;
+    const minTeacherSamplesAllowed = hasMinimumForTeacherSamples ? 2 : 0;
+
+    // Calculate max allowed based on 10% rule
     const maxAllowedPerType = Math.floor(mainProductQty * 0.1);
+
+    // Effective limits
+    const effectiveTeacherLimit = Math.max(maxAllowedPerType, minTeacherSamplesAllowed);
+    const effectiveSocialLimit = hasMinimumForTeacherSamples ? 0 : maxAllowedPerType;
 
     console.log('📊 Cart validation:', {
       mainProducts: mainProducts.length,
@@ -119,16 +129,20 @@
       teacherQty,
       socialQty,
       maxAllowedPerType,
-      teacherValid: teacherQty <= maxAllowedPerType,
-      socialValid: socialQty <= maxAllowedPerType
+      hasMinimumForTeacherSamples,
+      minTeacherSamplesAllowed,
+      effectiveTeacherLimit,
+      effectiveSocialLimit,
+      teacherValid: teacherQty <= effectiveTeacherLimit,
+      socialValid: socialQty <= effectiveSocialLimit
     });
 
     const validationDiv = document.getElementById('cart-free-samples-validation');
     const detailsP = document.getElementById('validation-details');
     const checkoutButton = document.getElementById('checkout');
 
-    const teacherExceeded = teacherQty > maxAllowedPerType;
-    const socialExceeded = socialQty > maxAllowedPerType;
+    const teacherExceeded = teacherQty > effectiveTeacherLimit;
+    const socialExceeded = socialQty > effectiveSocialLimit;
     const anyExceeded = teacherExceeded || socialExceeded;
 
     if (anyExceeded && mainProductQty > 0) {
@@ -136,17 +150,27 @@
       let errorMessages = [];
       
       if (teacherExceeded) {
-        const excess = teacherQty - maxAllowedPerType;
-        errorMessages.push(`Lehrerexemplare: ${teacherQty}/${maxAllowedPerType} (${excess} zu viel)`);
+        const excess = teacherQty - effectiveTeacherLimit;
+        errorMessages.push(`Lehrerexemplare: ${teacherQty}/${effectiveTeacherLimit} (${excess} zu viel)`);
       }
       
       if (socialExceeded) {
-        const excess = socialQty - maxAllowedPerType;
-        errorMessages.push(`Schülerfreiexemplare: ${socialQty}/${maxAllowedPerType} (${excess} zu viel)`);
+        const excess = socialQty - effectiveSocialLimit;
+        if (hasMinimumForTeacherSamples) {
+          errorMessages.push(`Schülerfreiexemplare: ${socialQty}/${effectiveSocialLimit} - Bei ≥3 Hauptprodukten sind keine Schülerfreiexemplare erlaubt, nur Lehrerexemplare.`);
+        } else {
+          errorMessages.push(`Schülerfreiexemplare: ${socialQty}/${effectiveSocialLimit} (${excess} zu viel)`);
+        }
       }
       
-      detailsP.innerHTML = `Sie haben zu viele Freiexemplare im Warenkorb.<br>
-        Erlaubt sind jeweils 10% von ${mainProductQty} Hauptprodukten = ${maxAllowedPerType} pro Typ.<br><br>
+      let ruleExplanation = '';
+      if (hasMinimumForTeacherSamples) {
+        ruleExplanation = `<br><strong>Sonderregel:</strong> Bei ${mainProductQty} Hauptprodukten (≥3) sind mindestens ${minTeacherSamplesAllowed} Lehrerexemplare erlaubt, aber keine Schülerfreiexemplare.`;
+      } else {
+        ruleExplanation = `<br>Erlaubt sind jeweils 10% von ${mainProductQty} Hauptprodukten = ${maxAllowedPerType} pro Typ.`;
+      }
+      
+      detailsP.innerHTML = `Sie haben zu viele Freiexemplare im Warenkorb.${ruleExplanation}<br><br>
         ${errorMessages.join('<br>')}`;
       
       validationDiv.style.display = 'block';
