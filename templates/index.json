@@ -19,7 +19,7 @@
         "arc_color": "#3f9fb8",
         "arc_height": 100,
         "heading": "Wählen Sie Ihre Produkte durch Klick auf die Zeitschrift",
-        "text": "Sie wählen eine Zeitschrift und bestellen in Klassenstärke. Die Hefte kommen monatlich (Sept.–Juni) mit Extraheften, Online- und Begleitmaterialien – ohne Aufpreis – direkt an Ihre Schule.",
+        "text": "Sie wählen eine Zeitschrift und bestellen in Klassenstärke. Die Hefte kommen monatlich (Sept./Okt.–Juni) mit Extraheften, Online- und Begleitmaterialien – ohne Aufpreis – direkt an Ihre Schule.",
         "caption_color": "#ffffff",
         "button_label": "Jetzt bestellen",
         "button_link": "shopify://collections"
@@ -79,7 +79,7 @@
       "name": "t:sections.testimonials.presets.name",
       "settings": {
         "headline": "Was Lehrer:innen und Schüler:innen sagen",
-        "subheadline": "ERFAHRUNGEN AUS DEM SCHULALLTAG MIT UNSEREN ZEITSCHRIFTEN.",
+        "subheadline": "ERFAHRUNGEN AUS DEM SCHULALLTAG MIT UNSEREN ZEITSCHRIFTEN",
         "container_width": "container--full",
         "color_scheme": "scheme-4",
         "padding_top": 0,

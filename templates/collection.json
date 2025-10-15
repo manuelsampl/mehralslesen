@@ -12,6 +12,31 @@
     "section": {
       "type": "section",
       "blocks": {
+        "collection_title_Xn48hn": {
+          "type": "collection-title",
+          "name": "t:names.collection_title",
+          "settings": {
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "3rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "text_tqQTNE": {
           "type": "text",
           "name": "Title",
@@ -42,7 +67,7 @@
           "type": "text",
           "name": "Description",
           "settings": {
-            "text": "<p>{{ closest.collection.metafields.custom.subheadline | metafield_tag }}</p>",
+            "text": "<p>{{ closest.collection.metafields.custom.subheadline | metafield_tag }}</p>{{ closest.collection.description }}",
             "width": "fit-content",
             "max_width": "none",
             "alignment": "left",
@@ -66,6 +91,7 @@
         }
       },
       "block_order": [
+        "collection_title_Xn48hn",
         "text_tqQTNE",
         "text_twGGkJ"
       ],
