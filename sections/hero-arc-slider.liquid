@@ -15,7 +15,35 @@
     >
       <!-- Angle Slider Container -->
       <div class="js-angle-slider">
-       
+        <!-- Navigation Buttons -->
+        <div class="js-angle-slider__pager">
+          <button class="js-angle-slider__prev arc-nav arc-nav--prev" type="button" aria-label="{{ 'general.previous' | t }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="69.428" height="37.894" viewBox="0 0 69.428 37.894">
+              <g id="Gruppe_78" data-name="Gruppe 78" transform="translate(2.5 3.518)">
+                <g id="Gruppe_50" data-name="Gruppe 50" transform="translate(44.508 30.858) rotate(-90)">
+                  <line id="Linie_18" data-name="Linie 18" x1="15.429" y2="18.902" transform="translate(15.429)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                  <line id="Linie_19" data-name="Linie 19" x2="15.429" y2="18.902" transform="translate(0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                </g>
+                <g id="Gruppe_51" data-name="Gruppe 51" transform="translate(0 15.429)">
+                  <line id="Linie_20" data-name="Linie 20" x1="63.41" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                </g>
+              </g>
+            </svg>
+          </button>
+          <button class="js-angle-slider__next arc-nav arc-nav--next" type="button" aria-label="{{ 'general.next' | t }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="69.428" height="37.893" viewBox="0 0 69.428 37.893">
+              <g id="Gruppe_78" data-name="Gruppe 78" transform="translate(2.5 3.518)">
+                <g id="Gruppe_50" data-name="Gruppe 50" transform="translate(63.41 0) rotate(90)">
+                  <line id="Linie_18" data-name="Linie 18" x1="15.429" y1="18.902" transform="translate(15.429 0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                  <line id="Linie_19" data-name="Linie 19" y1="18.902" x2="15.429" transform="translate(0 0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                </g>
+                <g id="Gruppe_51" data-name="Gruppe 51" transform="translate(0 15.429)">
+                  <line id="Linie_20" data-name="Linie 20" x1="63.41" transform="translate(0 0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
 
         <!-- Slider Body -->
         <div class="js-angle-slider__body">
@@ -72,35 +100,7 @@
           </div>
         </div>
       </div>
- <!-- Navigation Buttons -->
-        <div class="js-angle-slider__pager">
-          <button class="js-angle-slider__prev arc-nav arc-nav--prev" type="button" aria-label="{{ 'general.previous' | t }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="69.428" height="37.894" viewBox="0 0 69.428 37.894">
-              <g id="Gruppe_78" data-name="Gruppe 78" transform="translate(2.5 3.518)">
-                <g id="Gruppe_50" data-name="Gruppe 50" transform="translate(44.508 30.858) rotate(-90)">
-                  <line id="Linie_18" data-name="Linie 18" x1="15.429" y2="18.902" transform="translate(15.429)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
-                  <line id="Linie_19" data-name="Linie 19" x2="15.429" y2="18.902" transform="translate(0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
-                </g>
-                <g id="Gruppe_51" data-name="Gruppe 51" transform="translate(0 15.429)">
-                  <line id="Linie_20" data-name="Linie 20" x1="63.41" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
-                </g>
-              </g>
-            </svg>
-          </button>
-          <button class="js-angle-slider__next arc-nav arc-nav--next" type="button" aria-label="{{ 'general.next' | t }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="69.428" height="37.893" viewBox="0 0 69.428 37.893">
-              <g id="Gruppe_78" data-name="Gruppe 78" transform="translate(2.5 3.518)">
-                <g id="Gruppe_50" data-name="Gruppe 50" transform="translate(63.41 0) rotate(90)">
-                  <line id="Linie_18" data-name="Linie 18" x1="15.429" y1="18.902" transform="translate(15.429 0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
-                  <line id="Linie_19" data-name="Linie 19" y1="18.902" x2="15.429" transform="translate(0 0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
-                </g>
-                <g id="Gruppe_51" data-name="Gruppe 51" transform="translate(0 15.429)">
-                  <line id="Linie_20" data-name="Linie 20" x1="63.41" transform="translate(0 0)" fill="none" stroke="#e32013" stroke-linecap="round" stroke-width="5"/>
-                </g>
-              </g>
-            </svg>
-          </button>
-        </div>
+      
       <!-- Background Arc -->
       <div class="arc-bg" aria-hidden="true">
 
@@ -403,14 +403,28 @@
   }
 
   .arc-nav--next {
-    right: 50px;
+    right: 47%;
     transform: rotate(25deg);
   }
 
   /* Responsive adjustments */
   @media (max-width: 749px) {
     .arc-caption { 
-      margin-top: min(35vh, 250px); 
+      margin-top: 10vh;
+      max-width: 90vw;
+    }
+
+    .arc-caption__title{
+      font-size: 29px;
+    }
+
+    .arc-caption__text{
+      font-size: 14px;
+    }
+
+    .arc-card button{
+      font-size: 14px;
+      padding: 10px;
     }
   }
 
@@ -428,23 +442,62 @@
     }
 
       .arc-nav {
-        top:410px;
+        top:530px;
       }
+
+      .arc-nav--next {
+    right: 40%;
+    transform: rotate(25deg);
+  }
   }
 
   @media (max-width: 749px) {
+
+      .arc-nav {
+        top: 373px;
+    }
+
+  .arc-nav--next {
+    right: 68%;
+    transform: rotate(15deg);
+  }
+  .arc-nav--prev{
+    left: 15px;
+    transform: rotate(-195deg);
+  }
     .arc-bg { 
       height: 100vh;
-      width: 236vw;
-      left: -68vw;
-      top:-220px;
+      width: 300vw;
+        left: -100vw;
+      top:-51vh;
     }
   }
 
   @media (min-width: 750px) and (max-width: 999px) {
     .arc-bg {
-      height: 80vw;
-      top: 42vw;
+      height: 100vh;
+        top: -52vh;
+    }
+
+    .arc-caption { 
+      margin-top: 10vh;
+      max-width: 90vw;
+    }
+
+    .arc-caption__title{
+      font-size: 29px;
+    }
+
+    .arc-caption__text{
+      font-size: 14px;
+    }
+
+    .arc-card button{
+      font-size: 14px;
+      padding: 10px;
+    }
+        .arc-nav {
+        top: 311px;
     }
   }
 {% endstylesheet %}
@@ -699,6 +752,7 @@
 
     const animeSpeed = slider.dataset.speed ? Number(slider.dataset.speed) : 400;
     let isBusy = false;
+    let busyTimeout = null;
 
     // Animation function
     const moveAnime = (elm, changeAmount, isLast) => {
@@ -713,6 +767,10 @@
           if (isLast) {
             checkResetPosition();
             isBusy = false;
+            if (busyTimeout) {
+              clearTimeout(busyTimeout);
+              busyTimeout = null;
+            }
             changeActiveClass();
             removeWillChange();
           }
@@ -730,8 +788,23 @@
 
     // Navigation function
     const navMove = (moveAngle) => {
-      if (isBusy) return;
+      if (isBusy) {
+        console.log('Navigation blocked - animation in progress');
+        return;
+      }
       isBusy = true;
+      
+      // Safety timeout to reset isBusy if animation fails
+      if (busyTimeout) {
+        clearTimeout(busyTimeout);
+      }
+      busyTimeout = setTimeout(() => {
+        console.warn('Animation timeout - force resetting isBusy');
+        isBusy = false;
+        busyTimeout = null;
+        changeActiveClass();
+        removeWillChange();
+      }, animeSpeed + 200);
       
       const lastIndex = itemsLen - 1;
       for (let i = 0; i < itemsLen; i++) {
