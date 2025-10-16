@@ -386,7 +386,7 @@
       },
       "order_summary": {
         "customer_does_not_meet_discount_requirements_notice": "Der Rabattcode <strong style=\"text-transform:uppercase\">{{ code }}</strong> ist derzeit für Sie nicht verfügbar",
-        "tip_label": "Spende an das Jugendrotkreuz"
+        "tip_label": "Zusätzliche Spende an das Jugendrotkreuz"
       },
       "payment_gateway": {
         "generic_payment_terms": "Für Sie gelten die Bedingungen \"{{translatedName}}\". Ihre Zahlung ist am {{dueDate}} fällig.",
