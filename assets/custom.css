@@ -176,6 +176,8 @@ select {
     background-color: white;
     width: 10vw !important;
     height: 10vw !important;
+    min-width: 130px !important;
+    min-height: 130px !important;
     border-radius: 1000px;
     border: 2px solid #E30613;
     display: flex;
@@ -392,4 +394,57 @@ select {
     background-color: white !important;
     color: #3f9fb8 !important;
     box-shadow: none !important;
+}
+
+@media screen and (max-width: 999px) {
+    .product-information__media .media-gallery--grid {
+        height: 500px
+    }
+
+    .product-media {
+        height: 500px
+    }
+
+    .product-information__media-content {
+        padding: 0px !important;
+    }
+
+    .product-details {
+        flex-direction: column;
+        flex-direction: column-reverse;
+    }
+
+    .product-information__grid {
+        gap: 20px 0px;
+    }
+
+    .product-details .group-block--width-fill {
+        width: 100%;
+        margin-top: 0px;
+        align-self: center;
+        order: 2;
+    }
+
+    .product-details .product-price-round,
+    .featured-product .product-price-round {
+        right: 0px;
+        position: relative !important;
+        min-height: 130px !important;
+        min-width: 130px !important;
+        order: 2;
+        justify-self: flex-end;
+        align-self: center;
+    }
+
+    .add-to-cart-component {
+        position: relative;
+        right: 0px;
+        bottom: 0px;
+        margin-top: 20px;
+        order: 3;
+    }
+
+    .menu-drawer__featured-content {
+        display: none;
+    }
 }
