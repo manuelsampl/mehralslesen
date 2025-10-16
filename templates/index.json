@@ -231,7 +231,7 @@
               "type": "button",
               "settings": {
                 "label": "Mehr Erfahren",
-                "link": "shopify://pages/contact",
+                "link": "shopify://pages/kontakt",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",

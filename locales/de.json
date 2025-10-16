@@ -318,7 +318,8 @@
       },
       "field_errors": {
         "address_company_blank": "Gib einen Schulnamen ein",
-        "address_company_too_long": "Schulname ist zu lang. (max. 255 Zeichen)"
+        "address_company_too_long": "Schulname ist zu lang. (max. 255 Zeichen)",
+        "tips_invalid_tip_amount": "Eine Spende unter {{amount}} eingeben."
       },
       "thank_you": {
         "company_location_section_title": "Schule und Standort",
@@ -344,7 +345,14 @@
             "customer_account_required": "Sie müssen sich anmelden um fortzufahren.",
             "buyer_identity_presentment_currency_does_not_match": "Bei der Verarbeitung Ihrer Bestellung ist ein Problem aufgetreten. Versuchen Sie es in ein paar Minuten noch einmal."
           },
-          "session_identifier_not_unique_error": "Mit deiner Bestellung ist etwas schiefgelaufen, bitte versuchen Sie erneut auszuchecken."
+          "session_identifier_not_unique_error": "Mit deiner Bestellung ist etwas schiefgelaufen, bitte versuchen Sie erneut auszuchecken.",
+          "tip": {
+            "not_accepted_by_shop": "Wir akzeptieren keine Spenden.",
+            "only_one_tip_line_allowed": "Mehrere Spendenreihen werden nicht unterstützt.",
+            "tips_not_allowed_for_b2b": "Spenden sind in B2B-Shops nicht zulässig.",
+            "currency_change_reset": "Die Spende wurde aufgrund der Währungsumstellung zurückgesetzt.",
+            "tips_not_allowed_for_deferred_purchase_options": "Spendengelder für latente Kaufoptionen werden noch nicht unterstützt."
+          }
         },
         "complete_purchase_button_label": "Bestellung abschließen",
         "submit_for_review_notice_label": "Ihre Zahlung ist erst fällig, sobald Ihre Bestellung überprüft wurde"
@@ -377,7 +385,8 @@
         "cookie_preferences": "Cookies"
       },
       "order_summary": {
-        "customer_does_not_meet_discount_requirements_notice": "Der Rabattcode <strong style=\"text-transform:uppercase\">{{ code }}</strong> ist derzeit für Sie nicht verfügbar"
+        "customer_does_not_meet_discount_requirements_notice": "Der Rabattcode <strong style=\"text-transform:uppercase\">{{ code }}</strong> ist derzeit für Sie nicht verfügbar",
+        "tip_label": "Zusätzliche Spende an das Jugendrotkreuz"
       },
       "payment_gateway": {
         "generic_payment_terms": "Für Sie gelten die Bedingungen \"{{translatedName}}\". Ihre Zahlung ist am {{dueDate}} fällig.",
@@ -409,6 +418,13 @@
       },
       "shipping_errors": {
         "empty_state": "Geben Sie Ihre Lieferadresse ein, um verfügbare Versandarten anzuzeigen."
+      },
+      "tips": {
+        "title": "Spende hinzufügen",
+        "presets_description": "Prozentsatz der Spende auswählen",
+        "custom_label": "Benutzerdefinierte Spende",
+        "add_tip": "Spende hinzufügen",
+        "update_tip": "Spende aktualisieren"
       }
     },
     "email_marketing": {
@@ -423,7 +439,8 @@
     },
     "order_details": {
       "company": "Schule",
-      "company_and_location": "Schule und Standort"
+      "company_and_location": "Schule und Standort",
+      "tip": "Spende an das Jugendrotkreuz"
     },
     "B2B": {
       "account_information": {
