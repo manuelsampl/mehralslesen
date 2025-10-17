@@ -135,6 +135,11 @@ select {
     font-weight: bold;
 }
 
+.product-information {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 .product-information__grid {
     gap: 15px;
 }
