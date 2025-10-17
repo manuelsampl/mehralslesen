@@ -448,3 +448,47 @@ select {
         display: none;
     }
 }
+
+/* Force cart icon visibility on all mobile devices */
+@media screen and (max-width: 749px) {
+
+    /* Ensure header actions container is visible */
+    header-actions {
+        display: flex !important;
+        grid-area: rightB !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Ensure cart link is visible */
+    header-actions .action__cart,
+    .header-actions__action,
+    a.action__cart {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        align-items: flex-end;
+    }
+
+    .header-actions__cart-icon svg {
+        width: 58px !important;
+        height: auto !important;
+    }
+
+
+    /* Ensure the grid column has enough space */
+    .header__columns {
+        --header-mobile-bookend: minmax(44px, auto) !important;
+    }
+
+    .account-drawer {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .account-button {
+        align-content: flex-start !important;
+        flex-wrap: nowrap !important;
+    }
+}
