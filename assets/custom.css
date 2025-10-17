@@ -491,4 +491,9 @@ select {
         align-content: flex-start !important;
         flex-wrap: nowrap !important;
     }
+
+    .header-logo__image {
+        width: 40vw !important;
+        height: auto !important;
+    }
 }
