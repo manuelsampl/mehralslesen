@@ -508,7 +508,7 @@
         }
       },
       "settings": {
-        "content_width": "content-center-aligned",
+        "content_width": "content-full-width",
         "desktop_media_position": "left",
         "equal_columns": false,
         "limit_details_width": false,
@@ -647,7 +647,7 @@
         "carousel_on_mobile": false,
         "max_products": 4,
         "columns": 4,
-        "mobile_columns": "2",
+        "mobile_columns": "1",
         "columns_gap": 12,
         "rows_gap": 24,
         "icons_style": "arrow",
