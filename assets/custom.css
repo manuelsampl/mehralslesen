@@ -501,4 +501,10 @@ select {
         width: 40vw !important;
         height: auto !important;
     }
+
+    .header__icon--summary .header-drawer-icon {
+        width: 28px !important;
+        height: 28px !important;
+        margin-left: 10px !important;
+    }
 }
