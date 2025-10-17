@@ -471,6 +471,11 @@ select {
         align-items: flex-end;
     }
 
+    .header-actions__cart-icon {
+        display: flex !important;
+        align-items: flex-end;
+    }
+
     .header-actions__cart-icon svg {
         width: 58px !important;
         height: auto !important;
