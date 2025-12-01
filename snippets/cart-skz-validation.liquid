@@ -1,0 +1,322 @@
+{% doc %}
+  Validates that a school identification number (SKZ) is entered when
+  student subscription products are in the cart. Blocks checkout until
+  a valid 6-digit SKZ is provided.
+
+  @example
+  {% render 'cart-skz-validation' %}
+{% enddoc %}
+
+<div id="cart-skz-validation" class="cart-skz-validation" style="display: none;">
+  <div class="cart-skz-validation__content">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V13H11V15ZM11 11H9V5H11V11Z" fill="currentColor"/>
+    </svg>
+    <div class="cart-skz-validation__text">
+      <strong>{{ 'cart.skz_validation.title' | t }}</strong>
+      <p>{{ 'cart.skz_validation.student_subscription_notice' | t }}</p>
+      <p class="cart-skz-validation__private-notice">{{ 'cart.skz_validation.private_subscription_notice' | t }}</p>
+      
+      <div class="cart-skz-validation__input-group">
+        <label for="skz-input">{{ 'cart.skz_validation.label' | t }}</label>
+        <input 
+          type="text" 
+          id="skz-input" 
+          name="attributes[Schulkennzahl]"
+          maxlength="6" 
+          pattern="[0-9]{6}"
+          placeholder="123456"
+          class="cart-skz-validation__input"
+          form="cart-form"
+        />
+        <span id="skz-error" class="cart-skz-validation__error"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .cart-skz-validation {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-block-end: 1rem;
+    color: #856404;
+  }
+
+  .cart-skz-validation__content {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .cart-skz-validation__content svg {
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .cart-skz-validation__text {
+    flex: 1;
+  }
+
+  .cart-skz-validation strong {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .cart-skz-validation p {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  .cart-skz-validation__private-notice {
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  .cart-skz-validation__input-group {
+    margin-top: 1rem;
+  }
+
+  .cart-skz-validation__input-group label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .cart-skz-validation__input {
+    width: 100%;
+    max-width: 200px;
+    padding: 0.5rem;
+    border: 1px solid #856404;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: monospace;
+    letter-spacing: 0.1em;
+  }
+
+  .cart-skz-validation__input:focus {
+    outline: none;
+    border-color: #664d03;
+    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
+  }
+
+  .cart-skz-validation__input.error {
+    border-color: #dc3545;
+  }
+
+  .cart-skz-validation__error {
+    display: block;
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    min-height: 1.2em;
+  }
+
+  .cart__checkout-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+{% endstylesheet %}
+
+<script type="application/json" id="cart-skz-items-data">
+  {{ cart.items | json }}
+</script>
+
+{% javascript %}
+(function() {
+  console.log('🔍 Cart SKZ Validation loaded');
+
+  // SKU list that requires school identification
+  const STUDENT_SUBSCRIPTION_SKUS = [
+    'HS_SF', 'HS_LE', 'SPO_SF', 'SPO_LE', 'SPA_SF', 'SPA_LE',
+    'ME_SF', 'ME_LE', 'MW_SF', 'MW_LE', 'HS', 'KiGa-HS',
+    'SPO', 'SPA', 'ME', 'MW'
+  ];
+
+  const SKZ_STORAGE_KEY = 'cart_skz';
+
+  function hasStudentSubscription(cartItems) {
+    return cartItems.some(item => {
+      const sku = item.sku || '';
+      const hasRequiredSku = STUDENT_SUBSCRIPTION_SKUS.includes(sku);
+      
+      if (hasRequiredSku) {
+        console.log(`✅ Found student subscription SKU: ${sku} in product: ${item.product_title}`);
+      }
+      
+      return hasRequiredSku;
+    });
+  }
+
+  function isValidSKZ(skz) {
+    // Must be exactly 6 digits
+    return /^[0-9]{6}$/.test(skz);
+  }
+
+  function saveSKZToStorage(skz) {
+    try {
+      localStorage.setItem(SKZ_STORAGE_KEY, skz);
+      console.log('💾 SKZ saved to localStorage:', skz);
+    } catch (e) {
+      console.error('❌ Failed to save SKZ to localStorage:', e);
+    }
+  }
+
+  function getSKZFromStorage() {
+    try {
+      return localStorage.getItem(SKZ_STORAGE_KEY) || '';
+    } catch (e) {
+      console.error('❌ Failed to read SKZ from localStorage:', e);
+      return '';
+    }
+  }
+
+  async function updateCartAttribute(skz) {
+    try {
+      const response = await fetch('/cart/update.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          attributes: {
+            Schulkennzahl: skz
+          }
+        })
+      });
+      
+      if (response.ok) {
+        console.log('✅ Cart attribute updated with SKZ');
+        return true;
+      } else {
+        console.error('❌ Failed to update cart attribute');
+        return false;
+      }
+    } catch (e) {
+      console.error('❌ Error updating cart attribute:', e);
+      return false;
+    }
+  }
+
+  function validateSKZ() {
+    const cartDataElement = document.getElementById('cart-skz-items-data');
+    if (!cartDataElement) {
+      console.error('❌ Cart items data not found');
+      return;
+    }
+    
+    const cartItems = JSON.parse(cartDataElement.textContent);
+    const requiresSKZ = hasStudentSubscription(cartItems);
+
+    console.log('📊 SKZ Validation:', {
+      itemCount: cartItems.length,
+      requiresSKZ: requiresSKZ,
+      items: cartItems.map(item => ({ title: item.product_title, sku: item.sku }))
+    });
+
+    const validationDiv = document.getElementById('cart-skz-validation');
+    const skzInput = document.getElementById('skz-input');
+    const skzError = document.getElementById('skz-error');
+    const checkoutButton = document.getElementById('checkout');
+
+    if (requiresSKZ && cartItems.length > 0) {
+      // Show SKZ validation
+      validationDiv.style.display = 'block';
+      
+      // Restore saved SKZ if exists
+      const savedSKZ = getSKZFromStorage();
+      if (savedSKZ && skzInput && !skzInput.value) {
+        skzInput.value = savedSKZ;
+      }
+
+      // Check if we should disable checkout
+      const currentSKZ = skzInput ? skzInput.value.trim() : '';
+      const isValid = isValidSKZ(currentSKZ);
+
+      if (checkoutButton) {
+        if (isValid) {
+          checkoutButton.disabled = false;
+          checkoutButton.removeAttribute('aria-disabled');
+          saveSKZToStorage(currentSKZ);
+        } else {
+          checkoutButton.disabled = true;
+          checkoutButton.setAttribute('aria-disabled', 'true');
+        }
+      }
+
+      // Setup input validation
+      if (skzInput && !skzInput.dataset.listenerAttached) {
+        skzInput.dataset.listenerAttached = 'true';
+        
+        skzInput.addEventListener('input', function() {
+          const value = this.value.trim();
+          const valid = isValidSKZ(value);
+          
+          if (value.length > 0 && !valid) {
+            this.classList.add('error');
+            if (value.length < 6) {
+              skzError.textContent = 'Die Schulkennzahl muss genau 6 Ziffern haben.';
+            } else {
+              skzError.textContent = 'Bitte nur Ziffern eingeben.';
+            }
+            if (checkoutButton) {
+              checkoutButton.disabled = true;
+              checkoutButton.setAttribute('aria-disabled', 'true');
+            }
+          } else if (valid) {
+            this.classList.remove('error');
+            skzError.textContent = '';
+            if (checkoutButton) {
+              checkoutButton.disabled = false;
+              checkoutButton.removeAttribute('aria-disabled');
+            }
+            saveSKZToStorage(value);
+            updateCartAttribute(value);
+          } else {
+            this.classList.remove('error');
+            skzError.textContent = '';
+            if (checkoutButton) {
+              checkoutButton.disabled = true;
+              checkoutButton.setAttribute('aria-disabled', 'true');
+            }
+          }
+        });
+      }
+    } else {
+      // Hide SKZ validation if not needed
+      validationDiv.style.display = 'none';
+      
+      if (checkoutButton && cartItems.length > 0) {
+        // Don't interfere with other validation (like free samples)
+        // Only enable if not already disabled by another validation
+        const freeSampleValidation = document.getElementById('cart-free-samples-validation');
+        const freeSampleError = freeSampleValidation && freeSampleValidation.style.display !== 'none';
+        
+        if (!freeSampleError) {
+          checkoutButton.disabled = false;
+          checkoutButton.removeAttribute('aria-disabled');
+        }
+      }
+    }
+  }
+
+  // Run validation on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', validateSKZ);
+  } else {
+    validateSKZ();
+  }
+
+  // Re-validate when cart updates
+  document.addEventListener('cart:updated', validateSKZ);
+  document.addEventListener('cart:refresh', validateSKZ);
+  
+  // Also listen for Shopify's cart update events
+  if (window.Shopify && window.Shopify.on) {
+    window.Shopify.on('cart:update', validateSKZ);
+  }
+})();
+{% endjavascript %}

@@ -1,0 +1,257 @@
+{% comment %}
+  SKZ (School Identification Number) Checkout Integration
+  
+  This script should be added to:
+  Shopify Admin > Settings > Checkout > Order status page > Additional scripts
+  
+  It saves the SKZ from localStorage to order attributes and sends it
+  for metafield storage via webhook or Shopify Flow.
+{% endcomment %}
+
+<script>
+(function() {
+  'use strict';
+  
+  const SKZ_STORAGE_KEY = 'cart_skz';
+  
+  console.log('🎉 SKZ Checkout Script loaded');
+  console.log('📍 Page:', window.location.pathname);
+  console.log('🔍 Shopify object:', window.Shopify);
+  
+  // Only run on order status pages
+  if (!window.Shopify || !window.Shopify.checkout) {
+    console.log('ℹ️ Not an order status page, exiting');
+    return;
+  }
+  
+  const checkout = window.Shopify.checkout;
+  console.log('✅ Checkout object found:', {
+    order_id: checkout.order_id,
+    order_number: checkout.order_number,
+    customer_id: checkout.customer_id,
+    email: checkout.email
+  });
+  
+  function getSKZFromStorage() {
+    try {
+      const skz = localStorage.getItem(SKZ_STORAGE_KEY);
+      console.log('📖 Read from localStorage:', skz);
+      return skz || '';
+    } catch (e) {
+      console.error('❌ Failed to read SKZ from localStorage:', e);
+      return '';
+    }
+  }
+  
+  function clearSKZFromStorage() {
+    try {
+      localStorage.removeItem(SKZ_STORAGE_KEY);
+      console.log('🗑️ SKZ cleared from localStorage');
+    } catch (e) {
+      console.error('❌ Failed to clear SKZ from localStorage:', e);
+    }
+  }
+  
+  async function sendSKZToWebhook(skz) {
+    // This sends the data to a webhook endpoint that can update metafields
+    // You need to create this endpoint (via Shopify App or external service)
+    
+    const webhookUrl = 'https://your-domain.com/webhooks/save-skz'; // UPDATE THIS
+    
+    try {
+      const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          order_id: checkout.order_id,
+          order_number: checkout.order_number,
+          customer_id: checkout.customer_id,
+          email: checkout.email,
+          skz: skz,
+          timestamp: new Date().toISOString()
+        })
+      });
+      
+      if (response.ok) {
+        console.log('✅ SKZ sent to webhook successfully');
+        return true;
+      } else {
+        console.error('❌ Webhook returned error:', response.status);
+        return false;
+      }
+    } catch (error) {
+      console.error('❌ Failed to send SKZ to webhook:', error);
+      return false;
+    }
+  }
+  
+  async function processSKZ() {
+    const skz = getSKZFromStorage();
+    
+    if (!skz) {
+      console.log('ℹ️ No SKZ found in localStorage');
+      return;
+    }
+    
+    if (!/^[0-9]{6}$/.test(skz)) {
+      console.warn('⚠️ Invalid SKZ format:', skz);
+      clearSKZFromStorage();
+      return;
+    }
+    
+    console.log('📝 Processing SKZ:', skz);
+    console.log('📦 Order ID:', checkout.order_id);
+    console.log('👤 Customer ID:', checkout.customer_id);
+    
+    // Method 1: Send to webhook for metafield storage
+    // Uncomment and configure webhook URL above
+    // const webhookSuccess = await sendSKZToWebhook(skz);
+    
+    // Method 2: Store in custom order tracking/analytics
+    if (typeof window.analytics !== 'undefined' && window.analytics.track) {
+      try {
+        window.analytics.track('SKZ Provided', {
+          order_id: checkout.order_id,
+          order_number: checkout.order_number,
+          customer_id: checkout.customer_id,
+          skz: skz
+        });
+        console.log('📊 SKZ tracked via analytics');
+      } catch (e) {
+        console.error('❌ Analytics tracking failed:', e);
+      }
+    }
+    
+    // Method 3: Display for manual processing (temporary solution)
+    console.log('=' .repeat(50));
+    console.log('🏫 SCHULKENNZAHL (SKZ)');
+    console.log('=' .repeat(50));
+    console.log('Order ID:', checkout.order_id);
+    console.log('Order Number:', checkout.order_number);
+    console.log('Customer ID:', checkout.customer_id);
+    console.log('Email:', checkout.email);
+    console.log('SKZ:', skz);
+    console.log('=' .repeat(50));
+    console.log('⚠️ SETUP REQUIRED: Configure webhook or Flow to save to metafields');
+    console.log('See implementation instructions in the script comments');
+    console.log('=' .repeat(50));
+    
+    // Clear SKZ from storage
+    clearSKZFromStorage();
+  }
+  
+  // Wait for DOM to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', processSKZ);
+  } else {
+    processSKZ();
+  }
+  
+})();
+</script>
+
+{% comment %}
+=================================================================================
+IMPLEMENTATION INSTRUCTIONS
+=================================================================================
+
+This script runs on the Order Status / Thank You page and retrieves the SKZ
+from localStorage. However, it CANNOT directly write to Shopify metafields.
+
+Choose ONE of the following implementation methods:
+
+─────────────────────────────────────────────────────────────────────────────
+METHOD 1: Shopify Flow (RECOMMENDED - Shopify Plus only)
+─────────────────────────────────────────────────────────────────────────────
+
+Unfortunately, Shopify Flow cannot read from note_attributes directly on order
+creation. Instead, use one of the other methods below.
+
+─────────────────────────────────────────────────────────────────────────────
+METHOD 2: Webhook + Backend Service (RECOMMENDED - Works on all plans)
+─────────────────────────────────────────────────────────────────────────────
+
+1. Create a backend service (Node.js, Python, etc.) that:
+   - Receives POST requests from this script
+   - Uses Shopify Admin API to update order and customer metafields
+   
+2. Update the webhookUrl in this script to point to your endpoint
+
+3. Sample Node.js endpoint code:
+   ```javascript
+   app.post('/webhooks/save-skz', async (req, res) => {
+     const { order_id, customer_id, skz } = req.body;
+     
+     // Update order metafield
+     await shopify.metafield.create({
+       namespace: 'custom',
+       key: 'skz',
+       value: skz,
+       type: 'single_line_text_field',
+       owner_resource: 'order',
+       owner_id: order_id
+     });
+     
+     // Update customer metafield
+     if (customer_id) {
+       await shopify.metafield.create({
+         namespace: 'custom',
+         key: 'skz',
+         value: skz,
+         type: 'single_line_text_field',
+         owner_resource: 'customer',
+         owner_id: customer_id
+       });
+     }
+     
+     res.json({ success: true });
+   });
+   ```
+
+─────────────────────────────────────────────────────────────────────────────
+METHOD 3: Shopify App with App Proxy (Works on all plans)
+─────────────────────────────────────────────────────────────────────────────
+
+1. Create a Shopify app with these scopes:
+   - write_orders
+   - write_customers
+   
+2. Set up an App Proxy to route requests through your app
+
+3. Update webhookUrl to: /apps/your-app/save-skz
+
+─────────────────────────────────────────────────────────────────────────────
+METHOD 4: Manual Processing via Order Notes (FALLBACK)
+─────────────────────────────────────────────────────────────────────────────
+
+If you need a quick solution without backend setup:
+
+1. Modify cart-skz-validation.liquid to add SKZ as cart note:
+   ```liquid
+   <input type="hidden" name="note" id="cart-note-skz">
+   ```
+   
+2. Update the JavaScript to set the note value:
+   ```javascript
+   document.getElementById('cart-note-skz').value = 'SKZ: ' + currentSKZ;
+   ```
+
+3. The SKZ will appear in order notes in Shopify admin
+
+4. Use a Shopify webhook (orders/create) to parse notes and save to metafields
+
+─────────────────────────────────────────────────────────────────────────────
+TESTING
+─────────────────────────────────────────────────────────────────────────────
+
+1. Add a student subscription product to cart
+2. Enter a 6-digit SKZ (e.g., 123456)
+3. Complete checkout
+4. On thank you page, open browser console
+5. Look for the SKZ log output
+6. Verify SKZ is saved to metafields using your chosen method
+
+=================================================================================
+{% endcomment %}

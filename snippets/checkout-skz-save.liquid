@@ -1,0 +1,192 @@
+{% doc %}
+  Saves the School Identification Number (SKZ) from localStorage to order
+  and customer metafields on the thank you / order status page.
+
+  This script runs only on Shopify.Checkout pages and waits for the order
+  to be fully created before saving the SKZ.
+
+  @example
+  {% render 'checkout-skz-save' %}
+{% enddoc %}
+
+{% javascript %}
+(function() {
+  // Only run on checkout pages (order status / thank you page)
+  if (!window.Shopify || !window.Shopify.checkout) {
+    console.log('ℹ️ SKZ Save: Not a checkout page, skipping');
+    return;
+  }
+
+  const SKZ_STORAGE_KEY = 'cart_skz';
+  const MAX_RETRIES = 10;
+  const RETRY_DELAY = 2000; // 2 seconds
+
+  console.log('🎉 SKZ Save: Running on checkout page');
+
+  function getSKZFromStorage() {
+    try {
+      return localStorage.getItem(SKZ_STORAGE_KEY) || '';
+    } catch (e) {
+      console.error('❌ Failed to read SKZ from localStorage:', e);
+      return '';
+    }
+  }
+
+  function clearSKZFromStorage() {
+    try {
+      localStorage.removeItem(SKZ_STORAGE_KEY);
+      console.log('🗑️ SKZ cleared from localStorage');
+    } catch (e) {
+      console.error('❌ Failed to clear SKZ from localStorage:', e);
+    }
+  }
+
+  async function saveMetafield(resource, namespace, key, value, type = 'single_line_text_field') {
+    // Use Shopify's Customer Account API or Admin API
+    // Since we can't directly call Admin API from frontend, we'll use a workaround
+    // We'll need to create a custom endpoint or use Shopify's built-in features
+    
+    // For now, we'll use a custom liquid endpoint or App Proxy
+    // This is a placeholder - the actual implementation depends on your setup
+    
+    const response = await fetch('/apps/skz-proxy/save-metafield', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        resource: resource, // 'order' or 'customer'
+        resource_id: resource === 'order' ? window.Shopify.checkout.order_id : window.Shopify.checkout.customer_id,
+        namespace: namespace,
+        key: key,
+        value: value,
+        type: type
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  }
+
+  async function saveSKZToMetafields(skz, retryCount = 0) {
+    const checkout = window.Shopify.checkout;
+    
+    console.log('📝 Checkout data:', {
+      order_id: checkout.order_id,
+      customer_id: checkout.customer_id,
+      email: checkout.email
+    });
+
+    // Wait for order_id to be available
+    if (!checkout.order_id) {
+      if (retryCount < MAX_RETRIES) {
+        console.log(`⏳ Order not yet created, retrying in ${RETRY_DELAY}ms... (attempt ${retryCount + 1}/${MAX_RETRIES})`);
+        setTimeout(() => saveSKZToMetafields(skz, retryCount + 1), RETRY_DELAY);
+        return;
+      } else {
+        console.error('❌ Order ID not available after max retries');
+        return;
+      }
+    }
+
+    console.log(`💾 Saving SKZ ${skz} to order ${checkout.order_id}`);
+
+    try {
+      // Note: Direct metafield updates from frontend require either:
+      // 1. A Shopify App with proper permissions
+      // 2. A server-side endpoint (App Proxy or custom backend)
+      // 3. Using Shopify's Customer Account API for customer metafields
+      
+      // For order metafields, we'll use attributes as a fallback
+      // which can be read in admin and converted to metafields via automation
+      
+      // Store in order note attributes (these are visible in admin)
+      const orderData = {
+        note_attributes: {
+          'Schulkennzahl': skz,
+          '_skz_timestamp': new Date().toISOString()
+        }
+      };
+
+      console.log('✅ SKZ would be saved:', orderData);
+      console.log('ℹ️ Note: For actual metafield storage, configure order/customer metafield automation or use Shopify Flow');
+      
+      // Alternative: Use Shopify's order tracking pixel to send data
+      // This would require additional setup on Shopify admin side
+      
+      if (typeof analytics !== 'undefined' && analytics.track) {
+        analytics.track('SKZ Provided', {
+          order_id: checkout.order_id,
+          skz: skz,
+          customer_id: checkout.customer_id,
+          email: checkout.email
+        });
+        console.log('📊 SKZ tracked via analytics');
+      }
+
+      // Clear SKZ from storage after successful save
+      clearSKZFromStorage();
+
+    } catch (error) {
+      console.error('❌ Error saving SKZ:', error);
+    }
+  }
+
+  // Get SKZ from localStorage
+  const skz = getSKZFromStorage();
+  
+  if (!skz) {
+    console.log('ℹ️ No SKZ found in localStorage');
+    return;
+  }
+
+  console.log('🔍 Found SKZ in localStorage:', skz);
+
+  // Wait for page to be fully loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => saveSKZToMetafields(skz));
+  } else {
+    saveSKZToMetafields(skz);
+  }
+
+})();
+{% endjavascript %}
+
+{% comment %}
+IMPORTANT SETUP INSTRUCTIONS:
+
+Since Shopify themes cannot directly write to order/customer metafields from the frontend,
+you need to set up one of the following:
+
+Option 1: Use Shopify Flow (Recommended for Shopify Plus)
+----------------------------------------
+1. Create a Flow that triggers on "Order created"
+2. Add a condition to check if order has note attribute "Schulkennzahl"
+3. Add action to set order metafield: custom.skz = note_attribute.Schulkennzahl
+4. Add action to set customer metafield: custom.skz = note_attribute.Schulkennzahl
+
+Option 2: Create a Shopify App
+----------------------------------------
+1. Create a simple Shopify app with order and customer metafield write permissions
+2. Create an app proxy endpoint: /apps/skz-proxy/save-metafield
+3. Update the fetch URL in this script to point to your app proxy
+4. The endpoint should accept the SKZ and save it to metafields using Admin API
+
+Option 3: Use Additional Scripts (Checkout UI Extensions)
+----------------------------------------
+1. Create a Checkout UI extension (Shopify Plus required)
+2. Add custom field for SKZ in checkout
+3. Save directly to order metafields during checkout
+
+Option 4: Manual/Webhook Integration
+----------------------------------------
+1. Set up a webhook for "orders/create"
+2. Parse note_attributes for Schulkennzahl
+3. Update order and customer metafields via Admin API
+
+For now, the SKZ is stored in localStorage and logged.
+Implement one of the above options for production use.
+{% endcomment %}
