@@ -1,15 +1,13 @@
 {% comment %}
   SKZ (School Identification Number) Checkout Integration
-  
   This script should be added to:
   Shopify Admin > Settings > Checkout > Order status page > Additional scripts
-  
   It saves the SKZ from localStorage to order attributes and sends it
   for metafield storage via webhook or Shopify Flow.
 {% endcomment %}
 
 <script>
-(function() {
+  (function() {
   'use strict';
   
   const SKZ_STORAGE_KEY = 'cart_skz';
@@ -149,109 +147,106 @@
     processSKZ();
   }
   
-})();
+  })();
 </script>
 
 {% comment %}
-=================================================================================
-IMPLEMENTATION INSTRUCTIONS
-=================================================================================
+  =================================================================================
+  IMPLEMENTATION INSTRUCTIONS
+  =================================================================================
 
-This script runs on the Order Status / Thank You page and retrieves the SKZ
-from localStorage. However, it CANNOT directly write to Shopify metafields.
+  This script runs on the Order Status / Thank You page and retrieves the SKZ
+  from localStorage. However, it CANNOT directly write to Shopify metafields.
 
-Choose ONE of the following implementation methods:
+  Choose ONE of the following implementation methods:
 
-─────────────────────────────────────────────────────────────────────────────
-METHOD 1: Shopify Flow (RECOMMENDED - Shopify Plus only)
-─────────────────────────────────────────────────────────────────────────────
+  ─────────────────────────────────────────────────────────────────────────────
+  METHOD 1: Shopify Flow (RECOMMENDED - Shopify Plus only)
+  ─────────────────────────────────────────────────────────────────────────────
 
-Unfortunately, Shopify Flow cannot read from note_attributes directly on order
-creation. Instead, use one of the other methods below.
+  Unfortunately, Shopify Flow cannot read from note_attributes directly on order
+  creation. Instead, use one of the other methods below.
 
-─────────────────────────────────────────────────────────────────────────────
-METHOD 2: Webhook + Backend Service (RECOMMENDED - Works on all plans)
-─────────────────────────────────────────────────────────────────────────────
+  ─────────────────────────────────────────────────────────────────────────────
+  METHOD 2: Webhook + Backend Service (RECOMMENDED - Works on all plans)
+  ─────────────────────────────────────────────────────────────────────────────
 
-1. Create a backend service (Node.js, Python, etc.) that:
-   - Receives POST requests from this script
-   - Uses Shopify Admin API to update order and customer metafields
-   
-2. Update the webhookUrl in this script to point to your endpoint
+  1. Create a backend service (Node.js, Python, etc.) that:
+  - Receives POST requests from this script
+  - Uses Shopify Admin API to update order and customer metafields
+  2. Update the webhookUrl in this script to point to your endpoint
 
-3. Sample Node.js endpoint code:
-   ```javascript
-   app.post('/webhooks/save-skz', async (req, res) => {
-     const { order_id, customer_id, skz } = req.body;
-     
-     // Update order metafield
-     await shopify.metafield.create({
-       namespace: 'custom',
-       key: 'skz',
-       value: skz,
-       type: 'single_line_text_field',
-       owner_resource: 'order',
-       owner_id: order_id
-     });
-     
-     // Update customer metafield
-     if (customer_id) {
-       await shopify.metafield.create({
-         namespace: 'custom',
-         key: 'skz',
-         value: skz,
-         type: 'single_line_text_field',
-         owner_resource: 'customer',
-         owner_id: customer_id
-       });
-     }
-     
-     res.json({ success: true });
-   });
-   ```
+  3. Sample Node.js endpoint code:
+  ```javascript
+  app.post('/webhooks/save-skz', async (req, res) => {
+  const { order_id, customer_id, skz } = req.body;
 
-─────────────────────────────────────────────────────────────────────────────
-METHOD 3: Shopify App with App Proxy (Works on all plans)
-─────────────────────────────────────────────────────────────────────────────
+  // Update order metafield
+  await shopify.metafield.create({
+  namespace: 'custom',
+  key: 'skz',
+  value: skz,
+  type: 'single_line_text_field',
+  owner_resource: 'order',
+  owner_id: order_id
+  });
 
-1. Create a Shopify app with these scopes:
-   - write_orders
-   - write_customers
-   
-2. Set up an App Proxy to route requests through your app
+  // Update customer metafield
+  if (customer_id) {
+  await shopify.metafield.create({
+  namespace: 'custom',
+  key: 'skz',
+  value: skz,
+  type: 'single_line_text_field',
+  owner_resource: 'customer',
+  owner_id: customer_id
+  });
+  }
 
-3. Update webhookUrl to: /apps/your-app/save-skz
+  res.json({ success: true });
+  });
+  ```
 
-─────────────────────────────────────────────────────────────────────────────
-METHOD 4: Manual Processing via Order Notes (FALLBACK)
-─────────────────────────────────────────────────────────────────────────────
+  ─────────────────────────────────────────────────────────────────────────────
+  METHOD 3: Shopify App with App Proxy (Works on all plans)
+  ─────────────────────────────────────────────────────────────────────────────
 
-If you need a quick solution without backend setup:
+  1. Create a Shopify app with these scopes:
+  - write_orders
+  - write_customers
+  2. Set up an App Proxy to route requests through your app
 
-1. Modify cart-skz-validation.liquid to add SKZ as cart note:
-   ```liquid
-   <input type="hidden" name="note" id="cart-note-skz">
-   ```
-   
-2. Update the JavaScript to set the note value:
-   ```javascript
-   document.getElementById('cart-note-skz').value = 'SKZ: ' + currentSKZ;
-   ```
+  3. Update webhookUrl to: /apps/your-app/save-skz
 
-3. The SKZ will appear in order notes in Shopify admin
+  ─────────────────────────────────────────────────────────────────────────────
+  METHOD 4: Manual Processing via Order Notes (FALLBACK)
+  ─────────────────────────────────────────────────────────────────────────────
 
-4. Use a Shopify webhook (orders/create) to parse notes and save to metafields
+  If you need a quick solution without backend setup:
 
-─────────────────────────────────────────────────────────────────────────────
-TESTING
-─────────────────────────────────────────────────────────────────────────────
+  1. Modify cart-skz-validation.liquid to add SKZ as cart note:
+  ```liquid
+  <input type="hidden" name="note" id="cart-note-skz">
+  ```
+  2. Update the JavaScript to set the note value:
+  ```javascript
+  document.getElementById('cart-note-skz').value = 'SKZ: ' + currentSKZ;
+  ```
 
-1. Add a student subscription product to cart
-2. Enter a 6-digit SKZ (e.g., 123456)
-3. Complete checkout
-4. On thank you page, open browser console
-5. Look for the SKZ log output
-6. Verify SKZ is saved to metafields using your chosen method
+  3. The SKZ will appear in order notes in Shopify admin
 
-=================================================================================
+  4. Use a Shopify webhook (orders/create) to parse notes and save to metafields
+
+  ─────────────────────────────────────────────────────────────────────────────
+  TESTING
+  ─────────────────────────────────────────────────────────────────────────────
+
+  1. Add a student subscription product to cart
+  2. Enter a 6-digit SKZ (e.g., 123456)
+  3. Complete checkout
+  4. On thank you page, open browser console
+  5. Look for the SKZ log output
+  6. Verify SKZ is saved to metafields using your chosen method
+
+  =================================================================================
 {% endcomment %}

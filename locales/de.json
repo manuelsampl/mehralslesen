@@ -149,14 +149,10 @@
     "enter_school_id": "Schulkennzahl eingeben",
     "searching": "Suche läuft",
     "search_error": "Fehler bei der Suche. Bitte versuchen Sie es erneut.",
-    "cart": {
-      "skz_validation": {
-        "title": "Schulkennzahl erforderlich",
-        "student_subscription_notice": "Schülerabos sind ausschließlich für Schulen und Lehrer vorgesehen.",
-        "private_subscription_notice": "Privatpersonen können beim Produkt die Variante 'Privatabo' bestellen.",
-        "label": "Schulkennzahl (6-stellig)"
-      }
-    },
+    "cart_skz_validation_title": "Schulkennzahl erforderlich",
+    "cart_skz_validation_student_subscription_notice": "Schülerabos sind ausschließlich für Schulen und Lehrer vorgesehen.",
+    "cart_skz_validation_private_subscription_notice": "Privatpersonen können beim Produkt die Variante 'Privatabo' bestellen.",
+    "cart_skz_validation_label": "Schulkennzahl (6-stellig)",
     "price": "Preis",
     "price_regular": "Normaler Preis",
     "price_compare_at": "Vergleichspreis",

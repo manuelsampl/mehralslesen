@@ -156,14 +156,10 @@
     "enter_school_id": "Enter school ID",
     "searching": "Searching",
     "search_error": "Error during search. Please try again.",
-    "cart": {
-      "skz_validation": {
-        "title": "School ID Required",
-        "student_subscription_notice": "Student subscriptions are exclusively for schools and teachers.",
-        "private_subscription_notice": "Private individuals can order the 'Private Subscription' variant from the product page.",
-        "label": "School ID (6 digits)"
-      }
-    },
+    "cart_skz_validation_title": "School ID Required",
+    "cart_skz_validation_student_subscription_notice": "Student subscriptions are exclusively for schools and teachers.",
+    "cart_skz_validation_private_subscription_notice": "Private individuals can order the 'Private Subscription' variant from the product page.",
+    "cart_skz_validation_label": "School ID (6 digits)",
     "collection_placeholder": "Collection title",
     "discount_code": "Discount code",
     "shipping_discount_error": "Shipping discounts are shown at checkout after adding an address",
