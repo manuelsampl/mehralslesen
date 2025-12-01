@@ -67,7 +67,11 @@
       {% render 'quick-add-modal' %}
     {% endif %}
 
-    {% comment %} SKZ Save Script - runs on checkout/thank you page {% endcomment %}
+    {% comment %}
+    SKZ Save Script - Deaktiviert, da Backend erforderlich ist
+    Nutze stattdessen Shopify Flow oder Cloudflare Worker
+    Siehe: SHOPIFY_FLOW_SKZ.md für Setup-Anleitung
     {% render 'checkout-skz-save' %}
+    {% endcomment %}
   </body>
 </html>
