@@ -18,8 +18,9 @@
   }
 
   const SKZ_STORAGE_KEY = 'cart_skz';
-  const MAX_RETRIES = 10;
-  const RETRY_DELAY = 2000; // 2 seconds
+  const MAX_RETRIES = 20;
+  const RETRY_DELAY = 3000; // 3 seconds
+  const INITIAL_DELAY = 5000; // Wait 5 seconds before first attempt
 
   console.log('🎉 SKZ Save: Running on checkout page');
 
@@ -42,13 +43,6 @@
   }
 
   async function saveMetafield(resource, namespace, key, value, type = 'single_line_text_field') {
-    // Use Shopify's Customer Account API or Admin API
-    // Since we can't directly call Admin API from frontend, we'll use a workaround
-    // We'll need to create a custom endpoint or use Shopify's built-in features
-    
-    // For now, we'll use a custom liquid endpoint or App Proxy
-    // This is a placeholder - the actual implementation depends on your setup
-    
     const response = await fetch('/apps/skz-proxy/save-metafield', {
       method: 'POST',
       headers: {
@@ -71,11 +65,31 @@
     return await response.json();
   }
 
+  async function addOrderTag(orderId, tag) {
+    const response = await fetch('/apps/skz-proxy/add-order-tag', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        order_id: orderId,
+        tag: tag
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  }
+
   async function saveSKZToMetafields(skz, retryCount = 0) {
     const checkout = window.Shopify.checkout;
     
-    console.log('📝 Checkout data:', {
+    console.log('📝 Checkout data (attempt ' + (retryCount + 1) + '):', {
       order_id: checkout.order_id,
+      order_number: checkout.order_number,
       customer_id: checkout.customer_id,
       email: checkout.email
     });
@@ -83,8 +97,9 @@
     // Wait for order_id to be available
     if (!checkout.order_id) {
       if (retryCount < MAX_RETRIES) {
-        console.log(`⏳ Order not yet created, retrying in ${RETRY_DELAY}ms... (attempt ${retryCount + 1}/${MAX_RETRIES})`);
-        setTimeout(() => saveSKZToMetafields(skz, retryCount + 1), RETRY_DELAY);
+        const delay = retryCount === 0 ? INITIAL_DELAY : RETRY_DELAY;
+        console.log(`⏳ Order not yet created, retrying in ${delay}ms... (attempt ${retryCount + 1}/${MAX_RETRIES})`);
+        setTimeout(() => saveSKZToMetafields(skz, retryCount + 1), delay);
         return;
       } else {
         console.error('❌ Order ID not available after max retries');
@@ -92,34 +107,32 @@
       }
     }
 
-    console.log(`💾 Saving SKZ ${skz} to order ${checkout.order_id}`);
+    console.log(`💾 Saving SKZ ${skz} to order ${checkout.order_id} and customer ${checkout.customer_id}`);
 
     try {
-      // Note: Direct metafield updates from frontend require either:
-      // 1. A Shopify App with proper permissions
-      // 2. A server-side endpoint (App Proxy or custom backend)
-      // 3. Using Shopify's Customer Account API for customer metafields
-      
-      // For order metafields, we'll use attributes as a fallback
-      // which can be read in admin and converted to metafields via automation
-      
-      // Store in order note attributes (these are visible in admin)
-      const orderData = {
-        note_attributes: {
-          'Schulkennzahl': skz,
-          '_skz_timestamp': new Date().toISOString()
-        }
-      };
+      // Save to order metafield
+      console.log('📦 Saving order metafield...');
+      await saveMetafield('order', 'custom', 'skz', skz);
+      console.log('✅ Order metafield saved');
 
-      console.log('✅ SKZ would be saved:', orderData);
-      console.log('ℹ️ Note: For actual metafield storage, configure order/customer metafield automation or use Shopify Flow');
-      
-      // Alternative: Use Shopify's order tracking pixel to send data
-      // This would require additional setup on Shopify admin side
-      
+      // Save to customer metafield
+      if (checkout.customer_id) {
+        console.log('👤 Saving customer metafield...');
+        await saveMetafield('customer', 'custom', 'skz', skz);
+        console.log('✅ Customer metafield saved');
+      }
+
+      // Add order tag
+      const orderTag = `skz-${skz}`;
+      console.log('🏷️ Adding order tag:', orderTag);
+      await addOrderTag(checkout.order_id, orderTag);
+      console.log('✅ Order tag added');
+
+      // Track via analytics if available
       if (typeof analytics !== 'undefined' && analytics.track) {
         analytics.track('SKZ Provided', {
           order_id: checkout.order_id,
+          order_number: checkout.order_number,
           skz: skz,
           customer_id: checkout.customer_id,
           email: checkout.email
@@ -127,11 +140,29 @@
         console.log('📊 SKZ tracked via analytics');
       }
 
+      console.log('✅ All SKZ data saved successfully!');
+      console.log('=' .repeat(50));
+      console.log('Summary:');
+      console.log('- Order ID:', checkout.order_id);
+      console.log('- Order Number:', checkout.order_number);
+      console.log('- SKZ:', skz);
+      console.log('- Tag:', orderTag);
+      console.log('- Customer ID:', checkout.customer_id);
+      console.log('=' .repeat(50));
+
       // Clear SKZ from storage after successful save
       clearSKZFromStorage();
 
     } catch (error) {
       console.error('❌ Error saving SKZ:', error);
+      
+      // Retry if it's a network error
+      if (retryCount < MAX_RETRIES) {
+        console.log(`⚠️ Retrying due to error... (attempt ${retryCount + 1}/${MAX_RETRIES})`);
+        setTimeout(() => saveSKZToMetafields(skz, retryCount + 1), RETRY_DELAY);
+      } else {
+        console.error('❌ Failed to save SKZ after max retries');
+      }
     }
   }
 

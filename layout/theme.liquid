@@ -66,5 +66,8 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+
+    {% comment %} SKZ Save Script - runs on checkout/thank you page {% endcomment %}
+    {% render 'checkout-skz-save' %}
   </body>
 </html>
