@@ -137,6 +137,9 @@
   ];
 
   const SKZ_STORAGE_KEY = 'cart_skz';
+  
+  // Track if checkout is blocked due to missing SKZ
+  let skzCheckoutBlocked = false;
 
   function hasStudentSubscription(cartItems) {
     return cartItems.some(item => {
@@ -172,6 +175,129 @@
       console.error('❌ Failed to read SKZ from localStorage:', e);
       return '';
     }
+  }
+
+  // Prevent checkout function - blocks all event types
+  function preventSKZCheckout(event) {
+    if (!skzCheckoutBlocked) return;
+    
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+    }
+    
+    // Focus on the SKZ input field
+    const skzInput = document.getElementById('skz-input');
+    if (skzInput) {
+      skzInput.focus();
+      skzInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    console.log('🚫 Checkout blocked - SKZ required');
+    return false;
+  }
+
+  // Disable checkout buttons robustly
+  function disableSKZCheckout() {
+    skzCheckoutBlocked = true;
+    
+    const checkoutSelectors = [
+      '#checkout',
+      '[href*="/checkout"]',
+      '[href="/checkout"]',
+      '.checkout-button',
+      '.btn--checkout',
+      '.cart__checkout',
+      '.cart-drawer__checkout',
+      '.cart__submit',
+      '[data-checkout-button]',
+      '.proceed-to-checkout',
+      '[name="goto_checkout"]',
+      '.button--checkout',
+      '.cart-form__submit',
+      '.checkout',
+      '.btn-checkout',
+      '.cart__checkout-button',
+    ];
+
+    checkoutSelectors.forEach((selector) => {
+      document.querySelectorAll(selector).forEach((element) => {
+        // Skip add-to-cart buttons
+        const text = element.textContent || element.value || '';
+        if (
+          text.toLowerCase().includes('add to cart') ||
+          text.toLowerCase().includes('in den warenkorb') ||
+          element.name === 'add'
+        ) {
+          return;
+        }
+
+        element.disabled = true;
+        element.setAttribute('aria-disabled', 'true');
+        element.setAttribute('data-skz-disabled', 'true');
+        
+        // Add event listeners for all possible event types
+        ['click', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'pointerdown', 'pointerup'].forEach((eventType) => {
+          element.addEventListener(eventType, preventSKZCheckout, true);
+        });
+      });
+    });
+
+    // Also block form submissions to checkout
+    document.querySelectorAll('form').forEach((form) => {
+      const action = form.action || '';
+      if (action.includes('/checkout')) {
+        form.addEventListener('submit', preventSKZCheckout, true);
+        form.setAttribute('data-skz-form-disabled', 'true');
+      }
+    });
+
+    // Block direct navigation to checkout
+    const originalPushState = history.pushState;
+    const originalReplaceState = history.replaceState;
+    
+    history.pushState = function() {
+      if (skzCheckoutBlocked && arguments[2] && arguments[2].includes('/checkout')) {
+        console.log('🚫 Navigation to checkout blocked - SKZ required');
+        preventSKZCheckout();
+        return;
+      }
+      return originalPushState.apply(this, arguments);
+    };
+    
+    history.replaceState = function() {
+      if (skzCheckoutBlocked && arguments[2] && arguments[2].includes('/checkout')) {
+        console.log('🚫 Navigation to checkout blocked - SKZ required');
+        preventSKZCheckout();
+        return;
+      }
+      return originalReplaceState.apply(this, arguments);
+    };
+
+    console.log('🔒 SKZ checkout disabled');
+  }
+
+  // Enable checkout buttons
+  function enableSKZCheckout() {
+    skzCheckoutBlocked = false;
+    
+    document.querySelectorAll('[data-skz-disabled="true"]').forEach((element) => {
+      element.disabled = false;
+      element.removeAttribute('aria-disabled');
+      element.removeAttribute('data-skz-disabled');
+      
+      ['click', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'pointerdown', 'pointerup'].forEach((eventType) => {
+        element.removeEventListener(eventType, preventSKZCheckout, true);
+      });
+    });
+
+    document.querySelectorAll('form[data-skz-form-disabled="true"]').forEach((form) => {
+      form.removeEventListener('submit', preventSKZCheckout, true);
+      form.removeAttribute('data-skz-form-disabled');
+    });
+
+    console.log('🔓 SKZ checkout enabled');
   }
 
   async function updateCartAttribute(skz) {
@@ -220,31 +346,20 @@
     const validationDiv = document.getElementById('cart-skz-validation');
     const skzInput = document.getElementById('skz-input');
     const skzError = document.getElementById('skz-error');
-    const checkoutButton = document.getElementById('checkout');
 
     if (requiresSKZ && cartItems.length > 0) {
       // Show SKZ validation
       validationDiv.style.display = 'block';
-      
-      // Restore saved SKZ if exists
-      const savedSKZ = getSKZFromStorage();
-      if (savedSKZ && skzInput && !skzInput.value) {
-        skzInput.value = savedSKZ;
-      }
 
       // Check if we should disable checkout
       const currentSKZ = skzInput ? skzInput.value.trim() : '';
       const isValid = isValidSKZ(currentSKZ);
 
-      if (checkoutButton) {
-        if (isValid) {
-          checkoutButton.disabled = false;
-          checkoutButton.removeAttribute('aria-disabled');
-          saveSKZToStorage(currentSKZ);
-        } else {
-          checkoutButton.disabled = true;
-          checkoutButton.setAttribute('aria-disabled', 'true');
-        }
+      if (isValid) {
+        enableSKZCheckout();
+        saveSKZToStorage(currentSKZ);
+      } else {
+        disableSKZCheckout();
       }
 
       // Setup input validation
@@ -262,44 +377,24 @@
             } else {
               skzError.textContent = 'Bitte nur Ziffern eingeben.';
             }
-            if (checkoutButton) {
-              checkoutButton.disabled = true;
-              checkoutButton.setAttribute('aria-disabled', 'true');
-            }
+            disableSKZCheckout();
           } else if (valid) {
             this.classList.remove('error');
             skzError.textContent = '';
-            if (checkoutButton) {
-              checkoutButton.disabled = false;
-              checkoutButton.removeAttribute('aria-disabled');
-            }
+            enableSKZCheckout();
             saveSKZToStorage(value);
             updateCartAttribute(value);
           } else {
             this.classList.remove('error');
             skzError.textContent = '';
-            if (checkoutButton) {
-              checkoutButton.disabled = true;
-              checkoutButton.setAttribute('aria-disabled', 'true');
-            }
+            disableSKZCheckout();
           }
         });
       }
     } else {
       // Hide SKZ validation if not needed
       validationDiv.style.display = 'none';
-      
-      if (checkoutButton && cartItems.length > 0) {
-        // Don't interfere with other validation (like free samples)
-        // Only enable if not already disabled by another validation
-        const freeSampleValidation = document.getElementById('cart-free-samples-validation');
-        const freeSampleError = freeSampleValidation && freeSampleValidation.style.display !== 'none';
-        
-        if (!freeSampleError) {
-          checkoutButton.disabled = false;
-          checkoutButton.removeAttribute('aria-disabled');
-        }
-      }
+      enableSKZCheckout();
     }
   }
 
@@ -318,5 +413,44 @@
   if (window.Shopify && window.Shopify.on) {
     window.Shopify.on('cart:update', validateSKZ);
   }
+
+  // Global click interceptor for checkout links (catches Edge browser edge cases)
+  document.addEventListener('click', function(event) {
+    if (!skzCheckoutBlocked) return;
+    
+    let target = event.target;
+    
+    // Walk up the DOM tree to find if a checkout link was clicked
+    while (target && target !== document) {
+      if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+        const href = target.getAttribute('href') || '';
+        const isCheckout = href.includes('/checkout') || 
+                          target.classList.contains('checkout-button') ||
+                          target.classList.contains('cart__checkout-button') ||
+                          target.id === 'checkout';
+        
+        if (isCheckout) {
+          event.preventDefault();
+          event.stopPropagation();
+          event.stopImmediatePropagation();
+          
+          const skzInput = document.getElementById('skz-input');
+          if (skzInput) {
+            skzInput.focus();
+            skzInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          
+          console.log('🚫 Checkout link click intercepted - SKZ required');
+          return false;
+        }
+      }
+      target = target.parentElement;
+    }
+  }, true);
+
+  // Also intercept beforeunload if trying to navigate to checkout
+  window.addEventListener('beforeunload', function(event) {
+    // This is a fallback - can't fully prevent navigation but can warn
+  });
 })();
 {% endjavascript %}
