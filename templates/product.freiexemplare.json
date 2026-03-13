@@ -297,6 +297,47 @@
         "padding-block-end": 0
       }
     },
+    "marquee_RzjzNN": {
+      "type": "marquee",
+      "blocks": {
+        "text_t3CAUV": {
+          "type": "text",
+          "settings": {
+            "text": "<p>GRATIS SOMMERAUSGABE</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": "5.5rem",
+            "line_height": "tight",
+            "letter_spacing": "loose",
+            "case": "uppercase",
+            "wrap": "balance",
+            "color": "var(--color-foreground-heading)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_t3CAUV"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "",
+        "padding-block-start": 24,
+        "padding-block-end": 24,
+        "gap_between_elements": 24
+      }
+    },
     "main": {
       "type": "product-information",
       "blocks": {
@@ -693,6 +734,7 @@
   "order": [
     "section_4NVCJ8",
     "section_D6RFPX",
+    "marquee_RzjzNN",
     "main",
     "product_recommendations_qggXJq",
     "1755785569dcd158ff"
