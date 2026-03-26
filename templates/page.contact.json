@@ -511,8 +511,9 @@
         "text_JHgtan": {
           "type": "text",
           "name": "t:names.heading",
+          "disabled": true,
           "settings": {
-            "text": "<h2>Fragen und Antworten</h2>",
+            "text": "<h2>Fragen & Antworten</h2>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
