@@ -1476,7 +1476,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "When will I get my order?",
+                "heading": "Kann ich als Privatperson die Schuleinschreibungshefte bestellen?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -1485,7 +1485,7 @@
                 "text_Q3bkY7": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                    "text": "<p>Wir bieten Schuleinschreibungshefte nur<br/>für Volksschuldirektor:innen, die das Heft an Eltern bei der Schuleinschreibung<br/>weitergeben, an.</p><p>Besteller:innen, die das Abo an eine<br/>Privatadresse schicken lassen möchten, bieten wir „Hallo Schule!“ als Privatabo<br/>an. Die erste Ausgabe beinhaltet ein Extraheft, das bei den ersten Schritten<br/>zum Lesen begleitet und beim spielerischen Üben der Vorläuferfertigkeiten hilft.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
