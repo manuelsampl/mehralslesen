@@ -796,7 +796,7 @@
                 "accordion_row_qMeGUT": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Manufacturing",
+                    "heading": "Wie gebe ich Änderungen bekannt?",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -805,7 +805,7 @@
                     "text_rVMtqX": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Our products are manufactured both locally and globally. We carefully select our manufacturing partners to ensure our products are high quality and a fair value.</p>",
+                        "text": "<p>Falls sich in den ersten Schulwochen die Stückzahl der<br/>benötigten Abos ändert, geben Sie uns bitte einfach per E-Mail an<br/>abo@mehralslesen.at oder telefonisch unter 01/589 00-170 (Montag bis Donnerstag<br/>7:30-15 Uhr, Freitag 7:30-13 Uhr) Bescheid. Allfällige zusätzlich benötigte<br/>Exemplare liefern wir nach.  </p><p>Eine weitere Bestellung ist nicht<br/>erforderlich.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
