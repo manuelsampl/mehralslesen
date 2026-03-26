@@ -718,7 +718,7 @@
                 "accordion_row_GWLYat": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Return policy",
+                    "heading": "Gibt es Freiexemplare?",
                     "open_by_default": true,
                     "icon": "none",
                     "width": 20
@@ -727,7 +727,7 @@
                     "text_bkkyem": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Our goal is for every customer to be totally satisfied with their purchase. If this isn't the case, let us know and we'll do our best to work with you to make it right.</p>",
+                        "text": "<p>Leseförderung soll für ALLE Schüler:innen zugänglich sein.<br/>Deswegen können <strong>bis zu 10 % Ihrer Bestellmenge</strong> als<br/>Schüler:innenfreiexemplare für Schüler:innen aus einkommensschwachen Haushalten<br/>in Anspruch genommen werden. Zusätzlich stehen Ihnen bis zu 10 % Ihrer<br/>Bestellmenge als <strong>Lehrer:innenexemplare</strong> zu.</p><p>Unsere Jugendrotkreuzzeitschriften sind zu 100 %<br/>gemeinnützig. Jeder Euro Reinerlös fließt wieder in Jugendrotkreuz-Angebote für<br/>Kinder und Jugendliche.</p><p>Bitte beachten Sie, dass nach erfolgter Bestellung und<br/>Rechnungslegung kein nachträglicher Abzug von Freiexemplaren möglich ist. Aus<br/>finanzrechtlichen Gründen ist es erforderlich, dass Freiexemplare bei der<br/>Bestellung verbindlich bekannt gegeben werden (im Feld „Freiexemplare“).<br/>Dadurch können sowohl die bestellenden Lehrpersonen als auch die Organisationen<br/>jederzeit nachweisen, dass die eingesammelten Elterngelder widmungsgemäß<br/>verwendet werden.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
