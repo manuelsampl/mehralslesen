@@ -945,7 +945,7 @@
                   "type": "_accordion-row",
                   "name": "t:names.accordion_row",
                   "settings": {
-                    "heading": "When will I get my order?",
+                    "heading": "Was bedeutet: Die Jugendrotkreuz-Zeitschriften sindgemeinnützig?",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -954,7 +954,7 @@
                     "text_U7cBjQ": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                        "text": "<p>Unser Zeitschriften-Angebot ist zu 100 % gemeinnützig. Das<br/>bedeutet, dass der Reinerlös aus dem Verkauf der Abos in weiter Angebote des<br/>Jugendrotkreuzes für Kinder und Jugendliche fließt. So profitieren Schulen von<br/>den weiteren, oft kostenfreien Angeboten wie zum Beispiel Schwimmabzeichen,<br/>Erste-Hilfe-Programme oder Angebote zur Gesundheitsförderung. </p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
