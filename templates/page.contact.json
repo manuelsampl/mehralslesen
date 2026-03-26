@@ -1005,7 +1005,7 @@
                   "settings": {
                     "text": "<p>Bestellen Sie möglichst früh, um die erste Ausgabe bereits<br/>bis Schulbeginn zu erhalten. Wählen Sie als Zahlungsmethode „Kauf auf<br/>Rechnung“. Sie erhalten gleich mit der Bestellbestätigung Ihre Rechnung, die<br/>Sie jedoch erst bis Ende Oktober zahlen müssen.</p><p>Bei Änderungen an Ihrer Bestellung geben Sie uns bis 20.<br/>September Bescheid: Antworten Sie einfach auf das Betätigungsmail oder<br/>kontaktieren Sie unser Aboservice per Tel. oder E-Mail. Sie erhalten dann eine<br/>aktualisierte Rechnung zugesendet, die bis Ende Oktober fällig ist.</p>",
                     "width": "fit-content",
-                    "max_width": "normal",
+                    "max_width": "none",
                     "alignment": "left",
                     "type_preset": "rte",
                     "font": "var(--font-body--family)",
@@ -1534,6 +1534,7 @@
         "text_QcPDxr",
         "accordion_8dYKck"
       ],
+      "disabled": true,
       "name": "t:names.faq_section",
       "settings": {
         "content_direction": "column",
