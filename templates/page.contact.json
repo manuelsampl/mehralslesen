@@ -756,7 +756,7 @@
                 "accordion_row_GWLYat": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Gibt es Freiexemplare?",
+                    "heading": "Erhalte ich bei Änderung meiner Bestellung eine neue Rechnung?",
                     "open_by_default": true,
                     "icon": "none",
                     "width": 20
@@ -765,7 +765,7 @@
                     "text_bkkyem": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Leseförderung soll für ALLE Schüler:innen zugänglich sein.<br/>Deswegen können <strong>bis zu 10 % Ihrer Bestellmenge</strong> als<br/>Schüler:innenfreiexemplare für Schüler:innen aus einkommensschwachen Haushalten<br/>in Anspruch genommen werden. Zusätzlich stehen Ihnen bis zu 10 % Ihrer<br/>Bestellmenge als <strong>Lehrer:innenexemplare</strong> zu.</p><p>Unsere Jugendrotkreuzzeitschriften sind zu 100 %<br/>gemeinnützig. Jeder Euro Reinerlös fließt wieder in Jugendrotkreuz-Angebote für<br/>Kinder und Jugendliche.</p><p>Bitte beachten Sie, dass nach erfolgter Bestellung und<br/>Rechnungslegung kein nachträglicher Abzug von Freiexemplaren möglich ist. Aus<br/>finanzrechtlichen Gründen ist es erforderlich, dass Freiexemplare bei der<br/>Bestellung verbindlich bekannt gegeben werden (im Feld „Freiexemplare“).<br/>Dadurch können sowohl die bestellenden Lehrpersonen als auch die Organisationen<br/>jederzeit nachweisen, dass die eingesammelten Elterngelder widmungsgemäß<br/>verwendet werden.</p>",
+                        "text": "<p>Wenn Sie in den ersten Schulwochen Ihre Bestellung anpassen,<br/>erhalten Sie eine neue Rechnung, die die erste ersetzt und bis Ende Oktober<br/>fällig ist.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
