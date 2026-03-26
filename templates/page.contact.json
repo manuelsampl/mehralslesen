@@ -1021,7 +1021,7 @@
                     "text_Gxyxbb": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Leseförderung soll für ALLE Schüler:innen zugänglich sein. Deswegen können bis zu<strong> </strong>10 %<strong> </strong>Ihrer Bestellmenge als Schüler:innenfreiexemplare für Kinder und Jugendliche aus einkommensschwachen<br/>Haushalten in Anspruch genommen werden. Zusätzlich stehen Ihnen bis zu 10 % Ihrer Bestellmenge als Lehrer:innenexemplare zu.</p>",
+                        "text": "<p>Leseförderung soll für ALLE Schüler:innen zugänglich sein. Deswegen können bis zu<strong> </strong>10 %<strong> </strong>Ihrer Bestellmenge als Schüler:innenfreiexemplare für Kinder und Jugendliche aus Haushalten mit geringerem Einkommen in Anspruch genommen werden. Zusätzlich stehen Ihnen bis zu 10 % Ihrer Bestellmenge als Lehrer:innenexemplare zu.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
