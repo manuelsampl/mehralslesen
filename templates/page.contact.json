@@ -420,7 +420,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<ol><li>Sie bestellen einmalig online – bequem und sicher.</li><li>Änderungen sind flexibel bis 20. September möglich<br/>per E-Mail an <a href=\"mailto:abo@mehralslesen.at\" title=\"mailto:abo@mehralslesen.at\">abo@mehralslesen.at</a> oder telefonisch unter 01 589 00-170.</li><li>Sie erhalten gleich bei Bestellung Ihre Rechnung, die bis Ende Oktober fällig ist. <strong>Weitere Informationen finden unter Fragen & Antworten.</strong></li></ol><ul><li>Lehrer:innen-Exemplare bei Sammelbestellungen kostenlos</li><li>Schüler:innen-Freiexemplare (bis zu 10 % der Gesamtbestellung) für soziale Härtefälle</li><li>Digitale Zusatzmaterialien im Abo inkludiert</li><li>Abo mit monatlichen Ausgaben für das Schuljahr 2025/26</li><li>Punktschriftausgaben für Schüler:innen mit Sehbeeinträchtigung:</li><li>Bestellmöglichkeit via I-Lehrer:in beim Braille-Zentrum am Bundesblindeninstitut bei <a href=\"mailto:verkauf@bbi.at\" target=\"_blank\" title=\"mailto:verkauf@bbi.at\">verkauf@bbi.at</a><br/></li></ul>",
+                "text": "<ol><li>Sie bestellen einmalig online – bequem und sicher.</li><li>Änderungen sind flexibel bis 20. September möglich<br/>per E-Mail an <a href=\"mailto:abo@mehralslesen.at\" title=\"mailto:abo@mehralslesen.at\">abo@mehralslesen.at</a> oder telefonisch unter 01 589 00-170.</li><li>Sie erhalten gleich bei Bestellung Ihre Rechnung, die bis Ende Oktober fällig ist. <strong>Weitere Informationen finden unter Fragen & Antworten.</strong></li></ol><ul><li></li></ul>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
@@ -441,12 +441,39 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "text_7ijnQe": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<ul><li>Lehrer:innen-Exemplare bei Sammelbestellungen kostenlos</li><li>Schüler:innen-Freiexemplare (bis zu 10 % der Gesamtbestellung) für soziale Härtefälle</li><li>Digitale Zusatzmaterialien im Abo inkludiert</li><li>Abo mit monatlichen Ausgaben für das Schuljahr 2025/26</li><li>Punktschriftausgaben für Schüler:innen mit Sehbeeinträchtigung:</li><li>Bestellmöglichkeit via I-Lehrer:in beim Braille-Zentrum am Bundesblindeninstitut bei <a href=\"mailto:verkauf@bbi.at\" target=\"_blank\" title=\"mailto:verkauf@bbi.at\">verkauf@bbi.at</a></li></ul>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "text_FMFN4D",
             "text_RGinmp",
-            "text_GptP97"
+            "text_GptP97",
+            "text_7ijnQe"
           ]
         },
         "image_yTqnHX": {
