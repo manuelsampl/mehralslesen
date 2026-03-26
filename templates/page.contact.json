@@ -900,46 +900,6 @@
                 "padding-inline-end": 0
               },
               "blocks": {
-                "accordion_row_cmHTem": {
-                  "type": "_accordion-row",
-                  "name": "t:names.accordion_row",
-                  "settings": {
-                    "heading": "Bis wann darf ich Änderungen vornehmen?",
-                    "open_by_default": false,
-                    "icon": "none",
-                    "width": 20
-                  },
-                  "blocks": {
-                    "text_QgVjxn": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p><strong>Bis 20. September</strong> kann Ihre Bestellung flexibel<br/>angepasst werden. Dafür können Sie auf Ihre Bestellbestätigung antworten, uns<br/>ein E-Mail schreiben oder anrufen. Allfällige zusätzlich benötigte Exemplare<br/>liefern wir nach. Alle Folgelieferungen erfolgen auf Basis der verrechneten<br/>Bestellung.</p>",
-                        "width": "100%",
-                        "max_width": "normal",
-                        "alignment": "left",
-                        "type_preset": "rte",
-                        "font": "var(--font-body--family)",
-                        "font_size": "1rem",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "text_QgVjxn"
-                  ]
-                },
                 "accordion_row_fdTway": {
                   "type": "_accordion-row",
                   "name": "t:names.accordion_row",
@@ -1139,7 +1099,6 @@
                 }
               },
               "block_order": [
-                "accordion_row_cmHTem",
                 "accordion_row_fdTway",
                 "accordion_row_DeRKwj",
                 "accordion_row_LwUexm",
@@ -1158,6 +1117,7 @@
         "text_JHgtan",
         "group_YLaJFd"
       ],
+      "disabled": true,
       "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
