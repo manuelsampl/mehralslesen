@@ -991,6 +991,45 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "accordion_row_HWUfPJ": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Wann muss ich meine Rechnung bezahlen?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_MxWcTB": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Bestellen Sie möglichst früh, um die erste Ausgabe bereits<br/>bis Schulbeginn zu erhalten. Wählen Sie als Zahlungsmethode „Kauf auf<br/>Rechnung“. Sie erhalten gleich mit der Bestellbestätigung Ihre Rechnung, die<br/>Sie jedoch erst bis Ende Oktober zahlen müssen.</p><p>Bei Änderungen an Ihrer Bestellung geben Sie uns bis 20.<br/>September Bescheid: Antworten Sie einfach auf das Betätigungsmail oder<br/>kontaktieren Sie unser Aboservice per Tel. oder E-Mail. Sie erhalten dann eine<br/>aktualisierte Rechnung zugesendet, die bis Ende Oktober fällig ist.</p>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_MxWcTB"
+              ]
+            },
             "accordion_row_CbzFi8": {
               "type": "_accordion-row",
               "name": "t:names.accordion_dash_row",
@@ -1006,7 +1045,7 @@
                   "name": "t:names.text",
                   "settings": {
                     "text": "<p>Einzelne kostenfreie Hefte zur Ansicht können über unser<br/>Aboservice angefragt werden.</p>",
-                    "width": "100%",
+                    "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
                     "type_preset": "rte",
@@ -1150,45 +1189,6 @@
               },
               "block_order": [
                 "text_AxVQBU"
-              ]
-            },
-            "accordion_row_HWUfPJ": {
-              "type": "_accordion-row",
-              "settings": {
-                "heading": "Wann muss ich meine Rechnung bezahlen?",
-                "open_by_default": false,
-                "icon": "none",
-                "width": 20
-              },
-              "blocks": {
-                "text_MxWcTB": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Bestellen Sie möglichst früh, um die erste Ausgabe bereits<br/>bis Schulbeginn zu erhalten. Wählen Sie als Zahlungsmethode „Kauf auf<br/>Rechnung“. Sie erhalten gleich mit der Bestellbestätigung Ihre Rechnung, die<br/>Sie jedoch erst bis Ende Oktober zahlen müssen.</p><p>Bei Änderungen an Ihrer Bestellung geben Sie uns bis 20.<br/>September Bescheid: Antworten Sie einfach auf das Betätigungsmail oder<br/>kontaktieren Sie unser Aboservice per Tel. oder E-Mail. Sie erhalten dann eine<br/>aktualisierte Rechnung zugesendet, die bis Ende Oktober fällig ist.</p>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_MxWcTB"
               ]
             },
             "accordion_row_WLRnAW": {
@@ -1514,11 +1514,11 @@
             }
           },
           "block_order": [
+            "accordion_row_HWUfPJ",
             "accordion_row_CbzFi8",
             "accordion_row_7DzL3m",
             "accordion_row_r63H73",
             "accordion_row_YQMa9x",
-            "accordion_row_HWUfPJ",
             "accordion_row_WLRnAW",
             "accordion_row_aPBTqG",
             "accordion_row_YUVAyA",
@@ -1534,7 +1534,6 @@
         "text_QcPDxr",
         "accordion_8dYKck"
       ],
-      "disabled": true,
       "name": "t:names.faq_section",
       "settings": {
         "content_direction": "column",
