@@ -866,7 +866,7 @@
                   "type": "_accordion-row",
                   "name": "t:names.accordion_row",
                   "settings": {
-                    "heading": "When will I get my order?",
+                    "heading": "Bis wann darf ich Änderungen vornehmen?",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -875,7 +875,7 @@
                     "text_QgVjxn": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                        "text": "<p><strong>Bis 20. September</strong> kann Ihre Bestellung flexibel<br/>angepasst werden. Dafür können Sie auf Ihre Bestellbestätigung antworten, uns<br/>ein E-Mail schreiben oder anrufen. Allfällige zusätzlich benötigte Exemplare<br/>liefern wir nach. Alle Folgelieferungen erfolgen auf Basis der verrechneten<br/>Bestellung.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
