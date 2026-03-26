@@ -679,7 +679,7 @@
                   "type": "_accordion-row",
                   "name": "t:names.accordion_row",
                   "settings": {
-                    "heading": "When will I get my order?",
+                    "heading": "Gibt es einen Frühbucherrabatt?",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -688,7 +688,7 @@
                     "text_hNLyUC": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                        "text": "<p>Da wir eine non-profit Organisation sind, können wir keine<br/>ähnlichen Rabatte anbieten. Unsere Preise bleiben das ganze Jahr über<br/>gleich.  Wir verfolgen keine<br/>kommerziellen Interessen, sondern priorisieren pädagogische und soziale<br/>Ziele.  </p><p>Das Zeitschriften-Angebot ist zu <strong>100 % gemeinnützig</strong>.<br/>Das bedeutet, dass der Reinerlös aus dem Verkauf der Abos an die Schulen in<br/>Form von Angeboten zur Leseförderung und humanitären Bildung für Kinder und<br/>Jugendliche zurückfließt. So profitieren Schulen von den weiteren, oft kostenfreien<br/>Angeboten des Jugendrotkreuzes, wie zum Beispiel Schwimmabzeichen,<br/>Erste-Hilfe-Programme, Radfahrprüfung und Angebote zur Gesundheitsförderung. </p><p>Unser Angebot bleibt trotz steigender Kosten stets möglichst<br/>niedrig, sodass alle Schüler:innen unser Angebot in Anspruch nehmen können. Bis<br/>zu 10 % der Bestellmenge stehen Ihnen als Freiexemplare bei der Bestellung zur<br/>Verfügung.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
