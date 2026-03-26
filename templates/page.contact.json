@@ -1144,7 +1144,7 @@
                 "accordion_row_LwUexm": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Muss ich das Abo am Ende des Schuljahrs kündigen oderläuft es automatisch aus?",
+                    "heading": "Muss ich das Abo am Ende des Schuljahrs kündigen oder läuft es automatisch aus?",
                     "open_by_default": true,
                     "icon": "none",
                     "width": 20
