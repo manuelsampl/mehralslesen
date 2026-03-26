@@ -1033,7 +1033,7 @@
             "accordion_row_r63H73": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "Are any purchases final sale?",
+                "heading": "Gibt es einen Frühbucherrabatt?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
