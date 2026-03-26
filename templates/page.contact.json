@@ -753,7 +753,7 @@
                     "text_hNLyUC": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Antworten Sie einfach auf Ihre Bestellbestätigung, senden Sie<br/>uns ein E-Mail oder rufen uns an. Allfällige zusätzlich benötigte Exemplare<br/>liefern wir nach.<strong> Eine weitere Bestellung ist nicht<br/>erforderlich.</strong></p>",
+                        "text": "<p>Antworten Sie einfach auf Ihre Bestellbestätigung, senden Sie<br/>uns ein E-Mail oder rufen uns an. Allfällige zusätzlich benötigte Exemplare liefern wir nach.</p><p><strong>Eine weitere Bestellung ist nicht<br/>erforderlich.</strong></p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
