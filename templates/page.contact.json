@@ -874,7 +874,7 @@
                 "accordion_row_qMeGUT": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Wie gebe ich Änderungen bekannt?",
+                    "heading": "Gibt es einen Frühbucherrabatt?",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -883,7 +883,7 @@
                     "text_rVMtqX": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Falls sich in den ersten Schulwochen die Stückzahl der<br/>benötigten Abos ändert, geben Sie uns bitte einfach per E-Mail an<br/>abo@mehralslesen.at oder telefonisch unter 01/589 00-170 (Montag bis Donnerstag<br/>7:30-15 Uhr, Freitag 7:30-13 Uhr) Bescheid. Allfällige zusätzlich benötigte<br/>Exemplare liefern wir nach.  </p><p>Eine weitere Bestellung ist nicht<br/>erforderlich.</p>",
+                        "text": "<p>Da wir eine Non-Profit-Organisation sind, können wir keine<br/>ähnlichen Rabatte anbieten. Unsere Preise bleiben das ganze Jahr über gleich. Wir<br/>verfolgen keine kommerziellen Interessen, sondern priorisieren pädagogische und<br/>soziale Ziele. Unser Angebot bleibt trotz steigender Kosten stets möglichst<br/>niedrig, sodass alle Schüler:innen unser Angebot in Anspruch nehmen können.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
