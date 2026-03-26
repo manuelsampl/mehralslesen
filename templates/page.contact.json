@@ -985,7 +985,7 @@
                   "type": "_accordion-row",
                   "name": "t:names.accordion_row",
                   "settings": {
-                    "heading": "When will I get my order?",
+                    "heading": "Gibt es Freiexemplare?",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -994,7 +994,7 @@
                     "text_Gxyxbb": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                        "text": "<p>Leseförderung soll für ALLE Schüler:innen zugänglich sein.<br/>Deswegen können bis zu<strong> </strong>10 %<strong> </strong>Ihrer Bestellmenge als<br/>Schüler:innenfreiexemplare für Kinder und Jugendliche aus einkommensschwachen<br/>Haushalten in Anspruch genommen werden. Zusätzlich stehen Ihnen bis zu 10 %<br/>Ihrer Bestellmenge als Lehrer:innenexemplare zu.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
