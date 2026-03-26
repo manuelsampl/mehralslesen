@@ -757,7 +757,7 @@
                 "accordion_row_G4qGLM": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Shipping",
+                    "heading": "Gibt es noch die vorläufige Bestellung?",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -766,7 +766,7 @@
                     "text_h7Wcct": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                        "text": "<p>Ihre Bestellung muss nur noch <strong>einmal</strong> abgegeben werden<br/>und kann telefonisch oder per E-Mail bis zum 20. September geändert oder ggf. storniert<br/>werden. Die Rechnung kann sofort ab Abschluss der Bestellung bezahlt werden,<br/>spätestens bis Ende Oktober.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
