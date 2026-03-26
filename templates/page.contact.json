@@ -1071,6 +1071,47 @@
                 "text_rQfJTH"
               ]
             },
+            "accordion_row_YQMa9x": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Gibt es Freiexemplare?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_AxVQBU": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Leseförderung soll für ALLE Schüler:innen zugänglich sein.<br/>Deswegen können bis zu 10 % Ihrer Bestellmenge als<br/>Schüler:innenfreiexemplare für Schüler:innen aus einkommensschwachen Haushalten<br/>in Anspruch genommen werden. Zusätzlich stehen Ihnen bis zu 10 % Ihrer<br/>Bestellmenge als Lehrer:innenfreiexemplare zu.</p><p>Unsere Jugendrotkreuzzeitschriften sind zu 100 %<br/>gemeinnützig. Jeder Euro Reinerlös fließt wieder in Jugendrotkreuz-Angebote für<br/>Kinder und Jugendliche. Bitte beachten Sie, dass nach erfolgter Bestellung und<br/>Rechnungslegung kein nachträglicher Abzug von Freiexemplaren möglich ist. Aus<br/>finanzrechtlichen Gründen ist es erforderlich, dass Freiexemplare bei der<br/>Bestellung verbindlich bekannt gegeben werden (im Feld „Freiexemplare“).<br/>Dadurch können sowohl die bestellenden Lehrpersonen als auch die Organisationen<br/>jederzeit nachweisen, dass die eingesammelten Elterngelder widmungsgemäß<br/>verwendet werden.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_AxVQBU"
+              ]
+            },
             "accordion_row_HWUfPJ": {
               "type": "_accordion-row",
               "settings": {
@@ -1151,52 +1192,11 @@
                 "text_bHFyhx"
               ]
             },
-            "accordion_row_YQMa9x": {
-              "type": "_accordion-row",
-              "name": "t:names.accordion_dash_row",
-              "settings": {
-                "heading": "Gibt es Freiexemplare?",
-                "open_by_default": false,
-                "icon": "none",
-                "width": 20
-              },
-              "blocks": {
-                "text_AxVQBU": {
-                  "type": "text",
-                  "name": "t:names.text",
-                  "settings": {
-                    "text": "<p>Leseförderung soll für ALLE Schüler:innen zugänglich sein.<br/>Deswegen können bis zu 10 % Ihrer Bestellmenge als<br/>Schüler:innenfreiexemplare für Schüler:innen aus einkommensschwachen Haushalten<br/>in Anspruch genommen werden. Zusätzlich stehen Ihnen bis zu 10 % Ihrer<br/>Bestellmenge als Lehrer:innenfreiexemplare zu.</p><p>Unsere Jugendrotkreuzzeitschriften sind zu 100 %<br/>gemeinnützig. Jeder Euro Reinerlös fließt wieder in Jugendrotkreuz-Angebote für<br/>Kinder und Jugendliche. Bitte beachten Sie, dass nach erfolgter Bestellung und<br/>Rechnungslegung kein nachträglicher Abzug von Freiexemplaren möglich ist. Aus<br/>finanzrechtlichen Gründen ist es erforderlich, dass Freiexemplare bei der<br/>Bestellung verbindlich bekannt gegeben werden (im Feld „Freiexemplare“).<br/>Dadurch können sowohl die bestellenden Lehrpersonen als auch die Organisationen<br/>jederzeit nachweisen, dass die eingesammelten Elterngelder widmungsgemäß<br/>verwendet werden.</p>",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_AxVQBU"
-              ]
-            },
             "accordion_row_7DzL3m": {
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "Gibtes noch die vorläufige Bestellung?",
+                "heading": "Gibt es noch die vorläufige Bestellung?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -1516,9 +1516,9 @@
           "block_order": [
             "accordion_row_CbzFi8",
             "accordion_row_r63H73",
+            "accordion_row_YQMa9x",
             "accordion_row_HWUfPJ",
             "accordion_row_YUVAyA",
-            "accordion_row_YQMa9x",
             "accordion_row_7DzL3m",
             "accordion_row_aPBTqG",
             "accordion_row_WLRnAW",
