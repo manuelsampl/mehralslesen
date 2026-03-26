@@ -831,7 +831,7 @@
                     "text_h7Wcct": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Bei Bestellung bis September muss die Rechnung bis <strong>Ende<br/>Oktober</strong> bezahlt werden. Bei späteren Bestellungen haben Sie 30 Tage Zeit<br/>für die Bezahlung.</p>",
+                        "text": "<p>Bei Bestellung bis September muss die Rechnung bis <strong>Ende<br/>Oktober</strong> bezahlt werden. Bei späteren Bestellungen haben Sie 30 Tage Zeit für die Bezahlung.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
