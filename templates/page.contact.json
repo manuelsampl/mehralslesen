@@ -795,7 +795,7 @@
                 "accordion_row_G4qGLM": {
                   "type": "_accordion-row",
                   "settings": {
-                    "heading": "Gibt es noch die vorläufige Bestellung?",
+                    "heading": "Wann muss ich meine Rechnung bezahlen?",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -804,7 +804,7 @@
                     "text_h7Wcct": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Ihre Bestellung muss nur noch <strong>einmal</strong> abgegeben werden<br/>und kann telefonisch oder per E-Mail bis zum 20. September geändert oder ggf. storniert<br/>werden. Die Rechnung kann sofort ab Abschluss der Bestellung bezahlt werden,<br/>spätestens bis Ende Oktober.</p>",
+                        "text": "<p>Bei Bestellung bis September muss die Rechnung bis <strong>Ende<br/>Oktober</strong> bezahlt werden. Bei späteren Bestellungen haben Sie 30 Tage Zeit<br/>für die Bezahlung.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
