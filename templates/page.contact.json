@@ -673,7 +673,7 @@
                     "text_DEPnxG": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Klicken sie in Ihrem Bestätigungsmail auf „Bestellung ansehen“ oder alternativ auf der Bestellseite auf das rote Symbol rechts oben -&gt; Bestellungen. Geben Sie die E-Mail-Adresse ein, mit der sie bestellt haben. Sie erhalten einen Code per Mail und sehen damit ihre aufgegebenen Bestellungen.</p>",
+                        "text": "<p>Klicken sie in Ihrem Bestätigungsmail auf „Bestellung ansehen“ oder alternativ auf der Bestellseite auf das rote Symbol rechts oben -&gt; Bestellungen. Geben Sie die E-Mail-Adresse ein, mit der Sie bestellt haben. Sie erhalten einen Code per Mail und sehen damit ihre aufgegebenen Bestellungen.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
