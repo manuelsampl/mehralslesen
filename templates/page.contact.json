@@ -949,8 +949,9 @@
         "text_QcPDxr": {
           "type": "text",
           "name": "t:names.heading",
+          "disabled": true,
           "settings": {
-            "text": "<h3>Frequently asked questions</h3>",
+            "text": "<h3>Fragen & Antworten</h3>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",
