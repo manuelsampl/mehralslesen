@@ -1396,7 +1396,7 @@
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "When will I get my order?",
+                "heading": "Muss ich das Abo am Ende des Schuljahrs kündigen oderläuft es automatisch aus?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20
@@ -1405,7 +1405,7 @@
                 "text_iWMdAc": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                    "text": "<p>Die Abos werden pro Schuljahr abgeschlossen und müssen somit<br/>nicht gekündigt werden. Eine Bestellung fürs neue Schuljahr ist ab Mitte April<br/>möglich.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
