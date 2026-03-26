@@ -512,7 +512,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<h2>FAQ – Mehr als Lesen </h2>",
+            "text": "<h2>Fragen und Antworten</h2>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -871,7 +871,6 @@
         "text_JHgtan",
         "group_YLaJFd"
       ],
-      "disabled": true,
       "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
