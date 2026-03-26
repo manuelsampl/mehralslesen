@@ -633,7 +633,7 @@
                     "text_wgNCXm": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Ihre Bestellung muss nur noch <strong>einmal</strong> abgegeben werden.<br/>Bestellen Sie möglichst früh, um die erste Ausgabe bereits bis Schulbeginn zu<br/>erhalten. Wählen Sie als Zahlungsmethode „Kauf auf Rechnung“. Sie erhalten<br/>gleich mit der Bestellbestätigung Ihre Rechnung, die Sie jedoch erst bis Ende<br/>Oktober zahlen müssen.</p>",
+                        "text": "<p>Ihre Bestellung muss nur noch <strong>einmal</strong> abgegeben werden.<br/>Bestellen Sie möglichst früh, um die erste Ausgabe bereits bis Schulbeginn zu erhalten. Wählen Sie als Zahlungsmethode „Kauf auf Rechnung“. Sie erhalten gleich mit der Bestellbestätigung Ihre Rechnung, die Sie jedoch erst bis Ende Oktober zahlen müssen.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
