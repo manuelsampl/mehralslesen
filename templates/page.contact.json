@@ -835,7 +835,7 @@
                   "type": "_accordion-row",
                   "name": "t:names.accordion_row",
                   "settings": {
-                    "heading": "Bis wann darf ich Änderungen vornehmen?",
+                    "heading": "Gibt es Ansichtsexemplare?",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -844,7 +844,7 @@
                     "text_PBMbBM": {
                       "type": "text",
                       "settings": {
-                        "text": "<p><strong>Bis 20. September</strong> kann Ihre Bestellung flexibel<br/>angepasst werden. Dafür können Sie auf Ihre Bestellbestätigung antworten, uns<br/>ein E-Mail schreiben oder anrufen. Allfällige zusätzlich benötigte Exemplare<br/>liefern wir nach. Alle Folgelieferungen erfolgen auf Basis der verrechneten<br/>Bestellung.</p>",
+                        "text": "<p>Einzelne kostenfreie Ansichtsexemplare senden wir Ihnen<br/>gerne auf Anfrage zu.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
