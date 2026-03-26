@@ -677,7 +677,7 @@
                   "type": "_accordion-row",
                   "name": "t:names.accordion_row",
                   "settings": {
-                    "heading": "Gibt es Ansichtsexemplare?",
+                    "heading": "Bis wann darf ich Änderungen vornehmen?",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -686,7 +686,7 @@
                     "text_U4mrhF": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Einzelne kostenfreie Hefte zur Ansicht können über unser<br/>Aboservice angefragt werden.</p>",
+                        "text": "<p>Bis 20. September kann Ihre Bestellung flexibel angepasst<br/>werden. Allfällige zusätzlich benötigte Exemplare liefern wir nach. Alle<br/>Folgelieferungen erfolgen auf Basis der verrechneten Bestellung.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
