@@ -637,7 +637,7 @@
                   "type": "_accordion-row",
                   "name": "t:names.accordion_row",
                   "settings": {
-                    "heading": "Gibt es noch die vorläufige Bestellung?",
+                    "heading": "Wie kann ich mir meine Bestellung anzeigen lassen?",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -646,7 +646,7 @@
                     "text_DEPnxG": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Ihre Bestellung muss nur noch <strong>einmal</strong> abgegeben werden.<br/>Bestellen Sie möglichst früh, um die erste Ausgabe bereits bis Schulbeginn zu<br/>erhalten. Wählen Sie als Zahlungsmethode „Kauf auf Rechnung“. Sie erhalten<br/>gleich mit der Bestellbestätigung Ihre Rechnung, die Sie jedoch erst bis Ende<br/>Oktober zahlen müssen.</p>",
+                        "text": "<p>Klicken sie in Ihrem Bestätigungsmail auf „Bestellung<br/>ansehen“ oder alternativ auf der Bestellseite auf das rote Symbol rechts oben -&gt;<br/>Bestellungen. Geben sie die E-Mail-Adresse ein, mit der sie bestellt haben. Sie<br/>erhalten einen Code per Mail und sehen damit ihre aufgegebenen Bestellungen.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
