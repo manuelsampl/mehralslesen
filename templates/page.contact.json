@@ -1231,7 +1231,7 @@
                     "text_6YcEMT": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Wir bieten Schuleinschreibungshefte nur<br/>für Volksschuldirektor:innen, die das Heft an Eltern bei der Schuleinschreibung<br/>weitergeben, an.</p><p>Besteller:innen, die das Abo an eine<br/>Privatadresse schicken lassen möchten, bieten wir „Hallo Schule!“ als Privatabo<br/>an. Die erste Ausgabe beinhaltet ein Extraheft, das bei den ersten Schritten<br/>zum Lesen begleitet und beim spielerischen Üben der Vorläuferfertigkeiten hilft.</p>",
+                        "text": "<p>Wir bieten Schuleinschreibungshefte nur<br/>für Volksschulen an, die das Heft an Eltern bei der Schuleinschreibung<br/>weitergeben.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
