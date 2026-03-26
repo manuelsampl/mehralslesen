@@ -946,7 +946,7 @@
                   "type": "_accordion-row",
                   "name": "t:names.accordion_row",
                   "settings": {
-                    "heading": "When will I get my order?",
+                    "heading": "Kann ich meine Bestellung nach Rechnungslegung noch abändern?",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -955,7 +955,7 @@
                     "text_7VrFHA": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                        "text": "<p>Leider bieten wir keine Rückerstattungen an. Bitte beachten<br/>Sie, dass nach erfolgter Bestellung und Rechnungslegung kein nachträglicher<br/>Abzug von Freiexemplaren möglich ist. Aus finanzrechtlichen Gründen ist es<br/>erforderlich, dass Freiexemplare bei der Bestellung verbindlich bekannt gegeben<br/>werden (im Feld „Freiexemplare“). Dadurch können sowohl die bestellenden<br/>Lehrpersonen als auch die Organisationen jederzeit nachweisen, dass die<br/>eingesammelten Elterngelder widmungsgemäß verwendet werden.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
