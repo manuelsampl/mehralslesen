@@ -593,11 +593,51 @@
                 "padding-inline-end": 0
               },
               "blocks": {
+                "accordion_row_amrDDD": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "When will I get my order?",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_wgNCXm": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_wgNCXm"
+                  ]
+                },
                 "accordion_row_jUi3Pg": {
                   "type": "_accordion-row",
                   "name": "t:names.accordion_row",
                   "settings": {
-                    "heading": "Wann muss ich meine Rechnung bezahlen?",
+                    "heading": "Gibt es noch die vorläufige Bestellung?",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
@@ -606,7 +646,7 @@
                     "text_DEPnxG": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Bestellen Sie möglichst früh, um die erste Ausgabe bereits<br/>bis Schulbeginn zu erhalten. Wählen Sie als Zahlungsmethode <strong>„Kauf auf<br/>Rechnung“.</strong> Sie erhalten gleich mit der Bestellbestätigung Ihre Rechnung,<br/>die Sie jedoch erst <strong>bis Ende Oktober</strong> zahlen müssen.</p><p>Bei Änderungen an Ihrer Bestellung geben Sie uns <strong>bis 20.<br/>September</strong> Bescheid: Antworten Sie einfach auf das Betätigungsmail oder<br/>kontaktieren Sie unser Aboservice per Tel. oder E-Mail. Sie erhalten dann eine <strong>aktualisierte<br/>Rechnung</strong> zugesendet, die bis Ende Oktober fällig ist.</p>",
+                        "text": "<p>Ihre Bestellung muss nur noch <strong>einmal</strong> abgegeben werden.<br/>Bestellen Sie möglichst früh, um die erste Ausgabe bereits bis Schulbeginn zu<br/>erhalten. Wählen Sie als Zahlungsmethode „Kauf auf Rechnung“. Sie erhalten<br/>gleich mit der Bestellbestätigung Ihre Rechnung, die Sie jedoch erst bis Ende<br/>Oktober zahlen müssen.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
@@ -872,6 +912,7 @@
                 }
               },
               "block_order": [
+                "accordion_row_amrDDD",
                 "accordion_row_jUi3Pg",
                 "accordion_row_XgNrbG",
                 "accordion_row_QHimag",
@@ -900,6 +941,126 @@
                 "padding-inline-end": 0
               },
               "blocks": {
+                "accordion_row_pWt9iy": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "When will I get my order?",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_U7cBjQ": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_U7cBjQ"
+                  ]
+                },
+                "accordion_row_mE6FAf": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "When will I get my order?",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_Gxyxbb": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_Gxyxbb"
+                  ]
+                },
+                "accordion_row_3g8GFq": {
+                  "type": "_accordion-row",
+                  "name": "t:names.accordion_row",
+                  "settings": {
+                    "heading": "When will I get my order?",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {
+                    "text_YYPwDb": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>",
+                        "width": "100%",
+                        "max_width": "normal",
+                        "alignment": "left",
+                        "type_preset": "rte",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "pretty",
+                        "color": "var(--color-foreground)",
+                        "background": false,
+                        "background_color": "#00000026",
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "text_YYPwDb"
+                  ]
+                },
                 "accordion_row_fdTway": {
                   "type": "_accordion-row",
                   "name": "t:names.accordion_row",
@@ -1099,6 +1260,9 @@
                 }
               },
               "block_order": [
+                "accordion_row_pWt9iy",
+                "accordion_row_mE6FAf",
+                "accordion_row_3g8GFq",
                 "accordion_row_fdTway",
                 "accordion_row_DeRKwj",
                 "accordion_row_LwUexm",
