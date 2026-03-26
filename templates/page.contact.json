@@ -420,7 +420,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<ol><li>Sie bestellen einmalig online – bequem und sicher.</li><li>Änderungen sind flexibel bis 20. September möglich<br/>per E-Mail an <a href=\"mailto:abo@mehralslesen.at\" title=\"mailto:abo@mehralslesen.at\">abo@mehralslesen.at</a> oder telefonisch unter 01 589 00-170.</li><li>Sie erhalten gleich bei Bestellung Ihre Rechnung, die bis Ende Oktober fällig ist. <strong>Weitere Informationen finden unter Fragen & Antworten.</strong></li></ol><ul><li></li></ul>",
+                "text": "<ol><li>Sie bestellen einmalig online – bequem und sicher.</li><li>Änderungen sind flexibel bis 20. September möglich<br/>per E-Mail an <a href=\"mailto:abo@mehralslesen.at\" title=\"mailto:abo@mehralslesen.at\">abo@mehralslesen.at</a> oder telefonisch unter 01 589 00-170.</li><li>Sie erhalten gleich bei Bestellung Ihre Rechnung, die bis Ende Oktober fällig ist.</li></ol><p><strong>Weitere Informationen finden unter Fragen & Antworten.</strong></p>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
