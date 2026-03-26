@@ -792,7 +792,7 @@
                     "text_bkkyem": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Wenn Sie in den ersten Schulwochen Ihre Bestellung anpassen,<br/>erhalten Sie eine neue Rechnung, die die erste ersetzt und bis Ende Oktober fällig ist.</p>",
+                        "text": "<p>Wenn Sie in den ersten Schulwochen Ihre Bestellung anpassen,<br/>erhalten Sie eine neue Rechnung, die die erste ersetzt, und bis Ende Oktober fällig ist.</p>",
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
